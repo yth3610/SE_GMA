@@ -6,9 +6,10 @@ public class Map {
 
 	private int[][] map; // 지도저장
 	
-	// 지도 초기화 하는 함수 ( x : 지도 x축 크기, y : 지도 y축 크기 )
-	public void create(int x, int y){
+	// 지도 초기화 하는 함수 (int x, int y) ( x : 지도 x축 크기, y : 지도 y축 크기 )
+	public void create(){
 		
+		int x=5, y=5;
 		Random rand = new Random();
 		map=new int[x+2][y+2];
 		
@@ -28,21 +29,21 @@ public class Map {
 	}
 	
 	// 지도 재설정 하는 함수 (type : 종류 (hazard, color blob중에 뭐인지), x : 위치 x좌표, y : 위치 y좌표)
-	public void update(String type, int x, int y){
+	public void update(String type, Position xy){
 		
 		// type에 따라 지도 Update
 		switch(type){
 			case "Hazard" :
-				map[x][y]=3;
+				map[xy.getX()][xy.getY()]=3;
 				break;
 			case "Color" :
-				map[x][y]=2;
+				map[xy.getX()][xy.getY()]=2;
 				break;
 			case "Start" :
-				map[x][y]=0;
+				map[xy.getX()][xy.getY()]=0;
 				break;
 			case "Find" :
-				map[x][y]=1;
+				map[xy.getX()][xy.getY()]=1;
 				break;
 		}
 	}
