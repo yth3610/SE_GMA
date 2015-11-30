@@ -1,7 +1,10 @@
 package Interface;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.image.*;
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,8 +19,9 @@ class MyFrame extends JFrame{
 	private JButton btnset;
 	private JSplitPane sp1, sp2, sp3;
 	private TextArea txlog;
-	private JPanel panelInput, panelLog, panelDev;
+	private JPanel panelInput, panelMap, panelLog, panelDev;
 	private JScrollPane scrollPane;
+	private ImageIcon imcolorblob, imhazard, imrobot;
 	String mapList, hazardList, startList, findList;
 
 	public MyFrame(){
@@ -64,6 +68,11 @@ class MyFrame extends JFrame{
 		btnset = new JButton("set");
 		btnset.addActionListener(listener);
 		panelInput.add(btnset);
+		
+		panelMap = new JPanel();
+		imcolorblob = new ImageIcon("C:\\Desktop\\SE\\icon\\colorblob.png");
+		imhazard = new ImageIcon("C:\\Desktop\\SE\\icon\\hazard.jpg");
+	
 		
 		panelLog = new JPanel();	// System Log를 배치할 판넬	
 		panelLog.add(new JLabel("System Log"));
