@@ -4,12 +4,18 @@ import java.util.*;
 
 public class Path {
 	
-	private ArrayList<Position> path; // 경로저장 ( 클래스 다이어그램에 속성 추가하기 )
-	private Position path_xy; // 이동 경로 저장 객체
+	private static ArrayList<Position> path; // 경로저장
+	private static ArrayList<Position> finds; // 탐색 지점
+	private static Position start_xy; // 시작 지점
 
-	private ArrayList<Position> finds; // 탐색 지점
-	private Position start_xy; // 시작 지점
-
+	public static void main(String[] args)
+	{
+		Map map=new Map();
+		map.create();
+		Path pp = new Path();
+		pp.createPath();
+	}
+	
 	// 경로 초기화 하는 함수   (Position start_xy, ArrayList<Position> finds)
 	public void createPath(){
 
@@ -17,13 +23,10 @@ public class Path {
 		//this.finds=finds;
 
 		// 임의로 설정해 놓은 변수들
-		Position find_xy = new Position(2,3);
 		finds=new ArrayList<Position>();
-		finds.add(find_xy);
-		find_xy.setPosition(2,4);
-		finds.add(find_xy);
-		find_xy.setPosition(4,3);
-		finds.add(find_xy);
+		finds.add(new Position(2,3));
+		finds.add(new Position(2,4));
+		finds.add(new Position(4,3));
 			
 		start_xy = new Position(0,0);
 		
@@ -36,7 +39,7 @@ public class Path {
 		// 시작 지점, 탐색 지점 지도에 저장
 		p_map.update("Start", start_xy);
 		for(int i=0; i<finds.size(); i++)
-			p_map.update("Find", path.get(i));
+			p_map.update("Find", finds.get(i));
 
 		// 지도 받아오기
 		int[][] map = p_map.getMap();
@@ -46,11 +49,11 @@ public class Path {
 		boolean move = true;
 		
 		// path에 시작지점 추가
-		path_xy = new Position(start_xy.getX(),start_xy.getY());
-		path.add(path_xy);
+		path.add(new Position(start_xy.getX(),start_xy.getY()));
 		
+		// 시작지점 받아오기
 		x=start_xy.getX()+1; y=start_xy.getY()+1;
-		
+
 		for(int i=0;i<finds.size();i++)
 		{
 			fx=finds.get(i).getX()+1;
@@ -100,8 +103,7 @@ public class Path {
 				}
 			
 				move = true;
-				path_xy.setPosition(x-1, y-1);
-				path.add(path_xy); // 이동한 경로 저장
+				path.add(new Position(x-1, y-1)); // 이동한 경로 저장
 				
 				if(fx==x && fy==y) // 탐색지점 도착한 경우
 				{
@@ -115,6 +117,14 @@ public class Path {
 		
 		for(int i=0;i<path.size(); i++)
 			System.out.println(path.get(i).getPositionString());
+		
+		for(int i=0;i<5;i++)
+		{
+			for(int j=0; i<5; j++)
+			{
+				//if(map[i][j]==3)
+			}
+		}
 		
 	}
 	
