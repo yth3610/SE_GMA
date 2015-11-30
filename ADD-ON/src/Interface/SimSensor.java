@@ -1,6 +1,6 @@
 package Interface;
 
-import MapArticfacts.Position;
+import MapArtifacts.Position;
 
 interface SIM { //static 상수 사용을 위한 interface
 	public static final int START = 0;

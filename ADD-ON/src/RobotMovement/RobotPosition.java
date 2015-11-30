@@ -1,8 +1,8 @@
 package RobotMovement;
 
-import java.util.ArrayList;
+import MapArtifacts.Path;
 
-import MapArticfacts.Path;
+import java.util.ArrayList;
 
 public class RobotPosition {
 	private String currentPosition, nextPosition;
@@ -13,7 +13,6 @@ public class RobotPosition {
 	public RobotPosition () {
 		SimSensorManager simSensorM = new SimSensorManager();
 		Path path = new Path();
-		path.create();
 	}
 }
 
