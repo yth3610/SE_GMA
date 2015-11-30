@@ -25,6 +25,10 @@ public class Map {
 		}
 		
 		// 입력 받은 위험지역 표시하기
+		
+		/* for(int i=0; i<hazard.size(); i++)
+		 *		map[hazard.get(i).getX()][hazard.get(i).getY()]=2;
+		 */
 		// 둥글게 감싸진 부분, 갈 수 없는 부분 해결방법...????
 	}
 	
