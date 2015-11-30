@@ -10,44 +10,51 @@ public class Path {
 	private ArrayList<Position> finds; // 탐색 지점
 	private Position start_xy; // 시작 지점
 
-	// 경로 초기화 하는 함수
-	public void createPath(Position start_xy, ArrayList<Position> finds){
+	// 경로 초기화 하는 함수   (Position start_xy, ArrayList<Position> finds)
+	public void createPath(){
 
-		this.start_xy=start_xy;
-		this.finds=finds;
+		//this.start_xy=start_xy;
+		//this.finds=finds;
+
+		// 임의로 설정해 놓은 변수들
+		Position find_xy = new Position(2,3);
+		finds=new ArrayList<Position>();
+		finds.add(find_xy);
+		find_xy.setPosition(2,4);
+		finds.add(find_xy);
+		find_xy.setPosition(4,3);
+		finds.add(find_xy);
+			
+		start_xy = new Position(0,0);
 		
 		// 경로 저장 변수
 		path = new ArrayList<Position>();
-		
+
+		// Map 객체 생성
+		Map p_map=new Map();
 
 		// 시작 지점, 탐색 지점 지도에 저장
-		Map p_map=new Map();
-		//p_map.update("Start", );
+		p_map.update("Start", start_xy);
+		for(int i=0; i<finds.size(); i++)
+			p_map.update("Find", path.get(i));
 
 		// 지도 받아오기
 		int[][] map = p_map.getMap();
 		
-		// 임의로 설정해 놓은 변수들
-		int[][] find = {{2,3},{2,4},{4,3}};
 		int x, y;
-		int fx, fy, fnum=3;
-		String s;
+		int fx, fy;
 		boolean move = true;
 		
-		map[3][4] = 1;
-		map[3][5] = 1;
-		map[5][4] = 1; // 탐색지점
-		
-		// 시작지점 추가
-		path_xy = new Position(0,0);
+		// path에 시작지점 추가
+		path_xy = new Position(start_xy.getX(),start_xy.getY());
 		path.add(path_xy);
 		
-		x=1; y=1;
+		x=start_xy.getX()+1; y=start_xy.getY()+1;
 		
-		for(int i=0;i<fnum;i++)
+		for(int i=0;i<finds.size();i++)
 		{
-			fx=find[i][0]+1;
-			fy=find[i][1]+1;
+			fx=finds.get(i).getX()+1;
+			fy=finds.get(i).getY()+1;
 			
 			// 때떄로 무한 루프에 빠진다. 이전 이동 값을 몰라서...
 			while(true)
@@ -93,7 +100,6 @@ public class Path {
 				}
 			
 				move = true;
-				s=(x-1)+","+(y-1);
 				path_xy.setPosition(x-1, y-1);
 				path.add(path_xy); // 이동한 경로 저장
 				
@@ -107,8 +113,8 @@ public class Path {
 				
 		}
 		
-		//for(int i=0;i<path.size(); i++)
-			//System.out.println(path.get(i).getPositionString());
+		for(int i=0;i<path.size(); i++)
+			System.out.println(path.get(i).getPositionString());
 		
 	}
 	
