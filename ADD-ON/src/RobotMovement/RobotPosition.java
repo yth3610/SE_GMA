@@ -7,16 +7,15 @@ import java.util.ArrayList;
 
 public class RobotPosition {
 	private Position currentPosition, nextPosition;
-	Path path = new Path();
-
 	private ArrayList<Position> pathList;
-	private static int mcount = 0; //movement count
+	private static int mcount = 1; //movement count
 	
-	
+	Path path = new Path();
 	
 	public RobotPosition () {
 		//임시
 		currentPosition = new Position(1, 1);
+		pathList = new ArrayList<>();
 		pathList.add(new Position(1, 1));
 		pathList.add(new Position(1, 2));
 		pathList.add(new Position(2, 2));
@@ -29,7 +28,37 @@ public class RobotPosition {
 	
 	//path와 currentPositin을 비교하여 다음 위치를 만드는 method
 	public void createNextPosition() {
-		
+		nextPosition = new Position();
+		if(pathList.get(mcount).getX() - currentPosition.getX() == 1) {
+			//EAST(+x축)으로 한칸 이동해야 하는 경우
+			nextPosition.setX(currentPosition.getX() + 1);
+			nextPosition.setY(currentPosition.getY());
+			nextPosition.setDirection(1); //EAST(+x)
+		} 
+		else if(pathList.get(mcount).getX() - currentPosition.getX() == -1) {
+			//WEST(-x축)으로 한칸 이동해야 하는 경우
+			nextPosition.setX(currentPosition.getX() - 1);
+			nextPosition.setY(currentPosition.getY());
+			nextPosition.setDirection(3); //WEST(-x)
+		}
+		else if(pathList.get(mcount).getY() - currentPosition.getY() == 1) {
+			//NORTH(+y축)으로 한칸 이동해야 하는 경우
+			nextPosition.setX(currentPosition.getX());
+			nextPosition.setY(currentPosition.getY() + 1);
+			nextPosition.setDirection(4); //NORTH(+y)
+		} 
+		else if(pathList.get(mcount).getY() - currentPosition.getY() == -1) {
+			//SOUTH(-y축)으로 한칸 이동해야 하는 경우
+			nextPosition.setX(currentPosition.getX());
+			nextPosition.setY(currentPosition.getY() - 1);
+			nextPosition.setDirection(2); //SOUTH(-y)
+		}
+		mcount++; //다음 path를 받기 위한 변수
+	}
+	
+	public void setCurrentPosition(int x, int y) {
+		this.currentPosition.setX(x);
+		this.currentPosition.setY(y);
 	}
 	
 	public Position getNextPosition() {
@@ -37,8 +66,13 @@ public class RobotPosition {
 	}
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+
 		RobotPosition r = new RobotPosition();
+		r.createNextPosition();
+		System.out.println(r.getNextPosition().toString());
+		r.setCurrentPosition(1, 2);
+		r.createNextPosition();
+		System.out.println(r.getNextPosition().toString());
 	}
 }
 

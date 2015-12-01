@@ -26,18 +26,25 @@ public class Position {
 	public int getDirection() {
 		return this.direction;
 	}
-		
-	public String getPositionString() { //String형으로 Position 정보를 보내준다
-		return "(" + this.x + "," + this.y + ")";
-	}
 
 	public void setPosition(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
 	
-	public void setDirection() {
-		this.direction++;
-		this.direction = this.getDirection() % 4;
+	public void setX(int x) {
+		this.x = x;
+	}
+	
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+	public void setDirection(int direction) {
+		this.direction = direction;
+	}
+	
+	public String toString() {
+		return "(" + this.x + ", " + this.y + ") D : " + this.direction;
 	}
 }

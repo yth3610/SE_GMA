@@ -10,10 +10,10 @@ interface SIM { //static 상수 사용을 위한 interface
 	public static final int HIDE_COLORBLOB = 4;
 	public static final int HIDE_HAZARD = 5;
 	
-	public static final int EAST = 0;
-	public static final int SOUTH = 1;
-	public static final int WEST = 2;
-	public static final int NORTH = 3;
+	public static final int EAST = 1;
+	public static final int SOUTH = 2;
+	public static final int WEST = 3;
+	public static final int NORTH = 4;
 }
 
 public class SimSensor implements SIM {
