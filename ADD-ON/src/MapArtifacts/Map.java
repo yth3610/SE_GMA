@@ -6,7 +6,7 @@ public class Map {
 
 	private static int[][] map; // 지도저장
 	
-	// 지도 초기화 하는 함수 (int x, int y, arraylist hazard,) ( x : 지도 x축 크기, y : 지도 y축 크기 )
+	// 지도 초기화 하는 함수 (int x, int y, arraylist hazard) ( x : 지도 x축 크기, y : 지도 y축 크기 )
 	public void create(){
 		
 		int x=5, y=5;
