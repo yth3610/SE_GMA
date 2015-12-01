@@ -57,6 +57,7 @@ public class RobotPosition implements Finals{
 		mcount++; //다음 path를 받기 위한 변수
 	}
 	
+	//임시
 	public void setCurrentPosition(int x, int y) {
 		this.currentPosition.setX(x);
 		this.currentPosition.setY(y);

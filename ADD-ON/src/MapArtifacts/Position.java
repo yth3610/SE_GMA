@@ -40,8 +40,8 @@ public class Position {
 		this.y = y;
 	}
 	
-	public void setDirection(int direction) {
-		this.direction = direction;
+	public void setDirection(int d) {
+		this.direction = d;
 	}
 	
 	public String toString() {
