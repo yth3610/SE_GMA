@@ -10,9 +10,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.EventObject;
+import java.util.StringTokenizer;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+
+import MapArtifacts.MapManager;
+import MapArtifacts.Position;
 
 class MyFrame extends JFrame{
 	private JTextField txmap,txhazard,txstart,txfind;
@@ -70,9 +74,9 @@ class MyFrame extends JFrame{
 		panelInput.add(btnset);
 		
 		panelMap = new JPanel();
-		imcolorblob = new ImageIcon("C:\\Desktop\\SE\\icon\\colorblob.png");
-		imhazard = new ImageIcon("C:\\Desktop\\SE\\icon\\hazard.jpg");
-	
+		imcolorblob = new ImageIcon("icon/colorblob.png");
+		imhazard = new ImageIcon("icon/hazard.jpg");
+		JLabel lbcolorblob = new JLabel(imcolorblob);
 		
 		panelLog = new JPanel();	// System Log를 배치할 판넬	
 		panelLog.add(new JLabel("System Log"));
@@ -83,7 +87,7 @@ class MyFrame extends JFrame{
 		panelDev = new JPanel(); // 개발자 정보를 배치할 판넬		
 				
 		sp1.setTopComponent(panelInput);	// sp1에 panelInput 배치
-		sp2.setRightComponent(new JLabel("Map"));
+		sp2.setRightComponent(panelMap);
 		sp3.setTopComponent(panelLog);	// sp3에 panelLog 배치
 		sp3.setBottomComponent(new JLabel("Developer"));		
 		sp2.add(sp3);
@@ -98,14 +102,52 @@ class MyFrame extends JFrame{
 			if(e.getSource()==txmap || e.getSource()==txhazard ||
 					e.getSource()==txstart || e.getSource()==txfind ||
 					e.getSource()==btnset){
+			  
 				mapList = txmap.getText();
 				hazardList = txhazard.getText();
 				startList = txstart.getText();
 				findList = txfind.getText();
+				
+				ArrayList<Position> mappositionList = new ArrayList<>();
+				ArrayList<Position> startpositionList = new ArrayList<>();
+				ArrayList<Position> hazardpositionList = new ArrayList<>();
+				ArrayList<Position> findpositionList = new ArrayList<>();
+								
+			    StringTokenizer sthazard = new StringTokenizer(hazardList);
+			    StringTokenizer stfind = new StringTokenizer(findList);
+			    StringTokenizer ststart = new StringTokenizer(startList);
+			    StringTokenizer stmap = new StringTokenizer(mapList);
+			    
+			    String tmp = stmap.nextToken();
+			    int mapx = Integer.valueOf(tmp.substring(0,1));
+			    int mapy = Integer.valueOf(tmp.substring(2,tmp.length()));
+			    mappositionList.add(new Position(mapx,mapy));	
+			    
+			    tmp = ststart.nextToken();
+			    int x = Integer.valueOf(tmp.substring(0,1));
+			    int y = Integer.valueOf(tmp.substring(2,tmp.length()));
+			    
+			    while(stfind.hasMoreTokens()) {
+			    	tmp = stfind.nextToken();
+			    	x = Integer.valueOf(tmp.substring(0,1));
+			    	y = Integer.valueOf(tmp.substring(2,tmp.length()));
+			    	startpositionList.add(new Position(x,y));			    	
+			    }
+			    
+			    while(sthazard.hasMoreTokens()) {
+			        tmp = sthazard.nextToken();
+			        x = Integer.valueOf(tmp.substring(0, 1));
+			        y = Integer.valueOf(tmp.substring(2, tmp.length()));
+			        hazardpositionList.add(new Position(x, y));
+			    }
+			    
+			    MapManager map = new MapManager();
+			    map.create(mapx,mapy,hazardpositionList);
+			    
 				txlog.append("지도 크기"+mapList+"\n위험 지점"+hazardList+"\n시작 지점"+startList+"\n탐색 지점"+findList+"\n");
 			}
 		}
-	}
+	}	 
 }
 
 public class MapForm  {
