@@ -2,10 +2,11 @@ package RobotMovement;
 
 import MapArtifacts.Path;
 import MapArtifacts.Position;
+import Interface.Finals;
 
 import java.util.ArrayList;
 
-public class RobotPosition {
+public class RobotPosition implements Finals{
 	private Position currentPosition, nextPosition;
 	private ArrayList<Position> pathList;
 	private static int mcount = 1; //movement count
@@ -33,25 +34,25 @@ public class RobotPosition {
 			//EAST(+x축)으로 한칸 이동해야 하는 경우
 			nextPosition.setX(currentPosition.getX() + 1);
 			nextPosition.setY(currentPosition.getY());
-			nextPosition.setDirection(1); //EAST(+x)
+			nextPosition.setDirection(EAST); //EAST(+x)
 		} 
 		else if(pathList.get(mcount).getX() - currentPosition.getX() == -1) {
 			//WEST(-x축)으로 한칸 이동해야 하는 경우
 			nextPosition.setX(currentPosition.getX() - 1);
 			nextPosition.setY(currentPosition.getY());
-			nextPosition.setDirection(3); //WEST(-x)
+			nextPosition.setDirection(WEST); //WEST(-x)
 		}
 		else if(pathList.get(mcount).getY() - currentPosition.getY() == 1) {
 			//NORTH(+y축)으로 한칸 이동해야 하는 경우
 			nextPosition.setX(currentPosition.getX());
 			nextPosition.setY(currentPosition.getY() + 1);
-			nextPosition.setDirection(4); //NORTH(+y)
+			nextPosition.setDirection(NORTH); //NORTH(+y)
 		} 
 		else if(pathList.get(mcount).getY() - currentPosition.getY() == -1) {
 			//SOUTH(-y축)으로 한칸 이동해야 하는 경우
 			nextPosition.setX(currentPosition.getX());
 			nextPosition.setY(currentPosition.getY() - 1);
-			nextPosition.setDirection(2); //SOUTH(-y)
+			nextPosition.setDirection(SOUTH); //SOUTH(-y)
 		}
 		mcount++; //다음 path를 받기 위한 변수
 	}

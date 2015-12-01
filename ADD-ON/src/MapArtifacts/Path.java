@@ -182,7 +182,7 @@ public class Path {
 		
 		// path 출력
 		for(int i=0;i<path.size(); i++)
-			System.out.println(path.get(i).getPositionString());
+			System.out.println(path.get(i).toString());
 	}
 	
 	// 경로 재설정하는 함수 (Position start_xy, ArrayList<Position> finds)??

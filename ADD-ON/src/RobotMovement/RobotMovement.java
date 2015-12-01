@@ -1,8 +1,9 @@
 package RobotMovement;
 
+import Interface.Finals;
 import MapArtifacts.Position;
 
-public class RobotMovement {
+public class RobotMovement implements Finals {
 	private Position currentPosition, nextPosition;
 	private String movement;
 	
@@ -23,16 +24,16 @@ public class RobotMovement {
 	public void orderMovement(String move) { //RobotMovementInterface에 움직임 명령
 		if(movement.equals("go")) { //한칸 이동하는 경우
 			switch(currentPosition.getDirection()) {
-			case 1: //EAST(+x)
+			case EAST: //EAST(+x)
 				movement = "+x";
 				break;
-			case 2: //SOUTH(-y)
+			case SOUTH: //SOUTH(-y)
 				movement = "-y";
 				break;
-			case 3: //WEST(-x)
+			case WEST: //WEST(-x)
 				movement = "-x";
 				break;
-			case 4: //NORTH(+y)
+			case NORTH: //NORTH(+y)
 				movement = "+y";
 				break;
 			default:
