@@ -15,6 +15,7 @@ import java.util.StringTokenizer;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+import MapArtifacts.MapManager;
 import MapArtifacts.Position;
 
 class MyFrame extends JFrame{
@@ -118,13 +119,13 @@ class MyFrame extends JFrame{
 			    StringTokenizer stmap = new StringTokenizer(mapList);
 			    
 			    String tmp = stmap.nextToken();
-			    int x = Integer.valueOf(tmp.substring(0,1));
-			    int y = Integer.valueOf(tmp.substring(2,tmp.length()));
-			    mappositionList.add(new Position(x,y));	
+			    int mapx = Integer.valueOf(tmp.substring(0,1));
+			    int mapy = Integer.valueOf(tmp.substring(2,tmp.length()));
+			    mappositionList.add(new Position(mapx,mapy));	
 			    
 			    tmp = ststart.nextToken();
-			    x = Integer.valueOf(tmp.substring(0,1));
-			    y = Integer.valueOf(tmp.substring(2,tmp.length()));
+			    int x = Integer.valueOf(tmp.substring(0,1));
+			    int y = Integer.valueOf(tmp.substring(2,tmp.length()));
 			    
 			    while(stfind.hasMoreTokens()) {
 			    	tmp = stfind.nextToken();
@@ -139,6 +140,9 @@ class MyFrame extends JFrame{
 			        y = Integer.valueOf(tmp.substring(2, tmp.length()));
 			        hazardpositionList.add(new Position(x, y));
 			    }
+			    
+			    MapManager map = new MapManager();
+			    map.create(mapx,mapy,hazardpositionList);
 			    
 				txlog.append("지도 크기"+mapList+"\n위험 지점"+hazardList+"\n시작 지점"+startList+"\n탐색 지점"+findList+"\n");
 			}
