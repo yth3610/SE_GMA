@@ -70,9 +70,10 @@ class MyFrame extends JFrame{
 		panelInput.add(btnset);
 		
 		panelMap = new JPanel();
-		imcolorblob = new ImageIcon("C:\\Desktop\\SE\\icon\\colorblob.png");
-		imhazard = new ImageIcon("C:\\Desktop\\SE\\icon\\hazard.jpg");
-	
+		imcolorblob = new ImageIcon("colorblob.png");
+		imhazard = new ImageIcon("hazard.jpg");
+		JLabel lbcolorblob = new JLabel(imcolorblob);
+		panelMap.add(lbcolorblob);
 		
 		panelLog = new JPanel();	// System Log를 배치할 판넬	
 		panelLog.add(new JLabel("System Log"));
@@ -83,7 +84,7 @@ class MyFrame extends JFrame{
 		panelDev = new JPanel(); // 개발자 정보를 배치할 판넬		
 				
 		sp1.setTopComponent(panelInput);	// sp1에 panelInput 배치
-		sp2.setRightComponent(new JLabel("Map"));
+		sp2.setRightComponent(panelMap);
 		sp3.setTopComponent(panelLog);	// sp3에 panelLog 배치
 		sp3.setBottomComponent(new JLabel("Developer"));		
 		sp2.add(sp3);
