@@ -8,11 +8,12 @@ public class Map implements Finals {
 
 	private static int[][] map; // 지도저장
 	private static int x, y;
+
 	private ArrayList<Position> hazard;
-	
+
 	public static final int OK = 9;
 	public static final int ERROR = 999;
-	
+
 	// 지도 초기화 하는 함수 ( x : 지도 x축 크기, y : 지도 y축 크기, hazard : 위험지역 )
 	public void create(int x, int y, ArrayList<Position> hazard){
 		
@@ -85,3 +86,4 @@ public class Map implements Finals {
 		return OK;
 	}
 }
+
