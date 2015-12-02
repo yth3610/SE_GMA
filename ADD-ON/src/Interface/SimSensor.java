@@ -13,8 +13,6 @@ public class SimSensor implements Finals {
 	//처음 시작시에 생성하여 Operator로 부터 받은 시작지점으로 Robot의 위치를 설정하는 생성자
 	public SimSensor(int x, int y) {
 		this.position = new Position(x, y);
-		mmap.create();
-		map = mmap.getMap();
 	}
 	
 	public boolean hazardSensor() {
@@ -64,6 +62,10 @@ public class SimSensor implements Finals {
 			map[position.getX()][position.getY() + 1] = COLORBLOB;
 		}
 		return colorblob;
+	}
+	
+	public void setMap(int[][] map) {
+		this.map = map;
 	}
 	
 	public Position positionSensor() {

@@ -27,6 +27,7 @@ class MyFrame extends JFrame{
 	private JScrollPane scrollPane;
 	private ImageIcon imcolorblob, imhazard, imrobot;
 	String mapList, hazardList, startList, findList;
+	private static SimSensor robot;
 
 	public MyFrame(){
 		setSize(750,500);
@@ -147,7 +148,11 @@ class MyFrame extends JFrame{
 				txlog.append("지도 크기"+mapList+"\n위험 지점"+hazardList+"\n시작 지점"+startList+"\n탐색 지점"+findList+"\n");
 			}
 		}
-	}	 
+	}
+	
+	public SimSensor getRobot() {
+		return this.robot;
+	}
 }
 
 public class MapForm  {
