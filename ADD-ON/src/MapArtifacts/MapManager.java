@@ -9,7 +9,7 @@ public class MapManager {
 	// 지도 초기화 값 전달
 	public void create(int x, int y, ArrayList<Position> hazard){
 		map=new Map();
-		map.create();
+		map.create(x, y, hazard);
 	}
 	
 	// 지도 재설정 값 전달

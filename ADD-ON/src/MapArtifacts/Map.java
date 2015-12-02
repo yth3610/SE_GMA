@@ -1,15 +1,22 @@
 package MapArtifacts;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Map {
 
 	private static int[][] map; // 지도저장
+	private int x, y;
+	private ArrayList<Position> hazard;
 	
-	// 지도 초기화 하는 함수 (int x, int y, arraylist hazard) ( x : 지도 x축 크기, y : 지도 y축 크기 )
-	public void create(){
+	// 지도 초기화 하는 함수 ( x : 지도 x축 크기, y : 지도 y축 크기, hazard : 위험지역 )
+	public void create(int x, int y, ArrayList<Position> hazard){
 		
-		int x=5, y=5;
+		// 초기화
+		this.x=x;
+		this.y=y;
+		this.hazard=hazard;
+		
 		Random rand = new Random();
 		map=new int[x+2][y+2];
 		
@@ -25,10 +32,9 @@ public class Map {
 		}
 		
 		// 입력 받은 위험지역 표시하기
-		
-		/* for(int i=0; i<hazard.size(); i++)
-		 *		map[hazard.get(i).getX()][hazard.get(i).getY()]=2;
-		 */
+		for(int i=0; i<hazard.size(); i++)
+			map[hazard.get(i).getX()+1][hazard.get(i).getY()+1]=3;
+		 
 		// 둥글게 감싸진 부분, 갈 수 없는 부분 해결방법...????
 	}
 	

@@ -18,27 +18,13 @@ public class Path {
 	
 	public static final int OK = 9;
 	public static final int ERROR = 999;
-
-	public static void main(String[] args)
-	{
-		Map map=new Map();
-		map.create();
-		Path pp = new Path();
-		pp.createPath();
-	}
 	
-	// 경로 초기화 하는 함수   (Position start_xy, ArrayList<Position> finds)
-	public void createPath(){
+	// 경로 초기화 하는 함수   (start_xy : 출발지점 , finds : 탐색지점)
+	public void createPath(Position start_xy, ArrayList<Position> finds){
 
-		//this.start_xy=start_xy;
-		//this.finds=finds;
-
-		// 임의로 설정해 놓은 변수들
-		finds=new ArrayList<Position>();
-		finds.add(new Position(2,3));
-		finds.add(new Position(2,4));
-		finds.add(new Position(4,3));
-		start_xy = new Position(0,0);
+		// 초기화
+		this.start_xy=start_xy;
+		this.finds=finds;
 		
 		// 경로 저장 변수
 		path = new ArrayList<Position>();
@@ -60,10 +46,6 @@ public class Path {
 		x=start_xy.getX()+1; y=start_xy.getY()+1;
 		// 시작지점 저장
 		path.add(new Position(x-1, y-1));
-
-		map[3][4]=2;
-		map[3][5]=2;
-		map[5][4]=2;
 		
 		// 위험지역 출력
 		for(int i=1;i<6;i++)
@@ -97,6 +79,7 @@ public class Path {
 	
 	// 경로 재설정하는 함수 (Position start_xy, ArrayList<Position> finds)??
 	public void updatePath(){
+		
 		// 현재위치 받아오기
 		int x=3, y=2, p=0, fx, fy;
 		boolean a = false;
