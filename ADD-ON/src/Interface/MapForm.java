@@ -27,7 +27,7 @@ class MyFrame extends JFrame{
 	private JScrollPane scrollPane;
 	private ImageIcon imcolorblob, imhazard, imrobot;
 	String mapList, hazardList, startList, findList;
-	private static SimSensor robot;
+	private static SimSensor robot = new SimSensor();
 
 	public MyFrame(){
 		setSize(750,500);
@@ -156,8 +156,13 @@ class MyFrame extends JFrame{
 }
 
 public class MapForm  {
+	private static MyFrame f;
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		MyFrame f = new MyFrame();
+		f = new MyFrame();
+	}
+	
+	public static SimSensor getRobot() {
+		return f.getRobot();
 	}
 }
