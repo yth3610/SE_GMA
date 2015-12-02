@@ -22,8 +22,10 @@ public class RobotPosition implements Finals{
 		pathList.add(new Position(2, 2));
 		pathList.add(new Position(2, 1));
 		
-		//	SimSensorManager simSensorM = new SimSensorManager();
-		//	path.createPath();
+		//임시
+		//RobotPositionManager로 부터 robot의 현재위치를 가져온다.
+		//currentPosition = RobotPositionManager.getPosition();
+		//pathList = path.getPath();
 		
 	}
 	

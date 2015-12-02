@@ -1,5 +1,9 @@
 package RobotMovement;
 
-public class RobotPositionManager {
+import MapArtifacts.Position;
 
+public class RobotPositionManager {
+	public static Position getPosition() {
+		return SimSensorManager.positionSensor();
+	}
 }

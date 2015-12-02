@@ -75,6 +75,15 @@ public class SimSensor implements Finals {
 		this.position = position;
 	}
 	
+	public void setPosition(int x, int y) {
+		this.position.setX(x);
+		this.position.setY(y);
+	}
+	
+	public void setDirection(int d) {
+		this.position.setDirection(d);
+	}
+	
 	public void setMap(int[][] map) {
 		this.map = map;
 	}
