@@ -84,10 +84,11 @@ class MyFrame extends JFrame{
 		JLabel lbcolorblob = new JLabel(imcolorblob);
 				
 		panelLog = new JPanel();	// System Log를 배치할 판넬	
-		panelLog.add(new JLabel("System Log"));
+		panelLog.setLayout(new BorderLayout());
+		panelLog.add(new JLabel("System Log"),BorderLayout.PAGE_START);
 		txlog = new TextArea(15,30);
 		scrollPane = new JScrollPane(txlog);
-		panelLog.add(txlog);
+		panelLog.add(txlog,BorderLayout.CENTER);
 		
 		panelDev = new JPanel(); // 개발자 정보를 배치할 판넬		
 		MapComponent mapcomponent = new MapComponent(1, 1);
@@ -139,8 +140,8 @@ class MyFrame extends JFrame{
 		public void actionPerformed(ActionEvent e){
 			if(e.getSource()==txmap || e.getSource()==txhazard ||
 					e.getSource()==txstart || e.getSource()==txfind ||
-					e.getSource()==btnset){
-			  
+					e.getSource()==btnset){		
+				
 				ArrayList<Position> mappositionList = new ArrayList<>();	// 맵 좌표를 저장하는 리스트
 				ArrayList<Position> startpositionList = new ArrayList<>();	// 시작지점 좌료를 저장하는 리스트
 				ArrayList<Position> hazardpositionList = new ArrayList<>();	// 위험지역 좌표를 저장하는 리스트
@@ -179,7 +180,7 @@ class MyFrame extends JFrame{
 			    PathManager path = new PathManager();
 			    map.create(mapx,mapy,hazardpositionList);
 				
-			    MapComponent mapcomponent = new MapComponent(startpositionList.get(0).getX(), startpositionList.get(0).getY());
+			    MapComponent mapcomponent = new MapComponent(mappositionList.get(0).getX(), mappositionList.get(0).getY());
 			    MapForm.f.setComponent(mapcomponent);
 			 
 				txlog.append("지도 크기"+mappositionList+"\n위험 지점"+hazardpositionList+
