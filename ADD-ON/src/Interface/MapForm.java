@@ -40,13 +40,13 @@ class MyFrame extends JFrame{
 		findList = new String();  // 탐색 지점을 입력 받는 문자열
 		
 		sp1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT); // 상하 분할
-		sp1.setDividerLocation(40);	// 자르는 위치 높이 40 에서 시작
+		sp1.setDividerLocation(40);	// 자르는 위치 높이 40에서 시작
 		
 		sp2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT); // 좌우 분할
 		sp2.setDividerLocation(250); // 자르는 위치 너비 250에서 시작		
 		
 		sp3 = new JSplitPane(JSplitPane.VERTICAL_SPLIT); // 상하 분할
-		sp3.setDividerLocation(300);
+		sp3.setDividerLocation(300); // 자르는 위치 높이 300에서 시작
 		
 		panelInput = new JPanel(); // 입력 값들을 배치하는 판넬
 		panelInput.setLayout(new FlowLayout(FlowLayout.CENTER));
