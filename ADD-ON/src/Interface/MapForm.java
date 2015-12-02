@@ -20,6 +20,12 @@ import javax.swing.border.Border;
 import MapArtifacts.MapManager;
 import MapArtifacts.Position;
 
+class MapComponent extends JComponent{
+	public void paint(Graphics g){
+		g.drawRect(30,30,410,350);
+	}
+}
+	
 class MyFrame extends JFrame{
 	private JTextField txmap,txhazard,txstart,txfind;
 	private JButton btnset;
@@ -71,7 +77,7 @@ class MyFrame extends JFrame{
 		panelInput.add(btnset);
 		
 		panelMap = new JPanel();	// 재난지역 모델을 배치할 판넬
-		imcolorblob = new ImageIcon("icon/colorblob.png");	// colorblob icon
+		imcolorblob = new ImageIcon("icon/colorblob.pnddg");	// colorblob icon
 		imhazard = new ImageIcon("icon/hazard.jpg");	// hazard icon
 		imrobotN = new ImageIcon("icon/robot_N.jpg");	// 진행방향이 북쪽인 robot icon
 		imrobotE = new ImageIcon("icon/robot_E.jpg");	// 진행방향이 동쪽인 robot icon
@@ -88,7 +94,7 @@ class MyFrame extends JFrame{
 		panelDev = new JPanel(); // 개발자 정보를 배치할 판넬		
 				
 		sp1.setTopComponent(panelInput);	// sp1에 panelInput 배치
-		sp2.setRightComponent(panelMap);	// sp2에 panelMap 배치
+		sp2.setRightComponent(new MapComponent());	// sp2에 panelMap 배치
 		sp3.setTopComponent(panelLog);	// sp3 상단부에 panelLog 배치
 		sp3.setBottomComponent(panelDev);	// sp3 하단부에 panelDev 배치
 		sp2.add(sp3);
@@ -98,6 +104,7 @@ class MyFrame extends JFrame{
 		setVisible(true);
 	}	
 	
+
 	// set 버튼을 눌렀을 경우 이벤트
 	private class ButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
@@ -119,18 +126,7 @@ class MyFrame extends JFrame{
 			    int mapx = Integer.valueOf(tmp.substring(0,1));
 			    int mapy = Integer.valueOf(tmp.substring(2,tmp.length()));
 			    mappositionList.add(new Position(mapx,mapy));	
-			    
-			    JPanel drawpanel = new JPanel(){
-					public void paint(Graphics g){         //재작성 JPanel 중 방법
-						int width = 20;
-						for(int i=0; i<mapx; i++){
-							g.setColor(Color.BLACK);
-							g.drawLine(30,30+(i*width),((mapx-1)*width),30+width);
-						}
-				       
-					}
-				};
-			    
+			    			    
 			    tmp = ststart.nextToken();
 			    int x = Integer.valueOf(tmp.substring(0,1));
 			    int y = Integer.valueOf(tmp.substring(2,tmp.length()));
