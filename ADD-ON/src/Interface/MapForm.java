@@ -33,7 +33,7 @@ class MyFrame extends JFrame{
 	private static int width=400;	// 재난 지역 모델 너비
 	private static int height=350;	// 재난 지역 모델 높이
 	private static int x=30, y=30;	// 재난 지역 모델 좌측 상단 x,y 좌표
-	
+
 	public MyFrame(){
 		setSize(750,500);
 		setTitle("ADD-ON");
@@ -179,6 +179,7 @@ class MyFrame extends JFrame{
 			    MapManager map = new MapManager();
 			    PathManager path = new PathManager();
 			    map.create(mapx,mapy,hazardpositionList);
+			    path.createPath(startx, starty, findpositionList);
 				
 			    MapComponent mapcomponent = new MapComponent(mappositionList.get(0).getX(), mappositionList.get(0).getY());
 			    MapForm.f.setComponent(mapcomponent);
