@@ -7,7 +7,8 @@ public class Path implements Finals{
 	
 	private static ArrayList<Position> path; // 경로저장
 	private static ArrayList<Position> finds; // 탐색 지점
-	private static Position start_xy; // 시작 지점
+	private static int start_x; // 시작 지점
+	private static int start_y; // 시작 지점
 	
 	private ArrayList<Position> path2; // 부분 경로
 	private int[][] map; // 지도 저장
@@ -16,10 +17,11 @@ public class Path implements Finals{
 	public static final int ERROR = 999;
 	
 	// 경로 초기화 하는 함수   (start_xy : 출발지점 , finds : 탐색지점)
-	public void createPath(Position start_xy, ArrayList<Position> finds){
+	public void createPath(int start_x, int start_y, ArrayList<Position> finds){
 
 		// 초기화
-		this.start_xy=start_xy;
+		this.start_x=start_x;
+		this.start_y=start_y;
 		this.finds=finds;
 		
 		// 경로 저장 변수
@@ -29,7 +31,7 @@ public class Path implements Finals{
 		Map p_map=new Map();
 
 		// 시작 지점, 탐색 지점 지도에 저장
-		p_map.update("Start", start_xy);
+		p_map.update("Start", new Position(start_x, start_y));
 		for(int i=0; i<finds.size(); i++)
 			p_map.update("Find", finds.get(i));
 		
@@ -39,7 +41,7 @@ public class Path implements Finals{
 		int x, y, fx, fy; // 시작지점, 탐색지점
 		
 		// 시작지점 받아오기
-		x=start_xy.getX()+1; y=start_xy.getY()+1;
+		x=start_x+1; y=start_y+1;
 		
 		// 시작지점 저장
 		path.add(new Position(x-1, y-1));
@@ -83,7 +85,7 @@ public class Path implements Finals{
 		int x=3, y=2, fx, fy;
 		ArrayList<Position> un_finds=finds;
 		
-		// 현재 위치 이후의 경로 지우기
+		// 현재 위치 이후의 경로 지우기  (에러.....)
 		for(int i=path.size()-1;i>=0;i++)
 		{
 			if( x==path.get(path.size()-1).getX() && y==path.get(path.size()-1).getY())
@@ -92,7 +94,7 @@ public class Path implements Finals{
 				path.remove(path.size()-1);
 		}
 		
-		// 탐색한 탐색지점 지우기
+		// 탐색한 탐색지점 지우기 (에러.....)
 		for(int i=un_finds.size()-1; i>=0; i++)
 		{
 			if(path.indexOf((un_finds).get(i))>0)
