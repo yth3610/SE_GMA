@@ -134,7 +134,7 @@ public class Path {
 	}
 	
 	// x, y 부터 fx, fy까지 경로 구하기
-	public int create(int x, int y, int fx, int fy)
+	private int create(int x, int y, int fx, int fy)
 	{
 		int end=1;
 		boolean move = true;
@@ -233,7 +233,7 @@ public class Path {
 	}
 	
 	// 가장 예전에 간 방향 return	
-	public int oldestMove(int x, int y, int[][] n_path)
+	private int oldestMove(int x, int y, int[][] n_path)
 	{
 		int a, b, c, d;
 		
