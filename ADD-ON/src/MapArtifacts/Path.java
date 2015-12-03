@@ -36,7 +36,7 @@ public class Path implements Finals{
 			p_map.update("Find", finds.get(i));
 		
 		// 지도 받아오기
-		map = p_map.getMap(1);
+		map = p_map.getPathMap();
 
 		int x, y, fx, fy; // 시작지점, 탐색지점
 		
