@@ -25,6 +25,7 @@ public class Map implements Finals {
 		
 		Random rand = new Random();
 		map=new int[x+3][y+3];
+		draw_map=new int[x+1][y+1];
 		
 		for(int i=0; i<x+3; i++) // 입력 크기를 바탕으로 map을 임의 값으로 초기화
 		{
