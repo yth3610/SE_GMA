@@ -2,12 +2,18 @@ package MapArtifacts;
 
 import java.util.ArrayList;
 import java.util.Random;
+import Interface.Finals;
 
-public class Map {
+public class Map implements Finals {
 
 	private static int[][] map; // 지도저장
 	private int x, y;
 	private ArrayList<Position> hazard;
+	private static int x, y;
+	private ArrayList<Position> hazard;
+	
+	public static final int OK = 9;
+	public static final int ERROR = 999;
 	
 	// 지도 초기화 하는 함수 ( x : 지도 x축 크기, y : 지도 y축 크기, hazard : 위험지역 )
 	public void create(int x, int y, ArrayList<Position> hazard){
@@ -25,9 +31,9 @@ public class Map {
 			for(int j=0; j<y+2; j++)
 			{
 				if(i==0 || i==x+1 || j==0 || j==y+1)
-					map[i][j]=3;
+					map[i][j]=HAZARD;
 				else
-					map[i][j]=rand.nextInt(10)+1;
+					map[i][j]=rand.nextInt(10)+5;
 			}
 		}
 		
@@ -36,6 +42,8 @@ public class Map {
 			map[hazard.get(i).getX()+1][hazard.get(i).getY()+1]=3;
 		 
 		// 둥글게 감싸진 부분, 갈 수 없는 부분 해결방법...????
+		for(int i=0; i<hazard.size(); i++)
+			map[hazard.get(i).getX()+1][hazard.get(i).getY()+1]=HAZARD;
 	}
 	
 	// 지도 재설정 하는 함수 (type : 종류 (hazard, color blob중에 뭐인지), xy : 좌표)
@@ -44,22 +52,42 @@ public class Map {
 		// type에 따라 지도 Update
 		switch(type){
 			case "Hazard" :
-				map[xy.getX()][xy.getY()]=3;
+				map[xy.getX()+1][xy.getY()+1]=HAZARD; 
+				// updatePath();
 				break;
 			case "Color" :
-				map[xy.getX()][xy.getY()]=2;
+				map[xy.getX()+1][xy.getY()+1]=COLORBLOB;
 				break;
 			case "Start" :
-				map[xy.getX()][xy.getY()]=0;
+				map[xy.getX()+1][xy.getY()+1]=START;
 				break;
 			case "Find" :
-				map[xy.getX()][xy.getY()]=1;
+				map[xy.getX()+1][xy.getY()+1]=FIND;
 				break;
 		}
+		
+		if(confirm()==ERROR)
+			; // 둘러싸인 경우
 	}
 	
 	// 지도 반환 하는 함수
 	public int[][] getMap(){
 		return map;
+	}
+	
+	// 시작지점, 탐색지점이 위험지점으로 둘러싸인 경우
+	public int confirm(){
+		for(int i=1; i<x+1; i++) 
+		{
+			for(int j=1; j<y+1; j++)
+			{
+				if(map[i][j]==FIND || map[i][j]==START)
+				{
+					if(map[i+1][j]==HAZARD && map[i-1][j]==HAZARD && map[i][j+1]==HAZARD && map[i][j-1]==HAZARD)
+						return ERROR;
+				}
+			}
+		}
+		return OK;
 	}
 }

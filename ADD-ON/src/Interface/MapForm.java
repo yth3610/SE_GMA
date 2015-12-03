@@ -1,9 +1,11 @@
 package Interface;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.image.*;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
@@ -25,9 +27,14 @@ class MyFrame extends JFrame{
 	private TextArea txlog;
 	private JPanel panelInput, panelMap, panelLog, panelDev;
 	private JScrollPane scrollPane;
-	private ImageIcon imcolorblob, imhazard, imrobot;
-	String mapList, hazardList, startList, findList;
 	private static SimSensor robot = new SimSensor();
+	private static int width=400;	// 재난 지역 모델 너비
+	private static int height=350;	// 재난 지역 모델 높이
+	private static int x=30, y=30;	// 재난 지역 모델 좌측 상단 x,y 좌표
+	private static int robotWsa=50,robotWaa=-100;
+	private static int robotSsa=40,robotSaa=100;
+	private static int robotEsa=130,robotEaa=100;
+	private static int robotNsa=-40,robotNaa=-100;
 
 	public MyFrame(){
 		setSize(750,500);
@@ -35,10 +42,6 @@ class MyFrame extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		ButtonListener listener = new ButtonListener();
-		mapList =  new String();  // 지도 크기를 입력 받는 문자열
-		hazardList = new String();  // 위험 지점을 입력 받는 문자열
-		startList = new String();  // 시작 지점을 입력 받는 문자열
-		findList = new String();  // 탐색 지점을 입력 받는 문자열
 		
 		sp1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT); // 상하 분할
 		sp1.setDividerLocation(40);	// 자르는 위치 높이 40에서 시작
@@ -54,105 +57,148 @@ class MyFrame extends JFrame{
 		Border border = BorderFactory.createLineBorder(null);
 		panelInput.setBorder(border);
 		
-		panelInput.add(new JLabel("지도 크기"));
-		txmap = new JTextField(8);
+		panelInput.add(new JLabel("지도 크기"));	// 입력값들을 배치할 판넬
+		txmap = new JTextField(8);	// 지도크기를 입력받을 텍스트필드
 		txmap.addActionListener(listener);
 		panelInput.add(txmap);
-		panelInput.add(new JLabel("위험 지역"));
-		txhazard = new JTextField(8);
+		panelInput.add(new JLabel("위험 지역"));	
+		txhazard = new JTextField(8);	// 위험지역을 입력받을 텍스트필드
 		txhazard.addActionListener(listener);
 		panelInput.add(txhazard);
 		panelInput.add(new JLabel("시작 지점"));
-		txstart = new JTextField(8);
+		txstart = new JTextField(8);	// 시작지점을 입력받을 텍스트필드
 		txstart.addActionListener(listener);
 		panelInput.add(txstart);
 		panelInput.add(new JLabel("탐색 지점"));
-		txfind = new JTextField(8);
+		txfind = new JTextField(8);		// 탐색지점을 입력받을 텍스트필드
 		txfind.addActionListener(listener);
 		panelInput.add(txfind);
 		btnset = new JButton("set");
-		btnset.addActionListener(listener);
+		btnset.addActionListener(listener);	// set 버튼에 listener 달아줌
 		panelInput.add(btnset);
-		
-		panelMap = new JPanel();
-		imcolorblob = new ImageIcon("icon/colorblob.png");
-		imhazard = new ImageIcon("icon/hazard.jpg");
-		JLabel lbcolorblob = new JLabel(imcolorblob);
-		
+				
 		panelLog = new JPanel();	// System Log를 배치할 판넬	
-		panelLog.add(new JLabel("System Log"));
+		panelLog.setLayout(new BorderLayout());
+		panelLog.add(new JLabel("System Log"),BorderLayout.PAGE_START);
 		txlog = new TextArea(15,30);
 		scrollPane = new JScrollPane(txlog);
-		panelLog.add(txlog);
+		panelLog.add(txlog,BorderLayout.CENTER);
 		
 		panelDev = new JPanel(); // 개발자 정보를 배치할 판넬		
+		MapComponent mapcomponent = new MapComponent(1, 1);
 				
 		sp1.setTopComponent(panelInput);	// sp1에 panelInput 배치
-		sp2.setRightComponent(panelMap);
-		sp3.setTopComponent(panelLog);	// sp3에 panelLog 배치
-		sp3.setBottomComponent(new JLabel("Developer"));		
+		sp2.setRightComponent(mapcomponent);	// sp2에 panelMap 배치
+		sp3.setTopComponent(panelLog);	// sp3 상단부에 panelLog 배치
+		sp3.setBottomComponent(panelDev);	// sp3 하단부에 panelDev 배치
 		sp2.add(sp3);
 		sp1.add(sp2);	
 		getContentPane().add(sp1);
 		
 		setVisible(true);
-	}	
-
+	}
+	
+	public void setComponent(MapComponent mapcomponent) {
+		sp2.setRightComponent(mapcomponent);
+	}
+	
+	public SimSensor getRobot() {
+	      return this.robot;
+	}
+	
+	class MapComponent extends JComponent{
+		int mapx, mapy;
+		Map map = new Map();
+		int[][] mapdata;		
+		
+		public MapComponent(int x, int y) {
+			this.mapx = x;
+			this.mapy = y;
+		}
+		
+		public void paint(Graphics g){
+			g.drawRect(x,y,width,height);
+			g.setColor(Color.BLUE);
+			g.fillOval(30, 30, 30, 30);
+			g.setColor(Color.RED);
+			g.fillOval(60,60,30,30);
+			g.setColor(Color.MAGENTA);
+			g.fillArc(90,90,50,50,robotEsa,robotEaa);
+			g.fillArc(90, 60, 50, 50, robotSsa, robotSaa);
+			g.fillArc(90, 120,50,50,robotWsa,robotWaa);
+			g.fillArc(90, 150, 50, 50, robotNsa, robotNaa);
+			
+			int widthmap=width/mapx;	// 격자의 너비
+			int heightmap=height/mapy;	// 격자의 높이
+			int tempx=widthmap;
+			int tempy=heightmap;
+			for(int i=0;i<mapx-1;i++){				
+				g.drawLine(30+tempx,y,30+tempx,y+height);
+				tempx=tempx+widthmap;
+			}
+			for(int i=0;i<mapy-1;i++){				
+				g.drawLine(x,30+tempy,x+width,30+tempy);
+				tempy=tempy+heightmap;
+			}
+			
+		}		
+	}
+	
+	// set 버튼을 눌렀을 경우 이벤트
 	private class ButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			if(e.getSource()==txmap || e.getSource()==txhazard ||
 					e.getSource()==txstart || e.getSource()==txfind ||
-					e.getSource()==btnset){
-			  
-				mapList = txmap.getText();
-				hazardList = txhazard.getText();
-				startList = txstart.getText();
-				findList = txfind.getText();
+					e.getSource()==btnset){		
 				
-				ArrayList<Position> mappositionList = new ArrayList<>();
-				ArrayList<Position> startpositionList = new ArrayList<>();
-				ArrayList<Position> hazardpositionList = new ArrayList<>();
-				ArrayList<Position> findpositionList = new ArrayList<>();
-								
-			    StringTokenizer sthazard = new StringTokenizer(hazardList);
-			    StringTokenizer stfind = new StringTokenizer(findList);
-			    StringTokenizer ststart = new StringTokenizer(startList);
-			    StringTokenizer stmap = new StringTokenizer(mapList);
+				ArrayList<Position> mappositionList = new ArrayList<>();	// 맵 좌표를 저장하는 리스트
+				ArrayList<Position> startpositionList = new ArrayList<>();	// 시작지점 좌료를 저장하는 리스트
+				ArrayList<Position> hazardpositionList = new ArrayList<>();	// 위험지역 좌표를 저장하는 리스트
+				ArrayList<Position> findpositionList = new ArrayList<>();	// 탐색지점 좌료를 저장하는 리스트
+								 
+			    StringTokenizer sthazard = new StringTokenizer(txhazard.getText());
+			    StringTokenizer stfind = new StringTokenizer(txfind.getText());
+			    StringTokenizer ststart = new StringTokenizer(txstart.getText());
+			    StringTokenizer stmap = new StringTokenizer(txmap.getText());
 			    
 			    String tmp = stmap.nextToken();
 			    int mapx = Integer.valueOf(tmp.substring(0,1));
 			    int mapy = Integer.valueOf(tmp.substring(2,tmp.length()));
 			    mappositionList.add(new Position(mapx,mapy));	
-			    
+			    			    
 			    tmp = ststart.nextToken();
-			    int x = Integer.valueOf(tmp.substring(0,1));
-			    int y = Integer.valueOf(tmp.substring(2,tmp.length()));
+			    int startx = Integer.valueOf(tmp.substring(0,1));
+			    int starty = Integer.valueOf(tmp.substring(2,tmp.length()));
+			    startpositionList.add(new Position(startx,starty));
 			    
 			    while(stfind.hasMoreTokens()) {
 			    	tmp = stfind.nextToken();
-			    	x = Integer.valueOf(tmp.substring(0,1));
-			    	y = Integer.valueOf(tmp.substring(2,tmp.length()));
-			    	startpositionList.add(new Position(x,y));			    	
+			    	int findx = Integer.valueOf(tmp.substring(0,1));
+			    	int findy = Integer.valueOf(tmp.substring(2,tmp.length()));
+			    	findpositionList.add(new Position(findx,findy));			    	
 			    }
 			    
 			    while(sthazard.hasMoreTokens()) {
 			        tmp = sthazard.nextToken();
-			        x = Integer.valueOf(tmp.substring(0, 1));
-			        y = Integer.valueOf(tmp.substring(2, tmp.length()));
-			        hazardpositionList.add(new Position(x, y));
+			        int hazardx = Integer.valueOf(tmp.substring(0, 1));
+			        int hazardy = Integer.valueOf(tmp.substring(2, tmp.length()));
+			        hazardpositionList.add(new Position(hazardx, hazardy));
 			    }
-			    
+			    			   
 			    MapManager map = new MapManager();
+			    PathManager path = new PathManager();
 			    map.create(mapx,mapy,hazardpositionList);
-			    
-				txlog.append("지도 크기"+mapList+"\n위험 지점"+hazardList+"\n시작 지점"+startList+"\n탐색 지점"+findList+"\n");
-			}
-		}
-	}
-	
-	public SimSensor getRobot() {
-		return this.robot;
-	}
+			    path.createPath(startx, starty, findpositionList);
+				
+			    MapComponent mapcomponent = new MapComponent(mappositionList.get(0).getX(), mappositionList.get(0).getY());
+			    MapForm.f.setComponent(mapcomponent);
+			 
+				txlog.append("지도 크기"+mappositionList+"\n위험 지점"+hazardpositionList+
+						"\n시작 지점"+startpositionList+"\n탐색 지점"+findpositionList+"\n");
+				// system log에 입력받은 값들을 출력				
+			}			
+		}		
+	}	 
 }
 
 public class MapForm  {
