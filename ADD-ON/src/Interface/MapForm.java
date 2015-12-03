@@ -17,6 +17,7 @@ import java.util.StringTokenizer;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+import MapArtifacts.Map;
 import MapArtifacts.MapManager;
 import MapArtifacts.PathManager;
 import MapArtifacts.Position;
@@ -28,11 +29,14 @@ class MyFrame extends JFrame{
 	private TextArea txlog;
 	private JPanel panelInput, panelMap, panelLog, panelDev;
 	private JScrollPane scrollPane;
-	private ImageIcon imcolorblob, imhazard, imrobotN, imrobotE, imrobotS, imrobotW;
 	private static SimSensor robot;
 	private static int width=400;	// 재난 지역 모델 너비
 	private static int height=350;	// 재난 지역 모델 높이
 	private static int x=30, y=30;	// 재난 지역 모델 좌측 상단 x,y 좌표
+	private static int robotWsa=50,robotWaa=-100;
+	private static int robotSsa=40,robotSaa=100;
+	private static int robotEsa=130,robotEaa=100;
+	private static int robotNsa=-40,robotNaa=-100;
 
 	public MyFrame(){
 		setSize(750,500);
@@ -74,14 +78,6 @@ class MyFrame extends JFrame{
 		btnset = new JButton("set");
 		btnset.addActionListener(listener);	// set 버튼에 listener 달아줌
 		panelInput.add(btnset);
-	    
-		imcolorblob = new ImageIcon("icon/colorblob.pnddg");	// colorblob icon
-		imhazard = new ImageIcon("icon/hazard.jpg");	// hazard icon
-		imrobotN = new ImageIcon("icon/robot_N.jpg");	// 진행방향이 북쪽인 robot icon
-		imrobotE = new ImageIcon("icon/robot_E.jpg");	// 진행방향이 동쪽인 robot icon
-		imrobotS = new ImageIcon("icon/robot_S.jpg");	// 진행방향이 남쪽인 robot icon
-		imrobotW = new ImageIcon("icon/robot_W.jpg");	// 진행방향이 서쪽인 robot icon
-		JLabel lbcolorblob = new JLabel(imcolorblob);
 				
 		panelLog = new JPanel();	// System Log를 배치할 판넬	
 		panelLog.setLayout(new BorderLayout());
@@ -114,12 +110,26 @@ class MyFrame extends JFrame{
 	
 	class MapComponent extends JComponent{
 		int mapx, mapy;
+		Map map = new Map();
+		int[][] mapdata;		
+		
 		public MapComponent(int x, int y) {
 			this.mapx = x;
 			this.mapy = y;
 		}
+		
 		public void paint(Graphics g){
 			g.drawRect(x,y,width,height);
+			g.setColor(Color.BLUE);
+			g.fillOval(30, 30, 30, 30);
+			g.setColor(Color.RED);
+			g.fillOval(60,60,30,30);
+			g.setColor(Color.MAGENTA);
+			g.fillArc(90,90,50,50,robotEsa,robotEaa);
+			g.fillArc(90, 60, 50, 50, robotSsa, robotSaa);
+			g.fillArc(90, 120,50,50,robotWsa,robotWaa);
+			g.fillArc(90, 150, 50, 50, robotNsa, robotNaa);
+			
 			int widthmap=width/mapx;	// 격자의 너비
 			int heightmap=height/mapy;	// 격자의 높이
 			int tempx=widthmap;
@@ -132,7 +142,8 @@ class MyFrame extends JFrame{
 				g.drawLine(x,30+tempy,x+width,30+tempy);
 				tempy=tempy+heightmap;
 			}
-		}
+			
+		}		
 	}
 	
 	// set 버튼을 눌렀을 경우 이벤트
