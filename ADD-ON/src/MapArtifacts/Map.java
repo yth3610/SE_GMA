@@ -16,7 +16,7 @@ public class Map implements Finals {
 	public static final int ERROR = 999;
 
 	// 지도 초기화 하는 함수 ( x : 지도 x축 크기, y : 지도 y축 크기, hazard : 위험지역 )
-	public int[][] create(int x, int y, ArrayList<Position> hazard){
+	public void create(int x, int y, ArrayList<Position> hazard){
 		
 		// 초기화
 		this.x=x;
@@ -47,8 +47,6 @@ public class Map implements Finals {
 			map[hazard.get(i).getX()][hazard.get(i).getY()]=HAZARD;
 			path_map[hazard.get(i).getX()+1][hazard.get(i).getY()+1]=HAZARD;
 		}
-		
-		return map;
 	}
 	
 	// 지도 재설정 하는 함수 (type : 종류 (hazard, color blob중에 뭐인지), xy : 좌표)
