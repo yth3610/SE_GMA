@@ -17,7 +17,9 @@ import java.util.StringTokenizer;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+import MapArtifacts.Map;
 import MapArtifacts.MapManager;
+import MapArtifacts.PathManager;
 import MapArtifacts.Position;
 
 class MyFrame extends JFrame{
@@ -27,11 +29,7 @@ class MyFrame extends JFrame{
 	private TextArea txlog;
 	private JPanel panelInput, panelMap, panelLog, panelDev;
 	private JScrollPane scrollPane;
-<<<<<<< HEAD
 	private static SimSensor robot = new SimSensor();
-=======
-	private static SimSensor robot;
->>>>>>> refs/remotes/origin/Seo
 	private static int width=400;	// 재난 지역 모델 너비
 	private static int height=350;	// 재난 지역 모델 높이
 	private static int x=30, y=30;	// 재난 지역 모델 좌측 상단 x,y 좌표
