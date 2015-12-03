@@ -27,7 +27,11 @@ class MyFrame extends JFrame{
 	private TextArea txlog;
 	private JPanel panelInput, panelMap, panelLog, panelDev;
 	private JScrollPane scrollPane;
+<<<<<<< HEAD
 	private static SimSensor robot = new SimSensor();
+=======
+	private static SimSensor robot;
+>>>>>>> refs/remotes/origin/Seo
 	private static int width=400;	// 재난 지역 모델 너비
 	private static int height=350;	// 재난 지역 모델 높이
 	private static int x=30, y=30;	// 재난 지역 모델 좌측 상단 x,y 좌표
@@ -202,13 +206,14 @@ class MyFrame extends JFrame{
 }
 
 public class MapForm  {
-	private static MyFrame f;
-	
-	public static void main(String[] args) {
-		f = new MyFrame();
-	}
-	
-	public static SimSensor getRobot() {
-		return f.getRobot();
-	}
+
+	   static MyFrame f;
+	   
+	   public static void main(String[] args) {
+	      f = new MyFrame();
+	   }
+	   
+	   public static SimSensor getRobot() {
+	      return f.getRobot();
+	   }
 }
