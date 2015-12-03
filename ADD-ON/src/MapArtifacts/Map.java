@@ -83,7 +83,7 @@ public class Map implements Finals {
 	
 	// 지도 반환 하는 함수 (경로용)
 	public int[][] getPathMap(){
-			return map;
+			return path_map;
 	}
 	
 	// 시작지점, 탐색지점이 위험지점으로 둘러싸인 경우

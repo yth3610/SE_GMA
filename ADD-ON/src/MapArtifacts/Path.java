@@ -7,8 +7,6 @@ public class Path implements Finals{
 	
 	private static ArrayList<Position> path; // 경로저장
 	private static ArrayList<Position> finds; // 탐색 지점
-	private static int start_x; // 시작 지점
-	private static int start_y; // 시작 지점
 	
 	private ArrayList<Position> path2; // 부분 경로
 	private int[][] map; // 지도 저장
@@ -18,15 +16,15 @@ public class Path implements Finals{
 	
 	// 경로 초기화 하는 함수   (start_xy : 출발지점 , finds : 탐색지점)
 	public void createPath(int start_x, int start_y, ArrayList<Position> finds){
-
-		// 초기화
-		this.start_x=start_x;
-		this.start_y=start_y;
+		
+		int x, y, fx, fy;
+		
+		// 탐색지점 초기화
 		this.finds=finds;
 		
-		// 경로 저장 변수
+		// 경로 저장 변수 생성
 		path = new ArrayList<Position>();
-
+		
 		// Map 객체 생성
 		Map p_map=new Map();
 
@@ -38,8 +36,6 @@ public class Path implements Finals{
 		// 지도 받아오기
 		map = p_map.getPathMap();
 
-		int x, y, fx, fy; // 시작지점, 탐색지점
-		
 		// 시작지점 받아오기
 		x=start_x+1; y=start_y+1;
 		
@@ -47,15 +43,16 @@ public class Path implements Finals{
 		path.add(new Position(x-1, y-1));
 		
 		// 위험지역 출력
-		for(int i=1;i<6;i++)
+		for(int i=1;i<map.length-1;i++)
 		{
-			for(int j=1; j<6; j++)
+			for(int j=1; j<map[0].length-1; j++)
 			{
 				if(map[i][j]==HAZARD)
 					System.out.println("(("+(i-1)+","+(j-1)+"))");
 			}
 		}
 
+		// 경로 생성
 		for(int i=0;i<finds.size();i++)
 		{
 			// 탐색지점 받아오기
@@ -74,26 +71,25 @@ public class Path implements Finals{
 		// path 출력
 		for(int i=0;i<path.size(); i++)
 			System.out.println(path.get(i).toString());
-		
-		System.out.println();
-		
-		//p_map.update("Hazard", new Position(3,4));
-
-		// path 출력
-		for(int i=0;i<path.size(); i++)
-			System.out.println(path.get(i).toString());
 	}
 	
-	// 경로 재설정하는 함수 (Position hazard_xy, ArrayList<Position> finds)??
+	// 경로 재설정하는 함수
 	public void updatePath(Position hazard_xy){
 		
-		// 현재위치 받아오기??? hazard 발견한 위치 받아오기????
 		int x, y, fx, fy, hazard, num=0;
+		
+		// 발견된 위험지역 위치 받아오기
 		x=hazard_xy.getX();
 		y=hazard_xy.getY();
 		
 		// 탐색 안한 탐색지점
 		ArrayList<Position> un_finds=new ArrayList<Position>();
+		
+		// Map 객체 생성
+		Map p_map=new Map();
+				
+		// update된 지도 받아오기
+		map = p_map.getPathMap();
 		
 		// 위치 이후의 경로 지우기
 		for(hazard=0;hazard<path.size();hazard++)
@@ -112,21 +108,16 @@ public class Path implements Finals{
 			path.remove(hazard);
 		}
 		
+		// path의 마지막 지점 저장
 		x=path.get(path.size()-1).getX()+1;
 		y=path.get(path.size()-1).getY()+1;
 		
-		System.out.println(x);
-		System.out.println(y);
-		
-		// 경로 생성
+		// path의 마지막 지점부터 경로 생성
 		for(int i=0;i<un_finds.size();i++)
 		{
 			// 탐색지점 받아오기
 			fx=un_finds.get(i).getX()+1;
 			fy=un_finds.get(i).getY()+1;
-			
-			System.out.println(fx);
-			System.out.println(fy);
 			
 			if(create(x, y, fx, fy)==ERROR)
 				return ;
@@ -242,6 +233,9 @@ public class Path implements Finals{
 				System.out.println("BLOCKED ERROR");
 				return ERROR;
 			}
+			
+			// 어떤 탐색지점을 목표로 움직이다가 다른 탐색지점에 도착하는 경우????
+			// 빙 돌아온 경우 중복 제거하기
 		}
 		return OK;
 	}
