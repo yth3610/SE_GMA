@@ -125,6 +125,9 @@ public class Path implements Finals{
 			fx=un_finds.get(i).getX()+1;
 			fy=un_finds.get(i).getY()+1;
 			
+			System.out.println(fx);
+			System.out.println(fy);
+			
 			if(create(x, y, fx, fy)==ERROR)
 				return ;
 			
