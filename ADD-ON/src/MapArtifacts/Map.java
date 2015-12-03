@@ -81,8 +81,11 @@ public class Map implements Finals {
 			; // 둘러싸인 경우
 	}
 	
-	// 지도 반환 하는 함수 (경로용)
-	public int[][] getPathMap(){
+	// 지도 반환 하는 함수 (0 : 일반지도 1 : 경로용)
+	public int[][] getMap(int i){
+		if(i==0)
+			return map;
+		else
 			return path_map;
 	}
 	

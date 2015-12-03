@@ -34,7 +34,7 @@ public class Path implements Finals{
 			p_map.update("Find", finds.get(i));
 		
 		// 지도 받아오기
-		map = p_map.getPathMap();
+		map = p_map.getMap(1);
 
 		// 시작지점 받아오기
 		x=start_x+1; y=start_y+1;
@@ -89,7 +89,7 @@ public class Path implements Finals{
 		Map p_map=new Map();
 				
 		// update된 지도 받아오기
-		map = p_map.getPathMap();
+		map = p_map.getMap(1);
 		
 		// 위치 이후의 경로 지우기
 		for(hazard=0;hazard<path.size();hazard++)
