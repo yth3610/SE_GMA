@@ -1,21 +1,38 @@
 package RobotMovement;
 
-public class RobotMovementInterface {
+import Interface.MapForm;
 
-	public RobotMovementInterface(String move) {
+public class RobotMovementInterface {
+	
+	private String movement;
+	
+	public RobotMovementInterface() {
 
 	}
 	
 	public void moveRobot(String move) {
-		
+		switch(move) {
+		case "+x":
+			MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX() + 1,
+					MapForm.getRobot().positionSensor().getY());
+			break;
+		case "-y":
+			MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX(),
+					MapForm.getRobot().positionSensor().getY() - 1);
+			break;
+		case "-x":
+			MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX() - 1,
+					MapForm.getRobot().positionSensor().getY());
+			break;
+		case "+y":
+			MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX(),
+					MapForm.getRobot().positionSensor().getY() + 1);
+			break;
+		}
 	}
-	/*
+
 	public void turnRobot(String move) {
-		//this.direction++;
-		//if(this.direction == 5) { //direction이 범위를 벗어날 경우 이를 보정
-		//	this.direction = this.direction % 4;
-		//}
+		MapForm.getRobot().setDirection(Integer.valueOf(move));;
 	}
-	*/
 }
 

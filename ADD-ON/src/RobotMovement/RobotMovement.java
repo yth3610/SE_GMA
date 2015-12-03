@@ -6,18 +6,19 @@ import MapArtifacts.Position;
 public class RobotMovement implements Finals {
 	private Position currentPosition, nextPosition;
 	private String movement;
+	private RobotMovementInterface RMI;
 	
 	public RobotMovement() {
-		
+		RMI = new RobotMovementInterface();
 	}
 	
-	public String createMovement() { //nextPosition을 바탕으로 Movement 생성
+	public void createMovement() { //nextPosition을 바탕으로 Movement 생성
 		if(currentPosition.getDirection() == nextPosition.getDirection())
 			//현재위치의 방향과 다음위치의 방향이 같은 경우
-			return "go";
+			movement = "go";
 		else { 	//방향이 다른경우 시계방향으로 몇번 움직여야 하는지 Return
 			int turn = (nextPosition.getDirection() + currentPosition.getDirection()) % 4;
-			return String.valueOf(turn);
+			movement = String.valueOf(turn);
 		}
 	}
 	
@@ -39,9 +40,12 @@ public class RobotMovement implements Finals {
 			default:
 					break;
 			}
+			RMI.moveRobot(movement);
 		}
-		else //방향을 바꾸는 경우
+		else { //방향을 바꾸는 경우
 			movement = move;
+			RMI.turnRobot(movement);
+		}
 	}
 	
 	public boolean verifyMovement() { //Robot의 움직임 확인
