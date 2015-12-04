@@ -41,7 +41,7 @@ public class Path implements Finals{
 		// 시작지점 저장
 		path.add(new Position(x-1, y-1));
 		
-		// 위험지역 출력
+		//// 위험지역 출력
 		for(int i=1;i<map.length-1;i++)
 		{
 			for(int j=1; j<map[0].length-1; j++)
@@ -64,14 +64,14 @@ public class Path implements Finals{
 				if(create(x, y, fx, fy)==ERROR)
 					return ;
 			
-				for(int j=0; j<path2.size(); j++)
+				for(int j=1; j<path2.size(); j++)
 					path.add(path2.get(j));
 			
 				x=fx; y=fy;
 			}
 		}
 		
-		// path 출력
+		//// path 출력
 		for(int i=0;i<path.size(); i++)
 			System.out.println(path.get(i).toString());
 	}
@@ -101,12 +101,12 @@ public class Path implements Finals{
 				break;
 		}
 		num=path.size()-hazard;
-		for(int j=0; j<num; j++)
+		for(int i=0; i<num; i++)
 		{
-			for(int q=0; q<finds.size(); q++)
+			for(int j=0; j<finds.size(); j++)
 			{
-				if(finds.get(q).getX()==path.get(hazard).getX() && finds.get(q).getY()==path.get(hazard).getY())
-					un_finds.add(new Position(finds.get(q).getX(), finds.get(q).getY()));
+				if(finds.get(j).getX()==path.get(hazard).getX() && finds.get(j).getY()==path.get(hazard).getY())
+					un_finds.add(new Position(finds.get(j).getX(), finds.get(j).getY()));
 			}
 			path.remove(hazard);
 		}
@@ -128,7 +128,7 @@ public class Path implements Finals{
 				if(create(x, y, fx, fy)==ERROR)
 					return ;
 			
-				for(int j=0; j<path2.size(); j++)
+				for(int j=1; j<path2.size(); j++)
 					path.add(path2.get(j));
 			
 				x=fx; y=fy;
@@ -162,6 +162,10 @@ public class Path implements Finals{
 		
 		// 초기화
 		path2 = new ArrayList<Position>();
+		
+		// 출발지점 저장
+		path2.add(new Position(x-1, y-1));
+		n_path[x][y]=end++;
 		
 		while(true)
 		{
