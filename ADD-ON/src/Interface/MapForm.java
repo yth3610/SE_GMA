@@ -153,9 +153,9 @@ class MyFrame extends JFrame{
 						g.setColor(Color.RED);
 						g.fillOval(15+widthmap*i,15+heightmap*j,30,30);	// 빨간원을 그린다
 					}
-					if(mapdata[i][j]==FIND){	// 탐색 지점에 로봇을 위치시킨다
+					if(mapdata[i][j]==START){	// 탐색 지점에 로봇을 위치시킨다
 						g.setColor(Color.MAGENTA);
-						g.fillArc(15+widthmap*i,15+heightmap*j,50,50,robotEsa,robotEaa);
+						g.fillArc(20+widthmap*i,10+heightmap*j,50,50,robotEsa,robotEaa);
 					}
 				}
 			}
