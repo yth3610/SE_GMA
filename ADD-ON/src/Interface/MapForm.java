@@ -22,7 +22,7 @@ import MapArtifacts.MapManager;
 import MapArtifacts.PathManager;
 import MapArtifacts.Position;
 import Interface.Finals;
-	
+
 class MyFrame extends JFrame{
 	private JTextField txmap,txhazard,txstart,txfind;
 	private JButton btnset;
@@ -30,7 +30,7 @@ class MyFrame extends JFrame{
 	private TextArea txlog;
 	private JPanel panelInput, panelMap, panelLog, panelDev;
 	private JScrollPane scrollPane;
-	private static SimSensor robot;
+	private static SimSensor robot = new SimSensor();
 	private static int width=400;	// 재난 지역 모델 너비
 	private static int height=350;	// 재난 지역 모델 높이
 	private static int x=30, y=30;	// 재난 지역 모델 좌측 상단 x,y 좌표
@@ -227,6 +227,7 @@ class MyFrame extends JFrame{
 }
 
 public class MapForm  {
+
 	   static MyFrame f;
 	   
 	   public static void main(String[] args) {

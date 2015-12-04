@@ -103,4 +103,3 @@ public class Map implements Finals {
 		return OK;
 	}
 }
-

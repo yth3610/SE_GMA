@@ -1,6 +1,7 @@
 package RobotMovement;
 
 import Interface.MapForm;
+import MapArtifacts.Position;
 
 public class RobotMovementInterface {
 	
@@ -10,7 +11,7 @@ public class RobotMovementInterface {
 
 	}
 	
-	public void moveRobot(String move) {
+	public Position moveRobot(String move) {
 		switch(move) {
 		case "+x":
 			MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX() + 1,
@@ -29,6 +30,7 @@ public class RobotMovementInterface {
 					MapForm.getRobot().positionSensor().getY() + 1);
 			break;
 		}
+		return MapForm.getRobot().positionSensor();
 	}
 
 	public void turnRobot(String move) {
