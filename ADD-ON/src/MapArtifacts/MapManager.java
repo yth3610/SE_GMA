@@ -16,9 +16,4 @@ public class MapManager {
 	public void update(String type, Position xy){
 		map.update(type, xy);
 	}
-	
-	// 지도 출력...??? (시퀸스 잘못 그린 것 같다 Handling map)
-	public void print(){
-		
-	}
 }

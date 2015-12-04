@@ -7,7 +7,6 @@ public class Path implements Finals{
 	
 	private static ArrayList<Position> path; // 경로저장
 	private static ArrayList<Position> finds; // 탐색 지점
-	
 	private ArrayList<Position> path2; // 부분 경로
 	private int[][] map; // 지도 저장
 	
@@ -59,13 +58,17 @@ public class Path implements Finals{
 			fx=finds.get(i).getX()+1;
 			fy=finds.get(i).getY()+1;
 			
-			if(create(x, y, fx, fy)==ERROR)
-				return ;
+			// 방문한 탐색지점이 아닌 경우
+			if(visitedFinds(fx, fy)>0)
+			{
+				if(create(x, y, fx, fy)==ERROR)
+					return ;
 			
-			for(int j=0; j<path2.size(); j++)
-				path.add(path2.get(j));
+				for(int j=0; j<path2.size(); j++)
+					path.add(path2.get(j));
 			
-			x=fx; y=fy;
+				x=fx; y=fy;
+			}
 		}
 		
 		// path 출력
@@ -91,7 +94,7 @@ public class Path implements Finals{
 		// update된 지도 받아오기
 		map = p_map.getMap(1);
 		
-		// 위치 이후의 경로 지우기
+		// 위치 이후의 경로 지우기, 탐색 안한 탐색지점 un_finds에 저장
 		for(hazard=0;hazard<path.size();hazard++)
 		{
 			if( x==path.get(hazard).getX() && y==path.get(hazard).getY())
@@ -119,13 +122,17 @@ public class Path implements Finals{
 			fx=un_finds.get(i).getX()+1;
 			fy=un_finds.get(i).getY()+1;
 			
-			if(create(x, y, fx, fy)==ERROR)
-				return ;
+			// 방문한 탐색지점이 아닌 경우
+			if(visitedFinds(fx, fy)>0)
+			{
+				if(create(x, y, fx, fy)==ERROR)
+					return ;
 			
-			for(int j=0; j<path2.size(); j++)
-				path.add(path2.get(j));
+				for(int j=0; j<path2.size(); j++)
+					path.add(path2.get(j));
 			
-			x=fx; y=fy;
+				x=fx; y=fy;
+			}
 		}
 	}
 	
@@ -165,9 +172,9 @@ public class Path implements Finals{
 					y++;
 				else if(fy<y && n_path[x][y-1]==0)
 					y--;
-				else if(fx>x && n_path[x+1][y]==0)
+				else if(fx>=x && n_path[x+1][y]==0)
 					x++;
-				else if(fx<x && n_path[x-1][y]==0)
+				else if(fx<=x && n_path[x-1][y]==0)
 					x--;
 				else 
 					move = false;
@@ -178,9 +185,9 @@ public class Path implements Finals{
 					x++;
 				else if(fx<x && n_path[x-1][y]==0)
 					x--;
-				else if(fy>y && n_path[x][y+1]==0)
+				else if(fy>=y && n_path[x][y+1]==0)
 					y++;
-				else if(fy<y && n_path[x][y-1]==0)
+				else if(fy<=y && n_path[x][y-1]==0)
 					y--;
 				else 
 					move = false;
@@ -215,27 +222,25 @@ public class Path implements Finals{
 				return ERROR;
 			}
 			
-			move = true; // 초기화
-			path2.add(new Position(x-1, y-1)); // 경로 저장
-			
-			// 방문 순서 저장
-			n_path[x][y]=end++;
-			
-			if(fx==x && fy==y) // 탐색지점 도착한 경우
-			{
-				x=fx;
-				y=fy;
-				break;
-			}
-			
-			if(end==ERROR) // 경로이동 횟수가 999이상이 되면 위험지역으로 둘러싸였다고 판단하여 종료한다.
+			if(end==99) // 경로이동 횟수가 99이상이 되면 위험지역으로 둘러싸였다고 판단하여 종료한다.
 			{
 				System.out.println("BLOCKED ERROR");
 				return ERROR;
 			}
 			
-			// 어떤 탐색지점을 목표로 움직이다가 다른 탐색지점에 도착하는 경우????
-			// 빙 돌아온 경우 중복 제거하기
+			move = true; // 초기화
+			
+			System.out.println(" (( "+(x-1)+","+(y-1)+"))");
+			
+			// 빙 돌아온 경우 중복 제거하고 아닌 경우 경로저장
+			if(overlapPath(x-1, y-1)>0)
+				path2.add(new Position(x-1, y-1)); // 경로 저장
+			
+			// 방문 순서 저장
+			n_path[x][y]=end++;
+			
+			if(fx==x && fy==y) // 탐색지점 도착한 경우
+				break;
 		}
 		return OK;
 	}
@@ -260,5 +265,35 @@ public class Path implements Finals{
 			return SOUTH;
 		else
 			return ERROR;
+	}
+	
+	// 다른 탐색지점을 방문하는 중에 방문한 탐색지점일 경우 넘어가도록 하기위한 함수
+	private int visitedFinds(int fx, int fy){
+		for(int i=0; i<path.size(); i++)
+		{
+			if(fx==path.get(i).getX() && fy==path.get(i).getY())
+				return 0;
+		}
+		return 1;
+	}
+	
+	// 한 바퀴 삥 돈 경로 있는 경우
+	private int overlapPath(int x, int y){
+		int first=-1;
+		
+		for(int i=0; i<path2.size(); i++)
+		{
+			if(path2.get(i).getX()==x && path2.get(i).getY()==y)
+				first=i;
+		}
+		
+		if(first<0)
+			return 1; // 없는 경우
+
+		for(int i=path2.size()-1; i>first; i--)
+			path2.remove(i);
+		
+		return 0;
+		
 	}
 }
