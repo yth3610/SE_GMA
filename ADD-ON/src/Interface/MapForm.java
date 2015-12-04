@@ -21,6 +21,7 @@ import MapArtifacts.Map;
 import MapArtifacts.MapManager;
 import MapArtifacts.PathManager;
 import MapArtifacts.Position;
+import Interface.Finals;
 	
 class MyFrame extends JFrame{
 	private JTextField txmap,txhazard,txstart,txfind;
@@ -37,6 +38,7 @@ class MyFrame extends JFrame{
 	private static int robotSsa=40,robotSaa=100;
 	private static int robotEsa=130,robotEaa=100;
 	private static int robotNsa=-40,robotNaa=-100;
+	private int[][] mapdata= new int[5][5];
 
 	public MyFrame(){
 		setSize(750,500);
@@ -45,6 +47,7 @@ class MyFrame extends JFrame{
 		
 		ButtonListener listener = new ButtonListener();
 		
+//		mapdata[0][0] = 0;
 		sp1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT); // 상하 분할
 		sp1.setDividerLocation(40);	// 자르는 위치 높이 40에서 시작
 		
@@ -108,10 +111,8 @@ class MyFrame extends JFrame{
 	      return this.robot;
 	}
 	
-	class MapComponent extends JComponent{
-		int mapx, mapy;
-		Map map = new Map();
-		int[][] mapdata;		
+	class MapComponent extends JComponent implements Finals{
+		int mapx = 1, mapy = 1;
 		
 		public MapComponent(int x, int y) {
 			this.mapx = x;
@@ -120,29 +121,41 @@ class MyFrame extends JFrame{
 		
 		public void paint(Graphics g){
 			g.drawRect(x,y,width,height);
-			g.setColor(Color.BLUE);
-			g.fillOval(30, 30, 30, 30);
-			g.setColor(Color.RED);
-			g.fillOval(60,60,30,30);
+			/*
 			g.setColor(Color.MAGENTA);
 			g.fillArc(90,90,50,50,robotEsa,robotEaa);
 			g.fillArc(90, 60, 50, 50, robotSsa, robotSaa);
 			g.fillArc(90, 120,50,50,robotWsa,robotWaa);
 			g.fillArc(90, 150, 50, 50, robotNsa, robotNaa);
-			
+			*/
 			int widthmap=width/mapx;	// 격자의 너비
 			int heightmap=height/mapy;	// 격자의 높이
 			int tempx=widthmap;
 			int tempy=heightmap;
-			for(int i=0;i<mapx-1;i++){				
+			
+			for(int i=0;i<mapx-1;i++){	// x축 라인을 그린다
 				g.drawLine(30+tempx,y,30+tempx,y+height);
 				tempx=tempx+widthmap;
 			}
-			for(int i=0;i<mapy-1;i++){				
+			
+			for(int i=0;i<mapy-1;i++){	// y축 라인을 그린다			
 				g.drawLine(x,30+tempy,x+width,30+tempy);
 				tempy=tempy+heightmap;
 			}
 			
+			for(int i=0;i<=mapx;i++){
+				for(int j=0;j<=mapy;j++){
+					if(mapdata[i][j]==COLORBLOB){	// 좌표값이 ColorBlob인 경우
+						g.setColor(Color.BLUE);
+						g.fillOval(30+widthmap*i,30+heightmap*j,30,30);	// 파란원을 그린다
+					}
+					if(mapdata[i][j]==HAZARD){		// 좌표값이 hazard인 경우
+						g.setColor(Color.RED);
+						g.fillOval(30+widthmap*i,30+heightmap*j,30,30);	// 빨간원을 그린다
+					}
+				}
+			}
+					
 		}		
 	}
 	
@@ -191,7 +204,17 @@ class MyFrame extends JFrame{
 			    PathManager path = new PathManager();
 			    map.create(mapx,mapy,hazardpositionList);
 			    path.createPath(startx, starty, findpositionList);
-				
+			    Map mapmap = new Map();		
+				mapdata= mapmap.getMap(0);
+				/*
+				for(int i=0; i<mapdata.length; i++)
+				{
+					for(int j=0; j<mapdata[0].length; j++)
+						System.out.print(mapdata[i][j]+" ");
+					System.out.println();	
+					
+				}
+				*/
 			    MapComponent mapcomponent = new MapComponent(mappositionList.get(0).getX(), mappositionList.get(0).getY());
 			    MapForm.f.setComponent(mapcomponent);
 			 
