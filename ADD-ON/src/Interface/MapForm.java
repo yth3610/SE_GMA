@@ -34,10 +34,10 @@ class MyFrame extends JFrame{
 	private static int width=400;	// 재난 지역 모델 너비
 	private static int height=350;	// 재난 지역 모델 높이
 	private static int x=30, y=30;	// 재난 지역 모델 좌측 상단 x,y 좌표
-	private static int robotWsa=50,robotWaa=-100;
-	private static int robotSsa=40,robotSaa=100;
-	private static int robotEsa=130,robotEaa=100;
-	private static int robotNsa=-40,robotNaa=-100;
+	private static int robotWsa=50,robotWaa=-100;	// 로봇이 서쪽을 향하고 있는 경우
+	private static int robotSsa=40,robotSaa=100;	// 로봇이 남쪽을 향하고 있는 경우
+	private static int robotEsa=130,robotEaa=100;	// 로봇이 동쪽을 향하고 있는 경우
+	private static int robotNsa=-40,robotNaa=-100;	// 로봇이 북쪽을 향하고 있는 경우
 	private int[][] mapdata= new int[5][5];
 
 	public MyFrame(){
@@ -147,11 +147,15 @@ class MyFrame extends JFrame{
 				for(int j=0;j<=mapy;j++){
 					if(mapdata[i][j]==COLORBLOB){	// 좌표값이 ColorBlob인 경우
 						g.setColor(Color.BLUE);
-						g.fillOval(30+widthmap*i,30+heightmap*j,30,30);	// 파란원을 그린다
+						g.fillOval(15+widthmap*i,15+heightmap*j,30,30);	// 파란원을 그린다
 					}
 					if(mapdata[i][j]==HAZARD){		// 좌표값이 hazard인 경우
 						g.setColor(Color.RED);
-						g.fillOval(30+widthmap*i,30+heightmap*j,30,30);	// 빨간원을 그린다
+						g.fillOval(15+widthmap*i,15+heightmap*j,30,30);	// 빨간원을 그린다
+					}
+					if(mapdata[i][j]==FIND){	// 탐색 지점에 로봇을 위치시킨다
+						g.setColor(Color.MAGENTA);
+						g.fillArc(15+widthmap*i,15+heightmap*j,50,50,robotEsa,robotEaa);
 					}
 				}
 			}
