@@ -52,11 +52,11 @@ public class SimSensor implements Finals {
 			colorblob[EAST] = true;
 			map[position.getX() + 1][position.getY()] = COLORBLOB;
 		}
-		if(map[position.getX()][position.getY() - 1] == HIDE_COLORBLOB) { //SOUTH(-x) 规氢
+		if(position.getY() != 0 && map[position.getX()][position.getY() - 1] == HIDE_COLORBLOB) { //SOUTH(-x) 规氢
 			colorblob[SOUTH] = true;
 			map[position.getX()][position.getY() - 1] = COLORBLOB;
 		}
-		if(map[position.getX() - 1][position.getY()] == HIDE_COLORBLOB) { //WEST(-x) 规氢
+		if(position.getX() != 0 && map[position.getX() - 1][position.getY()] == HIDE_COLORBLOB) { //WEST(-x) 规氢
 			colorblob[WEST] = true;
 			map[position.getX() - 1][position.getY()] = COLORBLOB;
 		}

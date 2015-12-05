@@ -1,5 +1,6 @@
 package RobotMovement;
 
+import MapArtifacts.Map;
 import MapArtifacts.Path;
 import MapArtifacts.Position;
 import Interface.Finals;
@@ -12,6 +13,7 @@ public class RobotPosition implements Finals{
 	public static int pathCount = 1; //movement count
 	
 	Path path = new Path();
+	Map map = new Map();
 	
 	public RobotPosition () {
 
