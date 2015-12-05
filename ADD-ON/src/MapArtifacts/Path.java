@@ -7,7 +7,7 @@ public class Path implements Finals{
 	
 	private static ArrayList<Position> path; // 경로저장
 	private static ArrayList<Position> finds; // 탐색 지점
-	private ArrayList<Position> path2; // 부분 경로
+	private ArrayList<Position> part_path; // 부분 경로
 	private int[][] map; // 지도 저장
 	
 	public static final int OK = 9;
@@ -28,9 +28,9 @@ public class Path implements Finals{
 		Map p_map=new Map();
 
 		// 시작 지점, 탐색 지점 지도에 저장
-		p_map.update("Start", new Position(start_x, start_y));
+		p_map.updateMap("Start", new Position(start_x, start_y));
 		for(int i=0; i<finds.size(); i++)
-			p_map.update("Find", finds.get(i));
+			p_map.updateMap("Find", finds.get(i));
 		
 		// 지도 받아오기
 		map = p_map.getMap(1);
@@ -64,8 +64,8 @@ public class Path implements Finals{
 				if(create(x, y, fx, fy)==ERROR)
 					return ;
 			
-				for(int j=1; j<path2.size(); j++)
-					path.add(path2.get(j));
+				for(int j=1; j<part_path.size(); j++)
+					path.add(part_path.get(j));
 			
 				x=fx; y=fy;
 			}
@@ -128,8 +128,8 @@ public class Path implements Finals{
 				if(create(x, y, fx, fy)==ERROR)
 					return ;
 			
-				for(int j=1; j<path2.size(); j++)
-					path.add(path2.get(j));
+				for(int j=1; j<part_path.size(); j++)
+					path.add(part_path.get(j));
 			
 				x=fx; y=fy;
 			}
@@ -161,10 +161,10 @@ public class Path implements Finals{
 		}
 		
 		// 초기화
-		path2 = new ArrayList<Position>();
+		part_path = new ArrayList<Position>();
 		
 		// 출발지점 저장
-		path2.add(new Position(x-1, y-1));
+		part_path.add(new Position(x-1, y-1));
 		n_path[x][y]=end++;
 		
 		while(true)
@@ -238,7 +238,7 @@ public class Path implements Finals{
 			
 			// 빙 돌아온 경우 중복 제거하고 아닌 경우 경로저장
 			if(overlapPath(x-1, y-1)>0)
-				path2.add(new Position(x-1, y-1)); // 경로 저장
+				part_path.add(new Position(x-1, y-1)); // 경로 저장
 			
 			// 방문 순서 저장
 			n_path[x][y]=end++;
@@ -285,17 +285,17 @@ public class Path implements Finals{
 	private int overlapPath(int x, int y){
 		int first=-1;
 		
-		for(int i=0; i<path2.size(); i++)
+		for(int i=0; i<part_path.size(); i++)
 		{
-			if(path2.get(i).getX()==x && path2.get(i).getY()==y)
+			if(part_path.get(i).getX()==x && part_path.get(i).getY()==y)
 				first=i;
 		}
 		
 		if(first<0)
 			return 1; // 없는 경우
 
-		for(int i=path2.size()-1; i>first; i--)
-			path2.remove(i);
+		for(int i=part_path.size()-1; i>first; i--)
+			part_path.remove(i);
 		
 		return 0;
 		

@@ -22,6 +22,7 @@ import MapArtifacts.Map;
 import MapArtifacts.MapManager;
 import MapArtifacts.PathManager;
 import MapArtifacts.Position;
+import RobotMovement.RobotPosition;
 import RobotMovement.RobotPositionManager;
 import Interface.Finals;
 
@@ -40,10 +41,11 @@ class MyFrame extends JFrame{
    private static int robotSsa=40,robotSaa=100;   // 로봇이 남쪽을 향하고 있는 경우
    private static int robotEsa=130,robotEaa=100;   // 로봇이 동쪽을 향하고 있는 경우
    private static int robotNsa=-40,robotNaa=-100;   // 로봇이 북쪽을 향하고 있는 경우
-   private int[][] mapdata= new int[5][5];
+   private int[][] mapdata = new int[5][5];
    private ArrayList<Position> hazardpositionList = new ArrayList<>();   // 위험지역 좌표를 저장하는 리스트
    private ArrayList<Position> findpositionList = new ArrayList<>();   // 탐색지점 좌료를 저장하는 리스트
-   private Position startposition, mapposition;
+   private Position startposition, mapposition, robotposition;
+   public MapComponent mapcomponent;
 
    public MyFrame(){
       setSize(750,500);
@@ -115,23 +117,80 @@ class MyFrame extends JFrame{
          return this.robot;
    }
    
+   public Position getMapPosition() {
+	   return this.mapposition;
+   }
+   
    class MapComponent extends JComponent implements Finals{
       int mapx = 1, mapy = 1;
-      
+      int robotx =1, roboty=1;
       public MapComponent(int x, int y) {
          this.mapx = x;
          this.mapy = y;
       }
       
+      public void robotRepaint(){
+    	  repaint();
+      }
+      
+      public void repaint(Graphics g) {
+          g.drawRect(x,y,width,height);
+          repaint();
+          int widthmap=width/mapx;   // 격자의 너비
+          int heightmap=height/mapy;   // 격자의 높이
+          int tempx=widthmap;
+          int tempy=heightmap;
+          
+          for(int i=0;i<mapx-1;i++){   // x축 라인을 그린다
+             g.drawLine(30+tempx,y,30+tempx,y+height);
+             tempx=tempx+widthmap;
+          }
+          
+          for(int i=0;i<mapy-1;i++){   // y축 라인을 그린다         
+             g.drawLine(x,30+tempy,x+width,30+tempy);
+             tempy=tempy+heightmap;
+          }
+          
+          for(int i=0;i<=mapx;i++){
+             for(int j=0;j<=mapy;j++){
+                if(mapdata[i][j]==COLORBLOB){   // 좌표값이 ColorBlob인 경우
+                   g.setColor(Color.BLUE);
+                   g.fillOval(15+widthmap*i,365-heightmap*j,30,30);   // 파란원을 그린다
+                }
+                if(mapdata[i][j]==HAZARD){      // 좌표값이 hazard인 경우
+                   g.setColor(Color.RED);
+                   g.fillOval(15+widthmap*i,365-heightmap*j,30,30);   // 빨간원을 그린다
+                }
+                if(mapdata[i][j]==FIND){
+                   g.setColor(Color.ORANGE);
+                   g.fillRect(15+widthmap*i,365-heightmap*j,30,30);            
+                }
+             }
+          }
+    	  
+    	  switch(robot.positionSensor().getDirection()) {
+    	  case EAST :
+              g.fillArc(20+widthmap*robot.positionSensor().getX(),
+            		  355-heightmap*robot.positionSensor().getY(),50,50,robotEsa,robotEaa);
+              break;
+    	  case SOUTH:
+              g.fillArc(20+widthmap*robot.positionSensor().getX(),
+            		  355-heightmap*robot.positionSensor().getY(),50,50,robotSsa,robotSaa);
+              break;
+    	  case WEST:
+              g.fillArc(20+widthmap*robot.positionSensor().getX(),
+            		  355-heightmap*robot.positionSensor().getY(),50,50,robotWsa,robotWaa);
+              break;
+    	  case NORTH:
+              g.fillArc(20+widthmap*robot.positionSensor().getX(),
+            		  355-heightmap*robot.positionSensor().getY(),50,50,robotNsa,robotNaa);
+              break;
+    	  }
+      }
+      
       public void paint(Graphics g){
          g.drawRect(x,y,width,height);
-         /*
-         g.setColor(Color.MAGENTA);
-         g.fillArc(90,90,50,50,robotEsa,robotEaa);
-         g.fillArc(90, 60, 50, 50, robotSsa, robotSaa);
-         g.fillArc(90, 120,50,50,robotWsa,robotWaa);
-         g.fillArc(90, 150, 50, 50, robotNsa, robotNaa);
-         */
+         repaint();
          int widthmap=width/mapx;   // 격자의 너비
          int heightmap=height/mapy;   // 격자의 높이
          int tempx=widthmap;
@@ -161,9 +220,12 @@ class MyFrame extends JFrame{
                   g.setColor(Color.MAGENTA);
                   g.fillArc(20+widthmap*i,355-heightmap*j,50,50,robotEsa,robotEaa);
                }
+               if(mapdata[i][j]==FIND){
+                  g.setColor(Color.ORANGE);
+                  g.fillRect(15+widthmap*i,365-heightmap*j,30,30);            
+               }
             }
-         }
-               
+         }               
       }      
    }
    
@@ -174,6 +236,9 @@ class MyFrame extends JFrame{
                e.getSource()==txstart || e.getSource()==txfind ||
                e.getSource()==btnset){      
             
+            repaint();
+            
+            try{
             int mapx = Integer.valueOf(txmap.getText().substring(0,txmap.getText().indexOf(",")));
                int mapy = Integer.valueOf(txmap.getText().substring(txmap.getText().indexOf(",")+1,txmap.getText().length()));
                mapposition = new Position(mapx,mapy); 
@@ -183,7 +248,7 @@ class MyFrame extends JFrame{
                startposition = new Position(startx,starty);
                robot = new SimSensor(startx, starty);
                
-               StringTokenizer stfind = new StringTokenizer(txfind.getText());
+               StringTokenizer stfind = new StringTokenizer(txfind.getText());               
                 while(stfind.hasMoreTokens()) {
                    String tmp = stfind.nextToken();
                    int findx = Integer.valueOf(tmp.substring(0,1));
@@ -197,28 +262,39 @@ class MyFrame extends JFrame{
                     int hazardx = Integer.valueOf(tmp.substring(0, 1));
                     int hazardy = Integer.valueOf(tmp.substring(2, tmp.length()));
                     hazardpositionList.add(new Position(hazardx, hazardy));
-                }
+               }
                       
              MapManager map = new MapManager();
              PathManager path = new PathManager();
-             map.create(mapx,mapy,hazardpositionList);
+             map.createMap(mapx,mapy,hazardpositionList);
              path.createPath(startx, starty, findpositionList);
              Map mapmap = new Map();      
             mapdata= mapmap.getMap(0);
+            
+            RobotPosition rp = new RobotPosition();
          
              MapComponent mapcomponent = new MapComponent(mapposition.getX(), mapposition.getY());
              MapForm.f.setComponent(mapcomponent);
           
             txlog.append("지도 크기"+mapposition+"\n위험 지점"+hazardpositionList+
                   "\n시작 지점"+startposition+"\n탐색 지점"+findpositionList+"\n");
-            // system log에 입력받은 값들을 출력
-            RobotPositionManager rpm = new RobotPositionManager();
-         }         
-      }      
+            // system log에 입력받은 값들을 출력            
+            }
+            
+            catch(ArrayIndexOutOfBoundsException e1){
+               txlog.append("지도의 범위를 벗어납니다"+"\n");
+            }
+            /*
+            catch(){
+               txlog.append("경로를 생성할 수 없습니다"+"\n");
+            }
+            */
+         }
+      }
    }    
 }
 
-public class MapForm  {
+public class MapForm extends JFrame  {
 
       static MyFrame f;
       
@@ -234,12 +310,8 @@ public class MapForm  {
          f = new MyFrame();
       }
       
-      public void enterPosition(){
-         
-      }
-      
-      public void verifyPosition(){
-         
+      public static Position getMapPosition() {
+    	  return f.getMapPosition();
       }
       
       public void update(){

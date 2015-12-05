@@ -10,18 +10,15 @@ public class Map implements Finals {
 	private static int[][] map; // 지도저장
 	private static int x, y;
 
-	private ArrayList<Position> hazard;
-
 	public static final int OK = 9;
 	public static final int ERROR = 999;
 
 	// 지도 초기화 하는 함수 ( x : 지도 x축 크기, y : 지도 y축 크기, hazard : 위험지역 )
-	public void create(int x, int y, ArrayList<Position> hazard){
+	public void createMap(int x, int y, ArrayList<Position> hazard){
 		
 		// 초기화
 		this.x=x;
 		this.y=y;
-		this.hazard=hazard;
 		
 		Random rand = new Random();
 		path_map=new int[x+3][y+3];
@@ -50,7 +47,7 @@ public class Map implements Finals {
 	}
 	
 	// 지도 재설정 하는 함수 (type : 종류 (hazard, color blob중에 뭐인지), xy : 좌표)
-	public void update(String type, Position xy){
+	public void updateMap(String type, Position xy){
 		
 		Path m_path = new Path();
 		
@@ -89,7 +86,7 @@ public class Map implements Finals {
 	}
 	
 	// 시작지점, 탐색지점이 위험지점으로 둘러싸인 경우
-	public int confirm(){
+	private int confirm(){
 		for(int i=1; i<x+2; i++) 
 		{
 			for(int j=1; j<y+2; j++)
