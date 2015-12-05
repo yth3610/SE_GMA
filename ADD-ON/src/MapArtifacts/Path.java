@@ -28,9 +28,9 @@ public class Path implements Finals{
 		Map p_map=new Map();
 
 		// 시작 지점, 탐색 지점 지도에 저장
-		p_map.update("Start", new Position(start_x, start_y));
+		p_map.updateMap("Start", new Position(start_x, start_y));
 		for(int i=0; i<finds.size(); i++)
-			p_map.update("Find", finds.get(i));
+			p_map.updateMap("Find", finds.get(i));
 		
 		// 지도 받아오기
 		map = p_map.getMap(1);
