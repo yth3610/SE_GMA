@@ -10,8 +10,6 @@ public class Map implements Finals {
 	private static int[][] map; // 지도저장
 	private static int x, y;
 
-	private ArrayList<Position> hazard;
-
 	public static final int OK = 9;
 	public static final int ERROR = 999;
 
@@ -21,7 +19,6 @@ public class Map implements Finals {
 		// 초기화
 		this.x=x;
 		this.y=y;
-		this.hazard=hazard;
 		
 		Random rand = new Random();
 		path_map=new int[x+3][y+3];
