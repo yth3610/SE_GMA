@@ -9,26 +9,19 @@ import java.util.ArrayList;
 public class RobotPosition implements Finals{
 	private Position currentPosition, nextPosition;
 	private ArrayList<Position> pathList;
-	private static int pathCount = 1; //movement count
+	public static int pathCount = 1; //movement count
 	
 	Path path = new Path();
 	
 	public RobotPosition () {
-		//임시
-		currentPosition = new Position(1, 1);
-		pathList = new ArrayList<>();
-		pathList.add(new Position(1, 1));
-		pathList.add(new Position(1, 2));
-		pathList.add(new Position(2, 2));
-		pathList.add(new Position(2, 1));
-		
-		//연동해서 쓸 부분
+
 		//RobotPositionManager로 부터 robot의 현재위치를 가져온다.
-		//currentPosition = RobotPositionManager.getPosition();
-		//pathList = path.getPath();
-		//for(int i = 0; i < pathList.size(); i++)
-		//	this.createNextPosition(pathList.get(i));
-		
+		currentPosition = RobotPositionManager.getPosition();
+		pathList = path.getPath();
+		while(pathCount < pathList.size()) { //pathList.size()
+			this.createNextPosition(pathList.get(pathCount));
+		}
+		System.out.println("탐색종료");
 	}
 	
 	//path와 currentPositin을 비교하여 다음 위치를 만드는 method
@@ -58,13 +51,9 @@ public class RobotPosition implements Finals{
 			nextPosition.setY(currentPosition.getY() - 1);
 			nextPosition.setDirection(SOUTH); //SOUTH(-y)
 		}
+		System.out.println(pathCount + " next : " + nextPosition);
 		RobotMovement rm = new RobotMovement(currentPosition, nextPosition);
-	}
-	
-	//임시
-	public void setCurrentPosition(int x, int y) {
-		this.currentPosition.setX(x);
-		this.currentPosition.setY(y);
+		
 	}
 	
 	public Position getNextPosition() {
@@ -73,15 +62,5 @@ public class RobotPosition implements Finals{
 	
 	public static void plusCount() {
 		pathCount++;
-	}
-	
-	public static void main(String[] args) {
-
-		RobotPosition r = new RobotPosition();
-		//r.createNextPosition();
-		System.out.println(r.getNextPosition().toString());
-		r.setCurrentPosition(1, 2);
-		//r.createNextPosition();
-		System.out.println(r.getNextPosition().toString());
 	}
 }
