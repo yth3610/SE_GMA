@@ -30,11 +30,19 @@ public class RobotMovementInterface {
 					MapForm.getRobot().positionSensor().getY() + 1);
 			break;
 		}
+		System.out.println(RobotPosition.pathCount + "움직임 수행 후 위치 : " + MapForm.getRobot().positionSensor());
 		return MapForm.getRobot().positionSensor();
 	}
 
 	public void turnRobot(String move) {
-		MapForm.getRobot().setDirection(Integer.valueOf(move));;
+		int turn = Integer.valueOf(move);
+		int direction = MapForm.getRobot().positionSensor().getDirection();
+		for(int i = 1; i <= turn; i++) {
+			direction += 1;
+			if(direction > 4) //방향값이 NORTH(4)를 넘는경우 보정
+				direction %= 4;
+		}
+		MapForm.getRobot().setDirection(direction);
 	}
 }
 

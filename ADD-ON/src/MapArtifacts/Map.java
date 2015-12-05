@@ -75,8 +75,9 @@ public class Map implements Finals {
 				break;
 		}
 		
+		// 둘러싸인 경우 system log에 뜨도록 알리기
 		if(confirm()==ERROR)
-			; // 둘러싸인 경우
+			System.out.println("no path(surrounded hazard)");
 	}
 	
 	// 지도 반환 하는 함수 (0 : 일반지도 1 : 경로용)
@@ -89,13 +90,13 @@ public class Map implements Finals {
 	
 	// 시작지점, 탐색지점이 위험지점으로 둘러싸인 경우
 	public int confirm(){
-		for(int i=1; i<x+1; i++) 
+		for(int i=1; i<x+2; i++) 
 		{
-			for(int j=1; j<y+1; j++)
+			for(int j=1; j<y+2; j++)
 			{
-				if(map[i][j]==FIND || map[i][j]==START)
+				if(path_map[i][j]==FIND || path_map[i][j]==START)
 				{
-					if(map[i+1][j]==HAZARD && map[i-1][j]==HAZARD && map[i][j+1]==HAZARD && map[i][j-1]==HAZARD)
+					if(path_map[i+1][j]==HAZARD && path_map[i-1][j]==HAZARD && path_map[i][j+1]==HAZARD && path_map[i][j-1]==HAZARD)
 						return ERROR;
 				}
 			}

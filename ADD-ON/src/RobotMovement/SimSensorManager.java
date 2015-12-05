@@ -19,11 +19,11 @@ public class SimSensorManager {
 		return position;
 	}
 	
-	public static void setPosition(Position position) { //robot의 position을 설정하는 method
+	public void setPosition(Position position) { //robot의 position을 설정하는 method
 		MapForm.getRobot().setPosition(position);
 	}
 	
-	public static void setMap(int[][] map) { //robot이 가지고 있을 map 데이터를 설정하는 method-
+	public void setMap(int[][] map) { //robot이 가지고 있을 map 데이터를 설정하는 method-
 		MapForm.getRobot().setMap(map);
 	}
 }
