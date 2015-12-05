@@ -40,9 +40,10 @@ class MyFrame extends JFrame{
 	private static int robotEsa=130,robotEaa=100;	// 로봇이 동쪽을 향하고 있는 경우
 	private static int robotNsa=-40,robotNaa=-100;	// 로봇이 북쪽을 향하고 있는 경우
 	private int[][] mapdata= new int[5][5];
-	private ArrayList<Position> hazardpositionList = new ArrayList<>();   // 위험지역 좌표를 저장하는 리스트
-	private ArrayList<Position> findpositionList = new ArrayList<>();   // 탐색지점 좌료를 저장하는 리스트
+	private ArrayList<Position> hazardpositionList = new ArrayList<>();	// 위험지역 좌표를 저장하는 리스트
+	private ArrayList<Position> findpositionList = new ArrayList<>();	// 탐색지점 좌료를 저장하는 리스트
 	private Position startposition, mapposition;
+
 
 	public MyFrame(){
 		setSize(750,500);
@@ -50,7 +51,7 @@ class MyFrame extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		ButtonListener listener = new ButtonListener();
-	
+
 		sp1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT); // 상하 분할
 		sp1.setDividerLocation(40);	// 자르는 위치 높이 40에서 시작
 		
@@ -111,7 +112,7 @@ class MyFrame extends JFrame{
 	}
 	
 	public SimSensor getRobot() {
-	      return this.robot;
+	      return MyFrame.robot;
 	}
 	
 	class MapComponent extends JComponent implements Finals{
@@ -150,20 +151,19 @@ class MyFrame extends JFrame{
 				for(int j=0;j<=mapy;j++){
 					if(mapdata[i][j]==COLORBLOB){	// 좌표값이 ColorBlob인 경우
 						g.setColor(Color.BLUE);
-						g.fillOval(15+widthmap*i,365-heightmap*j,30,30);	// 파란원을 그린다
+						g.fillOval(15+widthmap*i,15+heightmap*(mapy-j),30,30);	// 파란원을 그린다
 					}
 					if(mapdata[i][j]==HAZARD){		// 좌표값이 hazard인 경우
 						g.setColor(Color.RED);
-						g.fillOval(15+widthmap*i,365-heightmap*j,30,30);	// 빨간원을 그린다
+						g.fillOval(15+widthmap*i,15+heightmap*(mapy-j),30,30);	// 빨간원을 그린다
 					}
 					if(mapdata[i][j]==START){	// 탐색 지점에 로봇을 위치시킨다
 						g.setColor(Color.MAGENTA);
-						g.fillArc(20+widthmap*i,355-heightmap*j,50,50,robotEsa,robotEaa);
+						g.fillArc(20+widthmap*i,10+heightmap*(mapy-j),50,50,robotEsa,robotEaa);
 					}
 				}
-			}
-					
-		}		
+			}			
+		}
 	}
 	
 	// set 버튼을 눌렀을 경우 이벤트
@@ -171,40 +171,40 @@ class MyFrame extends JFrame{
 		public void actionPerformed(ActionEvent e){
 			if(e.getSource()==txmap || e.getSource()==txhazard ||
 					e.getSource()==txstart || e.getSource()==txfind ||
-					e.getSource()==btnset){		
+					e.getSource()==btnset){			    		   
 				
-				int mapx = Integer.valueOf(txmap.getText().substring(0,txmap.getText().indexOf(",")));
-	            int mapy = Integer.valueOf(txmap.getText().substring(txmap.getText().indexOf(",")+1,txmap.getText().length()));
-	            mapposition = new Position(mapx,mapy); 
-
+			    int mapx = Integer.valueOf(txmap.getText().substring(0,txmap.getText().indexOf(",")));
+			    int mapy = Integer.valueOf(txmap.getText().substring(txmap.getText().indexOf(",")+1,txmap.getText().length()));
+			    mapposition = new Position(mapx,mapy);	
+			    			    
 			    int startx = Integer.valueOf(txstart.getText().substring(0,txstart.getText().indexOf(",")));
-	            int starty = Integer.valueOf(txstart.getText().substring(txstart.getText().indexOf(",")+1,txstart.getText().length()));
-	            startposition = new Position(startx,starty);
-	            robot = new SimSensor(startx, starty);
-	            
-	            StringTokenizer stfind = new StringTokenizer(txfind.getText());
-	             while(stfind.hasMoreTokens()) {
-	                String tmp = stfind.nextToken();
-	                int findx = Integer.valueOf(tmp.substring(0,1));
-	                int findy = Integer.valueOf(tmp.substring(2,tmp.length()));
-	                findpositionList.add(new Position(findx,findy));                
-	             }
-	             
-	             StringTokenizer sthazard = new StringTokenizer(txhazard.getText());
-	             while(sthazard.hasMoreTokens()) {
-	                String tmp = sthazard.nextToken();
-	                 int hazardx = Integer.valueOf(tmp.substring(0, 1));
-	                 int hazardy = Integer.valueOf(tmp.substring(2, tmp.length()));
-	                 hazardpositionList.add(new Position(hazardx, hazardy));
-	             }
-			    		   
+			    int starty = Integer.valueOf(txstart.getText().substring(txstart.getText().indexOf(",")+1,txstart.getText().length()));
+			    startposition = new Position(startx,starty);
+			    robot = new SimSensor(startx, starty);
+			    
+			    StringTokenizer stfind = new StringTokenizer(txfind.getText());
+			    while(stfind.hasMoreTokens()) {
+			    	String tmp = stfind.nextToken();
+			    	int findx = Integer.valueOf(tmp.substring(0,1));
+			    	int findy = Integer.valueOf(tmp.substring(2,tmp.length()));
+			    	findpositionList.add(new Position(findx,findy));			    	
+			    }
+			    
+			    StringTokenizer sthazard = new StringTokenizer(txhazard.getText());
+			    while(sthazard.hasMoreTokens()) {
+			    	String tmp = sthazard.nextToken();
+			        int hazardx = Integer.valueOf(tmp.substring(0, 1));
+			        int hazardy = Integer.valueOf(tmp.substring(2, tmp.length()));
+			        hazardpositionList.add(new Position(hazardx, hazardy));
+			    }
+			    			   
 			    MapManager map = new MapManager();
 			    PathManager path = new PathManager();
 			    map.create(mapx,mapy,hazardpositionList);
 			    path.createPath(startx, starty, findpositionList);
 			    Map mapmap = new Map();		
 				mapdata= mapmap.getMap(0);
-			
+
 			    MapComponent mapcomponent = new MapComponent(mapposition.getX(), mapposition.getY());
 			    MapForm.f.setComponent(mapcomponent);
 			 
@@ -217,7 +217,7 @@ class MyFrame extends JFrame{
 }
 
 public class MapForm  {
-
+ 
 	   static MyFrame f;
 	   
 	   public static void main(String[] args) {
@@ -229,6 +229,7 @@ public class MapForm  {
 	   }
 	   
 	   public void setMapcomponent() {
-	        // f.setMap
-	      }
+
+	        ;// f.setMap
+	   }
 }
