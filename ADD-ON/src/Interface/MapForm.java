@@ -122,15 +122,13 @@ class MyFrame extends JFrame{
 			this.mapy = y;
 		}
 		
+		public void setRobotPosition(Position p){
+			
+		}
+		
 		public void paint(Graphics g){
 			g.drawRect(x,y,width,height);
-			/*
-			g.setColor(Color.MAGENTA);
-			g.fillArc(90,90,50,50,robotEsa,robotEaa);
-			g.fillArc(90, 60, 50, 50, robotSsa, robotSaa);
-			g.fillArc(90, 120,50,50,robotWsa,robotWaa);
-			g.fillArc(90, 150, 50, 50, robotNsa, robotNaa);
-			*/
+	
 			int widthmap=width/mapx;	// 격자의 너비
 			int heightmap=height/mapy;	// 격자의 높이
 			int tempx=widthmap;
@@ -160,6 +158,10 @@ class MyFrame extends JFrame{
 						g.setColor(Color.MAGENTA);
 						g.fillArc(20+widthmap*i,355-heightmap*j,50,50,robotEsa,robotEaa);
 					}
+					if(mapdata[i][j]==FIND){
+						g.setColor(Color.ORANGE);
+						g.fillRect(15+widthmap*i,365-heightmap*j,30,30);				
+					}
 				}
 			}
 					
@@ -173,6 +175,9 @@ class MyFrame extends JFrame{
 					e.getSource()==txstart || e.getSource()==txfind ||
 					e.getSource()==btnset){		
 				
+				repaint();
+				
+				try{
 				int mapx = Integer.valueOf(txmap.getText().substring(0,txmap.getText().indexOf(",")));
 	            int mapy = Integer.valueOf(txmap.getText().substring(txmap.getText().indexOf(",")+1,txmap.getText().length()));
 	            mapposition = new Position(mapx,mapy); 
@@ -182,7 +187,7 @@ class MyFrame extends JFrame{
 	            startposition = new Position(startx,starty);
 	            robot = new SimSensor(startx, starty);
 	            
-	            StringTokenizer stfind = new StringTokenizer(txfind.getText());
+	            StringTokenizer stfind = new StringTokenizer(txfind.getText());	            
 	             while(stfind.hasMoreTokens()) {
 	                String tmp = stfind.nextToken();
 	                int findx = Integer.valueOf(tmp.substring(0,1));
@@ -196,7 +201,7 @@ class MyFrame extends JFrame{
 	                 int hazardx = Integer.valueOf(tmp.substring(0, 1));
 	                 int hazardy = Integer.valueOf(tmp.substring(2, tmp.length()));
 	                 hazardpositionList.add(new Position(hazardx, hazardy));
-	             }
+	            }
 			    		   
 			    MapManager map = new MapManager();
 			    PathManager path = new PathManager();
@@ -211,21 +216,38 @@ class MyFrame extends JFrame{
 				txlog.append("지도 크기"+mapposition+"\n위험 지점"+hazardpositionList+
 						"\n시작 지점"+startposition+"\n탐색 지점"+findpositionList+"\n");
 				// system log에 입력받은 값들을 출력				
-			}			
-		}		
+				}
+				catch(ArrayIndexOutOfBoundsException e1){
+					
+				}
+			}
+		}
+		 
+		public void nopath(String message){
+		      txlog.append(message+"\n");
+			      // 종료
+		}
 	}	 
 }
 
-public class MapForm  {
+public class MapForm extends JFrame  {
 
 	   static MyFrame f;
 	   
 	   public static void main(String[] args) {
-	      f = new MyFrame();
+	      open();
 	   }
 	   
 	   public static SimSensor getRobot() {
 	      return f.getRobot();
+	   }
+	   
+	   public static void open(){	// 사용자가 MapForm에 접근하는 함수
+		   f = new MyFrame();
+	   }
+	   
+	   public void update(){
+		   
 	   }
 	   
 	   public void setMapcomponent() {
