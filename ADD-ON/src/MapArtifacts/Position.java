@@ -8,7 +8,7 @@ public class Position {
 	public Position(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.direction = 0; //기본 위치를 EAST로 초기화
+		this.direction = 1; //기본 위치를 EAST로 초기화
 	}
 	
 	public Position() {
