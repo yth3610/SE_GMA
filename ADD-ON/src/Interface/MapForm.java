@@ -113,7 +113,7 @@ class MyFrame extends JFrame{
    }
    
    public void setComponent(MapComponent mapcomponent) {
-      sp2.setRightComponent(mapcomponent);
+       sp2.setRightComponent(mapcomponent);
    }
    
    public void setComponent(MovementComponent movecomponent){
@@ -127,11 +127,7 @@ class MyFrame extends JFrame{
    public Position getMapPosition() {
       return this.mapposition;
    }
-   
-   public void setRobotPosition(Position p){
-   
-   }
-   
+  
    class MapComponent extends JComponent implements Finals{
       int mapx = 1, mapy = 1;
 
@@ -139,10 +135,6 @@ class MyFrame extends JFrame{
          this.mapx = x;
          this.mapy = y;
       }   
-      
-      public void robotRepaint(){
-    	  repaint();
-      }
       
       public void paint(Graphics g){
          g.drawRect(x,y,width,height);  
@@ -176,7 +168,7 @@ class MyFrame extends JFrame{
                   g.setColor(Color.MAGENTA);
                   g.fillArc(20+widthmap*i,355-heightmap*j,50,50,robotEsa,robotEaa);
                }
-               if(mapdata[i][j]==FIND){
+               if(mapdata[i][j]==FIND){		// 탐색 지점을 표시
                   g.setColor(Color.ORANGE);
                   g.fillRect(15+widthmap*i,365-heightmap*j,30,30);            
                }
@@ -321,10 +313,16 @@ class MyFrame extends JFrame{
 			
 			   RobotPosition rp = new RobotPosition();
 			   
+			   while(){
 			   MovementComponent movecomponent = new MovementComponent(mapposition.getX(), mapposition.getY());
 			   MapForm.f.setComponent(movecomponent);
-			   txlog.append(""+"\n");
+			   }
+			   moveLog();
 		   }
+	   }
+	   // 로봇의 움직임을 출력해주는 시스템 로그
+	   public void moveLog(){
+		   txlog.append(""+"\n");
 	   }
    }
 }
