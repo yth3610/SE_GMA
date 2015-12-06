@@ -6,28 +6,84 @@ import MapArtifacts.Position;
 public class RobotMovementInterface {
 	
 	private String movement;
+	private Position mapPosition;
 	
 	public RobotMovementInterface() {
-
+		mapPosition = MapForm.getMapPosition();
 	}
-	
+
 	public Position moveRobot(String move) {
+		int random = (int)(Math.random() * 100) % 10;
+		System.out.println(random);
+
 		switch(move) {
 		case "+x":
-			MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX() + 1,
-					MapForm.getRobot().positionSensor().getY());
+			if(random == 1) { //10%확률로 2칸 이동
+				if(mapPosition.getX() < (MapForm.getRobot().positionSensor().getX() + 2)) {
+					//2칸 이동하는 경우 Map의 크기를 넘어가면 움직이지 않음
+					break;
+				}
+				else 
+					MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX() + 2,
+						MapForm.getRobot().positionSensor().getY());
+			} else if (random == 2) { //10%확률로 움직이지 않음
+				MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX(),
+						MapForm.getRobot().positionSensor().getY());
+			} else {
+				MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX() + 1,
+						MapForm.getRobot().positionSensor().getY());
+			}
 			break;
 		case "-y":
-			MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX(),
-					MapForm.getRobot().positionSensor().getY() - 1);
+			if(random == 1) { //10%확률로 2칸 이동
+				if(0 > (MapForm.getRobot().positionSensor().getY() - 2)) {
+					//2칸 이동하는 경우 Map의 크기를 넘어가면 움직이지 않음
+					break;
+				}
+				else
+				MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX(),
+						MapForm.getRobot().positionSensor().getY() - 2);
+			} else if (random == 2) { //10%확률로 움직이지 않음
+				MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX(),
+						MapForm.getRobot().positionSensor().getY());
+			} else {
+				MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX(),
+						MapForm.getRobot().positionSensor().getY() - 1);
+			}
 			break;
 		case "-x":
-			MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX() - 1,
-					MapForm.getRobot().positionSensor().getY());
+			if(random == 1) { //10%확률로 2칸 이동
+				if(0 > (MapForm.getRobot().positionSensor().getX() - 2)) {
+					//2칸 이동하는 경우 Map의 크기를 넘어가면 움직이지 않음
+					break;
+				}
+				else
+					MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX() - 2,
+						MapForm.getRobot().positionSensor().getY());
+			} else if (random == 2) { //10%확률로 움직이지 않음
+				MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX(),
+						MapForm.getRobot().positionSensor().getY());
+			} else {
+				MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX() - 1,
+						MapForm.getRobot().positionSensor().getY());
+			}
 			break;
 		case "+y":
-			MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX(),
-					MapForm.getRobot().positionSensor().getY() + 1);
+			if(random == 1) { //10%확률로 2칸 이동
+				if(mapPosition.getY() < (MapForm.getRobot().positionSensor().getY() + 2)) {
+					//2칸 이동하는 경우 Map의 크기를 넘어가면 움직이지 않음
+					break;
+				}
+				else
+					MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX(),
+						MapForm.getRobot().positionSensor().getY() + 2);
+			} else if (random == 2) { //10%확률로 움직이지 않음
+				MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX(),
+						MapForm.getRobot().positionSensor().getY());
+			} else {
+				MapForm.getRobot().setPosition(MapForm.getRobot().positionSensor().getX(),
+						MapForm.getRobot().positionSensor().getY() + 1);
+			}
 			break;
 		}
 		System.out.println(RobotPosition.pathCount + "움직임 수행 후 위치 : " + MapForm.getRobot().positionSensor());

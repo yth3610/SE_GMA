@@ -47,7 +47,7 @@ class MyFrame extends JFrame{
    private ArrayList<Position> hazardpositionList = new ArrayList<>();   // 위험지역 좌표를 저장하는 리스트
    private ArrayList<Position> findpositionList = new ArrayList<>();   // 탐색지점 좌료를 저장하는 리스트
    private Position startposition, mapposition, robotposition;
-   int s;
+   public MapComponent mapcomponent;
 
    public MyFrame(){
       setSize(750,500);
@@ -123,21 +123,76 @@ class MyFrame extends JFrame{
       return this.mapposition;
    }
    
-   public void setRobotPosition(Position p){
-   
-   }
-   
    class MapComponent extends JComponent implements Finals{
       int mapx = 1, mapy = 1;
-      
-      
+      int robotx =1, roboty=1;
       public MapComponent(int x, int y) {
          this.mapx = x;
          this.mapy = y;
       }   
       
+      public void robotRepaint(){
+    	  repaint();
+      }
+      
+      public void repaint(Graphics g) {
+          g.drawRect(x,y,width,height);
+          repaint();
+          int widthmap=width/mapx;   // 격자의 너비
+          int heightmap=height/mapy;   // 격자의 높이
+          int tempx=widthmap;
+          int tempy=heightmap;
+          
+          for(int i=0;i<mapx-1;i++){   // x축 라인을 그린다
+             g.drawLine(30+tempx,y,30+tempx,y+height);
+             tempx=tempx+widthmap;
+          }
+          
+          for(int i=0;i<mapy-1;i++){   // y축 라인을 그린다         
+             g.drawLine(x,30+tempy,x+width,30+tempy);
+             tempy=tempy+heightmap;
+          }
+          
+          for(int i=0;i<=mapx;i++){
+             for(int j=0;j<=mapy;j++){
+                if(mapdata[i][j]==COLORBLOB){   // 좌표값이 ColorBlob인 경우
+                   g.setColor(Color.BLUE);
+                   g.fillOval(15+widthmap*i,365-heightmap*j,30,30);   // 파란원을 그린다
+                }
+                if(mapdata[i][j]==HAZARD){      // 좌표값이 hazard인 경우
+                   g.setColor(Color.RED);
+                   g.fillOval(15+widthmap*i,365-heightmap*j,30,30);   // 빨간원을 그린다
+                }
+                if(mapdata[i][j]==FIND){
+                   g.setColor(Color.ORANGE);
+                   g.fillRect(15+widthmap*i,365-heightmap*j,30,30);            
+                }
+             }
+          }
+    	  
+    	  switch(robot.positionSensor().getDirection()) {
+    	  case EAST :
+              g.fillArc(20+widthmap*robot.positionSensor().getX(),
+            		  355-heightmap*robot.positionSensor().getY(),50,50,robotEsa,robotEaa);
+              break;
+    	  case SOUTH:
+              g.fillArc(20+widthmap*robot.positionSensor().getX(),
+            		  355-heightmap*robot.positionSensor().getY(),50,50,robotSsa,robotSaa);
+              break;
+    	  case WEST:
+              g.fillArc(20+widthmap*robot.positionSensor().getX(),
+            		  355-heightmap*robot.positionSensor().getY(),50,50,robotWsa,robotWaa);
+              break;
+    	  case NORTH:
+              g.fillArc(20+widthmap*robot.positionSensor().getX(),
+            		  355-heightmap*robot.positionSensor().getY(),50,50,robotNsa,robotNaa);
+              break;
+    	  }
+      }
+      
       public void paint(Graphics g){
-         g.drawRect(x,y,width,height);  
+         g.drawRect(x,y,width,height);
+         repaint();
          int widthmap=width/mapx;   // 격자의 너비
          int heightmap=height/mapy;   // 격자의 높이
          int tempx=widthmap;
@@ -189,10 +244,7 @@ class MyFrame extends JFrame{
             break;
          } */             
       }
-      
-      public void repaint(Graphics g){
-    	  
-      }   
+  
    }
    
    // set 버튼을 눌렀을 경우 이벤트
@@ -210,6 +262,7 @@ class MyFrame extends JFrame{
             	int mapx = Integer.valueOf(txmap.getText().substring(0,txmap.getText().indexOf(",")));
                 int mapy = Integer.valueOf(txmap.getText().substring(txmap.getText().indexOf(",")+1,txmap.getText().length()));
                 mapposition = new Position(mapx,mapy); 
+
 
                 int startx = Integer.valueOf(txstart.getText().substring(0,txstart.getText().indexOf(",")));
                 int starty = Integer.valueOf(txstart.getText().substring(txstart.getText().indexOf(",")+1,txstart.getText().length()));

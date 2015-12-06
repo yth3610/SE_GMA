@@ -4,6 +4,7 @@ import MapArtifacts.Map;
 import MapArtifacts.Path;
 import MapArtifacts.Position;
 import Interface.Finals;
+import Interface.MapForm;
 
 import java.util.ArrayList;
 
@@ -16,12 +17,17 @@ public class RobotPosition implements Finals{
 	Map map = new Map();
 	
 	public RobotPosition () {
+		
+		SimSensorManager ssm = new SimSensorManager();
+		ssm.setMap(map.getMap(0)); //robot이 가지고 있을 맵 설정
 
 		//RobotPositionManager로 부터 robot의 현재위치를 가져온다.
 		currentPosition = RobotPositionManager.getPosition();
 		pathList = path.getPath();
+
 		while(pathCount < pathList.size()) { //pathList.size()
 			this.createNextPosition(pathList.get(pathCount));
+			//MapForm.robotRepaint();
 		}
 		System.out.println("탐색종료");
 	}
