@@ -78,13 +78,13 @@ public class Path implements Finals{
 	}
 	
 	// 경로 재설정하는 함수
-	public void updatePath(Position hazard_xy){
+	public void updatePath(Position xy, int index){
 		
-		int x, y, fx, fy, hazard, num=0;
+		int x, y, fx, fy, now_xy, num=0;
 		
-		// 발견된 위험지역 위치 받아오기
-		x=hazard_xy.getX();
-		y=hazard_xy.getY();
+		// 현재 위치 받아오기
+		x=xy.getX();
+		y=xy.getY();
 		
 		// 탐색 안한 탐색지점
 		ArrayList<Position> un_finds=new ArrayList<Position>();
@@ -95,28 +95,35 @@ public class Path implements Finals{
 		// update된 지도 받아오기
 		map = p_map.getMap(1);
 		
-		// 위치 이후의 경로 지우기, 탐색 안한 탐색지점 un_finds에 저장
-		for(hazard=0;hazard<path.size();hazard++)
+		if(index==0)
 		{
-			if( x==path.get(hazard).getX() && y==path.get(hazard).getY())
-				break;
+			for(now_xy=0;now_xy<path.size();now_xy++)
+			{
+				if( x==path.get(now_xy).getX() && y==path.get(now_xy).getY())
+					break;
+			}
 		}
-		num=path.size()-hazard;
+		else
+		{
+			now_xy=index;
+			path.remove(now_xy);
+			path.add(now_xy, xy);
+		}
+		
+		// 현재 위치 이후의 경로 지우기, 탐색 안한 탐색지점 un_finds에 저장
+		now_xy++;
+		num=path.size()-now_xy;
 		for(int i=0; i<num; i++)
 		{
 			for(int j=0; j<finds.size(); j++)
 			{
-				if(finds.get(j).getX()==path.get(hazard).getX() && finds.get(j).getY()==path.get(hazard).getY())
+				if(finds.get(j).getX()==path.get(now_xy).getX() && finds.get(j).getY()==path.get(now_xy).getY())
 					un_finds.add(new Position(finds.get(j).getX(), finds.get(j).getY()));
 			}
-			path.remove(hazard);
+			path.remove(now_xy);
 		}
 		
-		// path의 마지막 지점 저장
-		x=path.get(path.size()-1).getX()+1;
-		y=path.get(path.size()-1).getY()+1;
-		
-		// path의 마지막 지점부터 경로 생성
+		// 현재 위치부터 경로 생성
 		for(int i=0;i<un_finds.size();i++)
 		{
 			// 탐색지점 받아오기
@@ -135,6 +142,10 @@ public class Path implements Finals{
 				x=fx; y=fy;
 			}
 		}
+		
+		//// path 출력
+		for(int i=0;i<path.size(); i++)
+			System.out.println(path.get(i).toString());
 	}
 	
 	// 경로 전달하는 함수
@@ -222,13 +233,10 @@ public class Path implements Finals{
 			}
 
 			if(!move) // 움직임에 실패한 경우
-			{
-				System.out.println("ERROR");
-				return ERROR;
-			}
+				MapForm.errorMessage("Fault Move"+"\n3초뒤 프로그램이 종료됩니다.");
 			
 			if(end==99) // 경로이동 횟수가 99이상이 되면 위험지역으로 둘러싸였다고 판단하여 종료한다.
-				MapForm.surroundedError();
+				MapForm.errorMessage("No Path(위험지역으로 둘러싸임)"+"\n3초뒤 프로그램이 종료됩니다.");
 			
 			
 			move = true; // 초기화
