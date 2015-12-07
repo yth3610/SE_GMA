@@ -295,9 +295,6 @@ class MyFrame extends JFrame{
 
                MapComponent mapcomponent = new MapComponent(mapposition.getX(), mapposition.getY());
                MapForm.f.setComponent(mapcomponent);
-          
-               txlog.append("지도 크기"+mapposition+"\n위험 지점"+hazardpositionList+
-                  "\n시작 지점"+startposition+"\n탐색 지점"+findpositionList+"\n");
 
                // system log에 입력받은 값들을 출력            
             	}            
@@ -313,15 +310,6 @@ class MyFrame extends JFrame{
 			
 			   RobotPosition rp = new RobotPosition();
 			  
-			   MovementComponent movecomponent = new MovementComponent(mapposition.getX(), mapposition.getY());
-			   MapForm.f.setComponent(movecomponent);
-			   try{
-				   Thread.sleep(1000);
-				
-				} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-				}			   
 		   }
 	   }
    }
