@@ -307,9 +307,8 @@ class MyFrame extends JFrame{
    private class startListener implements ActionListener{
 	   public void actionPerformed(ActionEvent e){
 		   if(e.getSource()==btnstart){
-			
+
 			   RobotPosition rp = new RobotPosition();
-			  
 		   }
 	   }
    }
@@ -329,11 +328,15 @@ class MyFrame extends JFrame{
   	  System.exit(0);
 	}
 	
-	public MovementComponent movePaint(int x, int y){
-		return new MovementComponent(x, y);
+	public MovementComponent movePaint(){
+		return new MovementComponent(mapposition.getX(), mapposition.getY());
+	}
+	
+	public MovementComponent updatePaint(int[][] update_map){
+		mapdata = update_map;
+		return new MovementComponent(mapposition.getX(), mapposition.getY());
 	}
 }
-
 
 public class MapForm extends JFrame  {
 
@@ -360,12 +363,8 @@ public class MapForm extends JFrame  {
     	  f.errorMessage(message);
       }    	  
       
-      public static void logMessage(String message){
-    	  f.moveLog(message);    	  
-      }
-      
-      public void movepaint(int mapx, int mapy){
-    	  f.setComponent(f.movePaint(mapx,mapy));
+      public void movepaint(){
+    	  f.setComponent(f.movePaint());
     	  try{
 			   Thread.sleep(1000);
 			
@@ -373,5 +372,9 @@ public class MapForm extends JFrame  {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			}		
+      }
+      
+      public static void updatePaint(int[][] update_map){
+    	  f.setComponent(f.updatePaint(update_map));
       }
 }
