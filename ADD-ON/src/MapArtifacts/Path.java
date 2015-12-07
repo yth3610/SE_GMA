@@ -13,8 +13,8 @@ public class Path implements Finals{
 	private ArrayList<Position> part_path; // 부분 경로
 	private int[][] map; // 지도 저장
 	
-	public static final int OK = 9;
-	public static final int ERROR = 999;
+	private static final int OK = 9;
+	private static final int ERROR = 999;
 	
 	// 경로 초기화 하는 함수   (start_xy : 출발지점 , finds : 탐색지점)
 	public void createPath(int start_x, int start_y, ArrayList<Position> finds){
