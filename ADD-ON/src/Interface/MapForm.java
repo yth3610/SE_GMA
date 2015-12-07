@@ -312,17 +312,7 @@ class MyFrame extends JFrame{
 	   public void actionPerformed(ActionEvent e){
 		   if(e.getSource()==btnstart){
 			
-			   RobotPosition rp = new RobotPosition();
-			  
-			   MovementComponent movecomponent = new MovementComponent(mapposition.getX(), mapposition.getY());
-			   MapForm.f.setComponent(movecomponent);
-			   try{
-				   Thread.sleep(1000);
-				
-				} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-				}			   
+			   RobotPosition rp = new RobotPosition();	   
 		   }
 	   }
    }
