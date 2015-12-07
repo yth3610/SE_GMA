@@ -129,7 +129,7 @@ class MyFrame extends JFrame{
       return this.mapposition;
 
    }
-   
+
    class MapComponent extends JComponent implements Finals{
       int mapx = 1, mapy = 1;
 
@@ -281,6 +281,10 @@ class MyFrame extends JFrame{
                     int hazardy = Integer.valueOf(tmp.substring(2, tmp.length()));
                     hazardpositionList.add(new Position(hazardx, hazardy));
                }
+               
+               txlog.append("지도 크기"+mapposition+"\n위험 지점"+hazardpositionList+
+                       "\n시작 지점"+startposition+"\n탐색 지점"+findpositionList+"\n");
+               
                MapManager map = new MapManager();
                PathManager path = new PathManager();
                map.createMap(mapx,mapy,hazardpositionList);
@@ -299,7 +303,7 @@ class MyFrame extends JFrame{
             
             	catch(ArrayIndexOutOfBoundsException e1){
             		txlog.append("지도의 범위를 벗어납니다"+"\n");
-            	}
+            	} 
                         	
             /*
             catch(){
@@ -315,9 +319,11 @@ class MyFrame extends JFrame{
 			
 			   RobotPosition rp = new RobotPosition();
 			   
-			   /*while(){*/
+			   /*while(){
 			   MovementComponent movecomponent = new MovementComponent(mapposition.getX(), mapposition.getY());
 			   MapForm.f.setComponent(movecomponent);
+			   Thread.sleep(1000);
+			   }*/
 		   }
 	   }
    }
@@ -343,8 +349,12 @@ public class MapForm extends JFrame  {
       public static Position getMapPosition() {
          return f.getMapPosition();
       }
-      
+
       public void moveLog(){
 		   MyFrame.txlog.append(""+"\n");
 	   }
+
+      public static void surroundedError(){
+    	  MyFrame.txlog.append("no Path(위험지역으로 둘러싸임)"+"\n");
+      }
 }

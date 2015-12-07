@@ -75,7 +75,7 @@ public class Map implements Finals {
 		
 		// 둘러싸인 경우 system log에 뜨도록 알리기
 		if(confirm()==ERROR)
-			System.out.println("no path(surrounded hazard)");
+			MapForm.surroundedError();
 	}
 	
 	// 지도 반환 하는 함수 (0 : 일반지도 1 : 경로용)
