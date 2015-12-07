@@ -67,17 +67,10 @@ public class RobotMovement implements Finals {
 			resultPosition = RMI.moveRobot(movement); //Robot이 움직이게 한다
 			boolean checkMovement = verifyMovement(resultPosition, movement);
 			System.out.println("first check");
-			while(checkMovement == false) { //움직임을 확인한다
-				//System.out.println("movement check : " + checkMovement);
-				this.cancelMovement(resultPosition, movement); //잘못 움직인것을 취소 한다
-				if(updatePath == true) {
-					checkMovement = true;
-				} else {
-					checkMovement = verifyMovement(resultPosition, movement);
-				}
 
+			if(checkMovement == false) { //움직임을 확인한다
+				path.updatePath(resultPosition, RobotPosition.pathCount);
 			}
-			updatePath = false;
 		}
 		else { //방향을 바꾸는 경우
 			movement = move; //방향전환 횟수
@@ -99,59 +92,5 @@ public class RobotMovement implements Finals {
 			System.out.println("Wrong Movement.");
 			return false;
 		}
-	}
-	
-	public boolean cancelMovement(Position position, String movement) {
-		System.out.println("Cancel Movement...");
-		switch(movement) {
-		case "+x": //EAST(+x) 방향으로 움직여야 했던 경우
-			if(position.getX() - this.nextPosition.getX() == -1) { //움직이지 않은 경우
-				resultPosition = RMI.moveRobot(movement);
-				return verifyMovement(resultPosition, movement);
-			}
-			else if(position.getX() - this.nextPosition.getX() == 1) { //2칸 움직인 경우
-				path.updatePath(position, RobotPosition.pathCount);
-				updatePath = true;
-				System.exit(0);
-				return true; 
-			}
-			break;
-		case "-y": //SOUTH(-y) 방향으로 움직여야 했던 경우
-			if(position.getY() - this.nextPosition.getY() == 1) { //움직이지 않은 경우
-				resultPosition = RMI.moveRobot(movement);
-				return verifyMovement(resultPosition, movement);
-			}
-			else if(position.getY() - this.nextPosition.getY() == -1) { //2칸 움직인 경우
-				path.updatePath(position, RobotPosition.pathCount);
-				updatePath = true;
-				System.exit(0);
-				return true;
-			}
-			break;
-		case "-x": //WEST(-x) 방향으로 움직여야 했던 경우
-			if(position.getX() - this.nextPosition.getX() == 1) { //움직이지 않은 경우
-				resultPosition = RMI.moveRobot(movement);
-				return verifyMovement(resultPosition, movement);
-			}
-			else if(position.getX() - this.nextPosition.getX() == -1) { //2칸 움직인 경우
-				path.updatePath(position, RobotPosition.pathCount);
-				updatePath = true;
-				return true;
-			}
-			break;
-		case "+y": //NORTH(+y) 방향으로 움직여야 했던 경우
-			if(position.getY() - this.nextPosition.getX() == -1) { //움직이지 않은 경우
-				resultPosition = RMI.moveRobot(movement);
-				return verifyMovement(resultPosition, movement);
-			}
-			else if(position.getY() - this.nextPosition.getY() == 1) { //2칸 움직인 경우
-				path.updatePath(position, RobotPosition.pathCount);
-				updatePath = true;
-				System.exit(0);
-				return true;
-			}
-			break;
-		}
-		return true;
 	}
 }
