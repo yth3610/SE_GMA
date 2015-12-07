@@ -110,7 +110,7 @@ public class Path implements Finals{
 			path.add(now_xy, xy);
 		}
 		
-		// 위치 이후의 경로 지우기, 탐색 안한 탐색지점 un_finds에 저장
+		// 현재 위치 이후의 경로 지우기, 탐색 안한 탐색지점 un_finds에 저장
 		now_xy++;
 		num=path.size()-now_xy;
 		for(int i=0; i<num; i++)
@@ -233,13 +233,10 @@ public class Path implements Finals{
 			}
 
 			if(!move) // 움직임에 실패한 경우
-			{
-				System.out.println("ERROR");
-				return ERROR;
-			}
+				MapForm.errorMessage("Fault Move"+"\n3초뒤 프로그램이 종료됩니다.");
 			
 			if(end==99) // 경로이동 횟수가 99이상이 되면 위험지역으로 둘러싸였다고 판단하여 종료한다.
-				MapForm.surroundedError();
+				MapForm.errorMessage("No Path(위험지역으로 둘러싸임)"+"\n3초뒤 프로그램이 종료됩니다.");
 			
 			
 			move = true; // 초기화
