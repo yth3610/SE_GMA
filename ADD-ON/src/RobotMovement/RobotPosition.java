@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class RobotPosition implements Finals{
 	private Position currentPosition, nextPosition;
 	private ArrayList<Position> pathList;
+	ArrayList<Position> movedList = new ArrayList<>();
 	public static int pathCount = 1; //movement count
 	
 	Path path = new Path();
@@ -24,6 +25,7 @@ public class RobotPosition implements Finals{
 		//RobotPositionManager로 부터 robot의 현재위치를 가져온다.
 		currentPosition = RobotPositionManager.getPosition();
 		pathList = path.getPath();
+		movedList.add(currentPosition);
 
 		while(pathCount < pathList.size()) { //pathList.size()
 			this.createNextPosition(pathList.get(pathCount));
