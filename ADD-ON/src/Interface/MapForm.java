@@ -360,6 +360,13 @@ public class MapForm extends JFrame  {
       }
       
       public static void surroundedError(){
-    	  MyFrame.txlog.append("no Path(위험지역으로 둘러싸임)"+"\n");
+    	  MyFrame.txlog.append("no Path(위험지역으로 둘러싸임)"+"\n 3초뒤 프로그램이 종료됩니다.");
+    	  try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	  System.exit(0);
       }
 }
