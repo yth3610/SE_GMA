@@ -85,6 +85,7 @@ public class RobotMovementInterface {
 			}
 			break;
 		}
+		MapForm.moveLog("움직임 수행 후 위치 : " + MapForm.getRobot().positionSensor());
 		System.out.println("움직임 수행 후 위치 : " + MapForm.getRobot().positionSensor());
 		return MapForm.getRobot().positionSensor();
 	}
@@ -94,6 +95,7 @@ public class RobotMovementInterface {
 		int direction = MapForm.getRobot().positionSensor().getDirection();
 		for(int i = 1; i <= turn; i++) {
 			direction += 1;
+			MapForm.moveLog("시계방향 90도 회전(" + i + ")");
 			System.out.println("시계방향 90도 회전(" + i + ")");
 			if(direction > 4) //방향값이 NORTH(4)를 넘는경우 보정
 				direction %= 4;

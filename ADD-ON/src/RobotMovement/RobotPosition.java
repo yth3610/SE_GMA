@@ -34,6 +34,7 @@ public class RobotPosition implements Finals{
 			pathList = path.getPath();
 			MapForm.movepaint();
 		}
+		MapForm.moveLog("탐색종료");
 		System.out.println("탐색종료");
 	}
 	
@@ -64,6 +65,7 @@ public class RobotPosition implements Finals{
 			nextPosition.setY(currentPosition.getY() - 1);
 			nextPosition.setDirection(SOUTH); //SOUTH(-y)
 		}
+		MapForm.moveLog(pathCount + "번째 nextPosition : " + nextPosition);
 		System.out.println(pathCount + "번째 nextPosition : " + nextPosition);
 		RobotMovement rm = new RobotMovement(currentPosition, nextPosition);
 	}

@@ -1,6 +1,7 @@
 package RobotMovement;
 
 import Interface.Finals;
+import Interface.MapForm;
 import MapArtifacts.Path;
 import MapArtifacts.Position;
 
@@ -17,7 +18,8 @@ public class RobotMovement implements Finals {
 		this.nextPosition = nextPosition;
 		this.createMovement();
 		RobotPosition.plusCount(); //Movement 명령 수행후 다음 path를 위한 pathCount를 증가시켜준다
-		//System.out.println("------plus---Count-----");
+		MapForm.moveLog("=======================");
+		System.out.println("=======================");
 	}
 	
 	public void createMovement() { //nextPosition을 바탕으로 Movement 생성
@@ -66,7 +68,7 @@ public class RobotMovement implements Finals {
 			}
 			resultPosition = RMI.moveRobot(movement); //Robot이 움직이게 한다
 			boolean checkMovement = verifyMovement(resultPosition, movement);
-			System.out.println("first check");
+			//System.out.println("first check");
 
 			if(checkMovement == false) { //움직임을 확인한다
 				path.updatePath(resultPosition, RobotPosition.pathCount);
@@ -75,7 +77,7 @@ public class RobotMovement implements Finals {
 		else { //방향을 바꾸는 경우
 			movement = move; //방향전환 횟수
 			RMI.turnRobot(movement); //Robot이 방향을 전환하게 한다
-			System.out.println("방향전환 완료");
+			//System.out.println("방향전환 완료");
 			//방향전환은 오류가 없으므로 움직임을 확인하지 않는다
 		}
 	}
@@ -84,11 +86,13 @@ public class RobotMovement implements Finals {
 		if(position.getX() == this.nextPosition.getX() && position.getY() == this.nextPosition.getY()
 				&& position.getDirection() == this.nextPosition.getDirection()) {
 			//robot의 현재 위치(X, Y)와 방향이 모두 같은 경우
+			MapForm.moveLog("Correct Movement.");
 			System.out.println("Correct Movement.");
-			System.out.println("=====================");
+			//System.out.println("=====================");
 			return true;
 		}
 		else { //위치가 다른 경우
+			MapForm.moveLog("Wrong Movement.");
 			System.out.println("Wrong Movement.");
 			return false;
 		}

@@ -23,24 +23,28 @@ public class SimSensor implements Finals {
 		case EAST:
 			if(map[position.getX() + 1][position.getY()] == HIDE_HAZARD) {
 				mm.updateMap("Hazard", new Position(position.getX() + 1, position.getY()));
+				MapForm.moveLog("Find HIDE_HAZARD (" + (position.getX()+1) + ", " + position.getY() + ")");
 				System.out.println("Find HIDE_HAZARD (" + (position.getX()+1) + ", " + position.getY() + ")");
 			}
 	        break;
 		case SOUTH:
 			if(map[position.getX()][position.getY() - 1] == HIDE_HAZARD) {
 				mm.updateMap("Hazard", new Position(position.getX(), position.getY() - 1));
+				MapForm.moveLog("Find HIDE_HAZARD (" + (position.getX()) + ", " + (position.getY()-1) + ")");
 				System.out.println("Find HIDE_HAZARD (" + (position.getX()) + ", " + (position.getY()-1) + ")");
 			}
 	         break;
 		case WEST:
 			if(map[position.getX() - 1][position.getY()] == HIDE_HAZARD) { 
 				mm.updateMap("Hazard", new Position(position.getX() - 1, position.getY()));
+				MapForm.moveLog("Find HIDE_HAZARD (" + (position.getX()-1) + ", " + (position.getY()) + ")");
 				System.out.println("Find HIDE_HAZARD (" + (position.getX()-1) + ", " + (position.getY()) + ")");
 			}
 			break;
 		case NORTH:
 			if(map[position.getX()][position.getY() + 1] == HIDE_HAZARD) {
 				mm.updateMap("Hazard", new Position(position.getX(), position.getY() + 1));
+				MapForm.moveLog("Find HIDE_HAZARD (" + (position.getX()) + ", " + (position.getY()+1) + ")");
 				System.out.println("Find HIDE_HAZARD (" + (position.getX()) + ", " + (position.getY()+1) + ")");
 			}
 			break;
@@ -53,18 +57,22 @@ public class SimSensor implements Finals {
 		//4방향 모두 찾아야 하기 때문에 4개의 if문 사용
 		if(map[position.getX() + 1][position.getY()] == HIDE_COLORBLOB) { //EAST(+x) 방향
 			mm.updateMap("Color", new Position(position.getX() + 1, position.getY()));
+			MapForm.moveLog("Find HIDE_COLORBLOB (" + (position.getX()+1) + ", " + (position.getY()) + ")");
 			System.out.println("Find HIDE_COLORBLOB (" + (position.getX()+1) + ", " + (position.getY()) + ")");
 		}
 		if(position.getY() != 0 && map[position.getX()][position.getY() - 1] == HIDE_COLORBLOB) { //SOUTH(-x) 방향
 			mm.updateMap("Color", new Position(position.getX(), position.getY() - 1));
+			MapForm.moveLog("Find HIDE_COLORBLOB (" + (position.getX()) + ", " + (position.getY()-1) + ")");
 			System.out.println("Find HIDE_COLORBLOB (" + (position.getX()) + ", " + (position.getY()-1) + ")");
 		}
 		if(position.getX() != 0 && map[position.getX() - 1][position.getY()] == HIDE_COLORBLOB) { //WEST(-x) 방향
 			mm.updateMap("Color", new Position(position.getX() - 1, position.getY()));
+			MapForm.moveLog("Find HIDE_COLORBLOB (" + (position.getX()-1) + ", " + (position.getY()) + ")");
 			System.out.println("Find HIDE_COLORBLOB (" + (position.getX()-1) + ", " + (position.getY()) + ")");
 		}
 		if(map[position.getX()][position.getY() + 1] == HIDE_COLORBLOB) { //NORTH(+y) 방향
 			mm.updateMap("Color", new Position(position.getX(), position.getY() + 1));
+			MapForm.moveLog("Find HIDE_COLORBLOB (" + (position.getX()) + ", " + (position.getY()+1) + ")");
 			System.out.println("Find HIDE_COLORBLOB (" + (position.getX()) + ", " + (position.getY()+1) + ")");
 		}
 	}
