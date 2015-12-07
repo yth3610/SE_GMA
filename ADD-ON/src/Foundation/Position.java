@@ -1,4 +1,4 @@
-package MapArtifacts;
+package Foundation;
 
 public class Position {
 	private int x;

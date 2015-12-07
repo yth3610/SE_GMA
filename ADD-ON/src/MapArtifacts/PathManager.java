@@ -2,6 +2,8 @@ package MapArtifacts;
 
 import java.util.ArrayList;
 
+import Foundation.Position;
+
 public class PathManager {
 
 	private static Path path;

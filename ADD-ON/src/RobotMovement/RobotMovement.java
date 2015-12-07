@@ -1,8 +1,8 @@
 package RobotMovement;
 
-import Interface.Finals;
+import Foundation.Finals;
+import Foundation.Position;
 import MapArtifacts.Path;
-import MapArtifacts.Position;
 
 public class RobotMovement implements Finals {
 	private Position currentPosition, nextPosition;
@@ -103,7 +103,7 @@ public class RobotMovement implements Finals {
 			}
 			else if(position.getX() - this.nextPosition.getX() == 1) { //2칸 움직인 경우
 				path.updatePath(position, RobotPosition.pathCount);
-				return true;
+				return true; 
 			}
 			break;
 		case "-y": //SOUTH(-y) 방향으로 움직여야 했던 경우

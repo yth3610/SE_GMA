@@ -1,7 +1,7 @@
 package RobotMovement;
 
+import Foundation.Position;
 import Interface.MapForm;
-import MapArtifacts.Position;
 
 public class SimSensorManager {
 	public static void hazardSensor(){ //hazard의 유무를 받아오는 method

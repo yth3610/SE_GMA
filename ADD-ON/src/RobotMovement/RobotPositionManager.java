@@ -1,6 +1,6 @@
 package RobotMovement;
 
-import MapArtifacts.Position;
+import Foundation.Position;
 
 public class RobotPositionManager {
 	public RobotPositionManager() {

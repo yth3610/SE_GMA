@@ -1,7 +1,8 @@
 package Interface;
 
+import Foundation.Finals;
+import Foundation.Position;
 import MapArtifacts.MapManager;
-import MapArtifacts.Position;
 
 public class SimSensor implements Finals {
 	private static Position position; //현재 위치

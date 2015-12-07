@@ -1,7 +1,9 @@
 package MapArtifacts;
 
 import java.util.*;
-import Interface.Finals;
+
+import Foundation.Finals;
+import Foundation.Position;
 import Interface.MapForm;
 
 public class Path implements Finals{

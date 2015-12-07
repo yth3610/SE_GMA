@@ -1,7 +1,7 @@
 package RobotMovement;
 
+import Foundation.Position;
 import Interface.MapForm;
-import MapArtifacts.Position;
 
 public class RobotMovementInterface {
 	
@@ -12,7 +12,7 @@ public class RobotMovementInterface {
 	}
 
 	public Position moveRobot(String move) {
-		int random = (int)(Math.random() * 1000) % 20 + 2;
+		int random = (int)(Math.random() * 1000) % 20;
 		System.out.println("random : " + random);
 
 		switch(move) {

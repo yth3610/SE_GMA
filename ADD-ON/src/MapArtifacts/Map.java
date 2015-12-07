@@ -2,7 +2,9 @@ package MapArtifacts;
 
 import java.util.ArrayList;
 import java.util.Random;
-import Interface.Finals;
+
+import Foundation.Finals;
+import Foundation.Position;
 import Interface.MapForm;
 
 public class Map implements Finals {
