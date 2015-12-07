@@ -106,7 +106,6 @@ public class Path implements Finals{
 		else
 		{
 			now_xy=index;
-			path.remove(now_xy);
 			path.add(now_xy, xy);
 		}
 		
