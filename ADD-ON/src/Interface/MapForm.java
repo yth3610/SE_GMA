@@ -363,7 +363,7 @@ public class MapForm extends JFrame  {
     	  f.errorMessage(message);
       }    	  
       
-      public void movepaint(){
+      public static void movepaint(){
     	  f.setComponent(f.movePaint());
     	  try{
 			   Thread.sleep(1000);
