@@ -85,9 +85,8 @@ public class RobotMovement implements Finals {
 	}
 	
 	public boolean verifyMovement(Position position, String movement) { //Robot의 움직임 확인
-		if(position.getX() == this.nextPosition.getX() && position.getY() == this.nextPosition.getY()
-				&& position.getDirection() == this.nextPosition.getDirection()) {
-			//robot의 현재 위치(X, Y)와 방향이 모두 같은 경우
+		if(position.getX() == this.nextPosition.getX() && position.getY() == this.nextPosition.getY()) {
+			//robot의 현재 위치(X, Y)가 모두 같은 경우
 			MapForm.moveLog("Correct Movement.");
 			System.out.println("Correct Movement.");
 			//System.out.println("=====================");
