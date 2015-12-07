@@ -29,7 +29,6 @@ public class RobotPosition implements Finals{
 
 		while(pathCount < pathList.size()) { //pathList.size()
 			this.createNextPosition(pathList.get(pathCount));
-			pathList = path.getPath();
 			MapForm.movepaint();
 		}
 		System.out.println("Å½»öÁ¾·á");
