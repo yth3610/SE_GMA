@@ -57,7 +57,6 @@ public class Map implements Finals {
 			case "Hazard" :
 				path_map[xy.getX()+1][xy.getY()+1]=HAZARD; 
 				map[xy.getX()][xy.getY()]=HAZARD; 
-				m_path.updatePath(xy);
 				break;
 			case "Color" :
 				path_map[xy.getX()+1][xy.getY()+1]=COLORBLOB;
@@ -76,6 +75,10 @@ public class Map implements Finals {
 		// 둘러싸인 경우 system log에 뜨도록 알리기
 		if(confirm()==ERROR)
 			MapForm.surroundedError();
+		
+		// Hazard 추가한 경우 경로 update
+		if(type.equalsIgnoreCase("Hazard"))
+			m_path.updatePath(xy);
 	}
 	
 	// 지도 반환 하는 함수 (0 : 일반지도 1 : 경로용)
