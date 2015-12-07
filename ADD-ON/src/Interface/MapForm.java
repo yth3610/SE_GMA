@@ -119,7 +119,7 @@ class MyFrame extends JFrame{
    public void setComponent(MovementComponent movecomponent){
 	   sp2.setRightComponent(movecomponent);
    }
-   
+
    public SimSensor getRobot() {
          return this.robot;
    }
@@ -127,7 +127,7 @@ class MyFrame extends JFrame{
    public Position getMapPosition() {
       return this.mapposition;
    }
-  
+
    class MapComponent extends JComponent implements Finals{
       int mapx = 1, mapy = 1;
 
@@ -135,7 +135,7 @@ class MyFrame extends JFrame{
          this.mapx = x;
          this.mapy = y;
       }   
-      
+
       public void paint(Graphics g){
          g.drawRect(x,y,width,height);  
 
@@ -293,9 +293,7 @@ class MyFrame extends JFrame{
                txlog.append("지도 크기"+mapposition+"\n위험 지점"+hazardpositionList+
                   "\n시작 지점"+startposition+"\n탐색 지점"+findpositionList+"\n");
                
-               if(mapmap.confirm()==ERROR)
-            	   txlog.append("경로를 생성할 수 없습니다");
-               
+
                // system log에 입력받은 값들을 출력            
             	}
             
