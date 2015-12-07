@@ -295,7 +295,7 @@ class MyFrame extends JFrame{
 
                MapComponent mapcomponent = new MapComponent(mapposition.getX(), mapposition.getY());
                MapForm.f.setComponent(mapcomponent);
-               
+
                // system log에 입력받은 값들을 출력            
             	}            
             	catch(ArrayIndexOutOfBoundsException e1){
