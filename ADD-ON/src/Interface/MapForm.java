@@ -342,8 +342,8 @@ class MyFrame extends JFrame{
   	  System.exit(0);
 	}
 	
-	public MovementComponent movePaint(int x, int y){
-		return new MovementComponent(x, y);
+	public MovementComponent movePaint(){
+		return new MovementComponent(mapposition.getX(), mapposition.getY());
 	}
 }
 
@@ -373,8 +373,8 @@ public class MapForm extends JFrame  {
     	  f.errorMessage(message);
       }    	  
       
-      public void movepaint(int mapx, int mapy){
-    	  f.setComponent(f.movePaint(mapx,mapy));
+      public void movepaint(){
+    	  f.setComponent(f.movePaint());
     	  try{
 			   Thread.sleep(1000);
 			
