@@ -74,7 +74,7 @@ public class Map implements Finals {
 		
 		// 둘러싸인 경우 system log에 뜨도록 알리기
 		if(confirm()==ERROR)
-			MapForm.surroundedError();
+			MapForm.errorMessage("No Path(위험지역으로 둘러싸임)"+"\n3초뒤 프로그램이 종료됩니다.");
 		
 		// Hazard 추가한 경우 경로
 		if(type.equalsIgnoreCase("Hazard"))
