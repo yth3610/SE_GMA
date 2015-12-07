@@ -81,7 +81,7 @@ public class Path implements Finals{
 		// update된 지도 받아오기
 		map = p_map.getMap(1);
 		
-		if(index==0)
+		if(index==0) // hazard 때문에 path update
 		{
 			for(now_xy=0;now_xy<path.size();now_xy++)
 			{
@@ -89,13 +89,13 @@ public class Path implements Finals{
 					break;
 			}
 		}
-		else if(xy.getX()==path.get(index).getX() && xy.getY()==path.get(index).getY())
+		else if(xy.getX()==path.get(index).getX() && xy.getY()==path.get(index).getY()) // 움직이지 않아서 path update
 		{
 			now_xy=index;
 			path.add(now_xy, new Position(xy.getX(), xy.getY()));
 			return ;
 		}
-		else
+		else // 2번 이동한 것 때문에 path update
 		{
 			now_xy=index;
 			path.add(now_xy, new Position(xy.getX(), xy.getY()));
