@@ -304,12 +304,6 @@ class MyFrame extends JFrame{
             	catch(ArrayIndexOutOfBoundsException e1){
             		txlog.append("지도의 범위를 벗어납니다"+"\n");
             	} 
-                        	
-            /*
-            catch(){
-               txlog.append("경로를 생성할 수 없습니다"+"\n");
-            }
-            */
          	}
       	}
    	} 
@@ -322,7 +316,13 @@ class MyFrame extends JFrame{
 			   /*while(){
 			   MovementComponent movecomponent = new MovementComponent(mapposition.getX(), mapposition.getY());
 			   MapForm.f.setComponent(movecomponent);
-			   Thread.sleep(1000);
+			   try{
+				   Thread.sleep(1000);
+				
+				} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				}
 			   }*/
 		   }
 	   }
@@ -363,5 +363,5 @@ public class MapForm extends JFrame  {
 			e.printStackTrace();
 		}
     	  System.exit(0);
-      }
+     }
 }
