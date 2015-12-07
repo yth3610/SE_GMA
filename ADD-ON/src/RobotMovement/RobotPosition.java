@@ -20,7 +20,7 @@ public class RobotPosition implements Finals{
 	public RobotPosition () {
 		
 		SimSensorManager ssm = new SimSensorManager();
-		ssm.setMap(map.getMap(0)); //robot이 가지고 있을 맵 설정
+		ssm.setMap(map.getMap(1)); //robot이 가지고 있을 맵 설정
 
 		//RobotPositionManager로 부터 robot의 현재위치를 가져온다.
 		currentPosition = ssm.positionSensor();
@@ -32,6 +32,7 @@ public class RobotPosition implements Finals{
 			ssm.hazardSensor();
 			ssm.colorBlobSensor();
 			pathList = path.getPath();
+			ssm.setMap(map.getMap(1));
 			MapForm.movepaint();
 		}
 		MapForm.moveLog("탐색종료");

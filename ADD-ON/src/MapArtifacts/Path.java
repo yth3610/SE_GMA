@@ -41,16 +41,6 @@ public class Path implements Finals{
 		
 		// 시작지점 저장
 		path.add(new Position(x-1, y-1));
-		
-		//// 위험지역 출력
-		for(int i=1;i<map.length-1;i++)
-		{
-			for(int j=1; j<map[0].length-1; j++)
-			{
-				if(map[i][j]==HAZARD)
-					System.out.println("(("+(i-1)+","+(j-1)+"))");
-			}
-		}
 
 		// 경로 생성
 		for(int i=0;i<finds.size();i++)
@@ -71,10 +61,6 @@ public class Path implements Finals{
 				x=fx; y=fy;
 			}
 		}
-		
-		//// path 출력
-		for(int i=0;i<path.size(); i++)
-			System.out.println(path.get(i).toString());
 	}
 	
 	// 경로 재설정하는 함수
@@ -95,7 +81,7 @@ public class Path implements Finals{
 		// update된 지도 받아오기
 		map = p_map.getMap(1);
 		
-		if(index==0)
+		if(index==0) // hazard 때문에 path update
 		{
 			for(now_xy=0;now_xy<path.size();now_xy++)
 			{
@@ -103,10 +89,16 @@ public class Path implements Finals{
 					break;
 			}
 		}
-		else
+		else if(xy.getX()==path.get(index).getX() && xy.getY()==path.get(index).getY()) // 움직이지 않아서 path update
 		{
 			now_xy=index;
-			path.add(now_xy, xy);
+			path.add(now_xy, new Position(xy.getX(), xy.getY()));
+			return ;
+		}
+		else // 2번 이동한 것 때문에 path update
+		{
+			now_xy=index;
+			path.add(now_xy, new Position(xy.getX(), xy.getY()));
 		}
 		
 		// 현재 위치 이후의 경로 지우기, 탐색 안한 탐색지점 un_finds에 저장
@@ -143,10 +135,6 @@ public class Path implements Finals{
 				x=fx; y=fy;
 			}
 		}
-		
-		//// path 출력
-		for(int i=0;i<path.size(); i++)
-			System.out.println(path.get(i).toString());
 	}
 	
 	// 경로 전달하는 함수
@@ -239,10 +227,7 @@ public class Path implements Finals{
 			if(end==99) // 경로이동 횟수가 99이상이 되면 위험지역으로 둘러싸였다고 판단하여 종료한다.
 				MapForm.errorMessage("No Path(위험지역으로 둘러싸임)"+"\n3초뒤 프로그램이 종료됩니다.");
 			
-			
 			move = true; // 초기화
-			
-			System.out.println(" (( "+(x-1)+","+(y-1)+" )) ");
 			
 			// 빙 돌아온 경우 중복 제거하고 아닌 경우 경로저장
 			if(overlapPath(x-1, y-1)>0)
@@ -305,7 +290,6 @@ public class Path implements Finals{
 		for(int i=part_path.size()-1; i>first; i--)
 			part_path.remove(i);
 		
-		return 0;
-		
+		return 0;	
 	}
 }
