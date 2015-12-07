@@ -297,8 +297,7 @@ class MyFrame extends JFrame{
                MapForm.f.setComponent(mapcomponent);
                
                // system log에 입력받은 값들을 출력            
-            	}
-            
+            	}            
             	catch(ArrayIndexOutOfBoundsException e1){
             		txlog.append("지도의 범위를 벗어납니다"+"\n");
             	} 
@@ -313,12 +312,12 @@ class MyFrame extends JFrame{
 	   }
    }
 	   // 로봇의 움직임을 출력해주는 시스템 로그
-	public void moveLog(){
-		txlog.append(""+"\n");
+	public void moveLog(String message){
+		txlog.append(message+"\n");
 	}
 	
 	public void errorMessage(String message){
-		txlog.append(message);
+		txlog.append(message+"\n");
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
