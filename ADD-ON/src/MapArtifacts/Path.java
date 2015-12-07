@@ -275,7 +275,7 @@ public class Path implements Finals{
 	private int visitedFinds(int fx, int fy){
 		for(int i=0; i<path.size(); i++)
 		{
-			if(fx==path.get(i).getX() && fy==path.get(i).getY())
+			if((fx-1)==path.get(i).getX() && (fy-1)==path.get(i).getY())
 				return 0;
 		}
 		return 1;
