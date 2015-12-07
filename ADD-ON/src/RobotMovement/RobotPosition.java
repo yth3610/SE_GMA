@@ -27,7 +27,6 @@ public class RobotPosition implements Finals{
 
 		while(pathCount < pathList.size()) { //pathList.size()
 			this.createNextPosition(pathList.get(pathCount));
-			//MapForm.robotRepaint();
 		}
 		System.out.println("탐색종료");
 	}
@@ -59,9 +58,8 @@ public class RobotPosition implements Finals{
 			nextPosition.setY(currentPosition.getY() - 1);
 			nextPosition.setDirection(SOUTH); //SOUTH(-y)
 		}
-		System.out.println(pathCount + " next : " + nextPosition);
+		System.out.println(pathCount + "번째 nextPosition : " + nextPosition);
 		RobotMovement rm = new RobotMovement(currentPosition, nextPosition);
-		
 	}
 	
 	public Position getNextPosition() {
