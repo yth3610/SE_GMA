@@ -67,6 +67,7 @@ public class RobotMovement implements Finals {
 			resultPosition = RMI.moveRobot(movement); //Robot이 움직이게 한다
 			boolean checkMovement = verifyMovement(resultPosition, movement);
 			System.out.println("first check");
+			
 			if(checkMovement == false) { //움직임을 확인한다
 				path.updatePath(resultPosition, RobotPosition.pathCount);
 			}

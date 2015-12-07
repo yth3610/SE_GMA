@@ -12,7 +12,7 @@ public class RobotMovementInterface {
 	}
 
 	public Position moveRobot(String move) {
-		int random = (int)(Math.random() * 1000) % 5;
+		int random = (int)(Math.random() * 1000) % 20;
 		System.out.println("random : " + random);
 
 		switch(move) {

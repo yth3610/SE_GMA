@@ -23,12 +23,15 @@ public class RobotPosition implements Finals{
 		ssm.setMap(map.getMap(0)); //robot이 가지고 있을 맵 설정
 
 		//RobotPositionManager로 부터 robot의 현재위치를 가져온다.
-		currentPosition = RobotPositionManager.getPosition();
+		currentPosition = ssm.positionSensor();
 		pathList = path.getPath();
 		movedList.add(currentPosition);
 
 		while(pathCount < pathList.size()) { //pathList.size()
 			this.createNextPosition(pathList.get(pathCount));
+			ssm.hazardSensor();
+			ssm.colorBlobSensor();
+			pathList = path.getPath();
 			MapForm.movepaint();
 		}
 		System.out.println("탐색종료");
