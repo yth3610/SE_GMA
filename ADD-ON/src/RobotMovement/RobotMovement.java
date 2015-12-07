@@ -26,21 +26,21 @@ public class RobotMovement implements Finals {
 		if(currentPosition.getDirection() == nextPosition.getDirection()) {
 			//현재위치의 방향과 다음위치의 방향이 같은 경우
 			String movement = "go";
-			this.orderMovement(movement);
+			this.orderMovement(movement); //한 칸 움직임
 		} else if(nextPosition.getDirection() > currentPosition.getDirection()) { //방향이 다른경우 시계방향으로 몇번 움직여야 하는지 Return
 			int turn = nextPosition.getDirection() - currentPosition.getDirection();
 			String movement = String.valueOf(turn);
-			this.orderMovement(movement);
+			this.orderMovement(movement); //방향전환
 			movement = "go";
-			this.orderMovement(movement);
+			this.orderMovement(movement); //한 칸 움직임
 		} else {
 			int turn = (nextPosition.getDirection() + currentPosition.getDirection()) % 4;
 			if(turn == 0) //완전 반대방향인 경우 보정
 				turn = 2;
 			String movement = String.valueOf(turn);
-			this.orderMovement(movement);
+			this.orderMovement(movement); //방향전환
 			movement = "go";
-			this.orderMovement(movement);
+			this.orderMovement(movement); //한 칸 움직임
 		}	
 	}
 	

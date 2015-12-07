@@ -30,8 +30,8 @@ public class RobotPosition implements Finals{
 
 		while(pathCount < pathList.size()) { //pathList.size()
 			this.createNextPosition(pathList.get(pathCount));
-			ssm.hazardSensor();
-			ssm.colorBlobSensor();
+			ssm.hazardSensor(); //hazard 유무 판단
+			ssm.colorBlobSensor(); //color blob 유무 판단
 			pathList = path.getPath();
 			ssm.setMap(map.getMap(1));
 			MapForm.movepaint();
