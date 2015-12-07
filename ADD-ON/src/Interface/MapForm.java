@@ -322,7 +322,6 @@ class MyFrame extends JFrame{
 	   public void actionPerformed(ActionEvent e){
 		   if(e.getSource()==btnstart){
 			   RobotPosition rp = new RobotPosition();	// 로봇이 이동을 시작한다.
-
 		   }
 	   }
    }
