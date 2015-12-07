@@ -107,8 +107,6 @@ public class RobotMovement implements Finals {
 		case "+x": //EAST(+x) 방향으로 움직여야 했던 경우
 			if(position.getX() - this.nextPosition.getX() == -1) { //움직이지 않은 경우
 				resultPosition = RMI.moveRobot(movement);
-				System.out.println("+x");
-				System.exit(0);
 				return verifyMovement(resultPosition, movement);
 			}
 			else if(position.getX() - this.nextPosition.getX() == 1) { //2칸 움직인 경우
@@ -121,8 +119,6 @@ public class RobotMovement implements Finals {
 		case "-y": //SOUTH(-y) 방향으로 움직여야 했던 경우
 			if(position.getY() - this.nextPosition.getY() == 1) { //움직이지 않은 경우
 				resultPosition = RMI.moveRobot(movement);
-				System.out.println("-y");
-				System.exit(0);
 				return verifyMovement(resultPosition, movement);
 			}
 			else if(position.getY() - this.nextPosition.getY() == -1) { //2칸 움직인 경우
@@ -135,8 +131,6 @@ public class RobotMovement implements Finals {
 		case "-x": //WEST(-x) 방향으로 움직여야 했던 경우
 			if(position.getX() - this.nextPosition.getX() == 1) { //움직이지 않은 경우
 				resultPosition = RMI.moveRobot(movement);
-				System.out.println("-x");
-				System.exit(0);
 				return verifyMovement(resultPosition, movement);
 			}
 			else if(position.getX() - this.nextPosition.getX() == -1) { //2칸 움직인 경우
@@ -148,8 +142,6 @@ public class RobotMovement implements Finals {
 		case "+y": //NORTH(+y) 방향으로 움직여야 했던 경우
 			if(position.getY() - this.nextPosition.getX() == -1) { //움직이지 않은 경우
 				resultPosition = RMI.moveRobot(movement);
-				System.out.println("+y");
-				System.exit(0);
 				return verifyMovement(resultPosition, movement);
 			}
 			else if(position.getY() - this.nextPosition.getY() == 1) { //2칸 움직인 경우
