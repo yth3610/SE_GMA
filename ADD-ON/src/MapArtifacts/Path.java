@@ -135,6 +135,9 @@ public class Path implements Finals{
 				x=fx; y=fy;
 			}
 		}
+		
+		for(int i=0; i<path.size(); i++)
+			System.out.println(path.get(i).toString());
 	}
 	
 	// 경로 전달하는 함수
