@@ -1,12 +1,14 @@
 package RobotMovement;
 
 import Interface.Finals;
+import MapArtifacts.Path;
 import MapArtifacts.Position;
 
 public class RobotMovement implements Finals {
 	private Position currentPosition, nextPosition;
 	private RobotMovementInterface RMI;
 	Position resultPosition;
+	Path path = new Path();
 	
 	public RobotMovement(Position currentPosition, Position nextPosition) {
 		RMI = new RobotMovementInterface();
@@ -100,8 +102,8 @@ public class RobotMovement implements Finals {
 				return verifyMovement(resultPosition, movement);
 			}
 			else if(position.getX() - this.nextPosition.getX() == 1) { //2칸 움직인 경우
-				resultPosition = RMI.moveRobot(movement);
-				return verifyMovement(resultPosition, movement);
+				path.updatePath(position, RobotPosition.pathCount);
+				return true; 
 			}
 			break;
 		case "-y": //SOUTH(-y) 방향으로 움직여야 했던 경우
@@ -110,8 +112,8 @@ public class RobotMovement implements Finals {
 				return verifyMovement(resultPosition, movement);
 			}
 			else if(position.getY() - this.nextPosition.getY() == -1) { //2칸 움직인 경우
-				resultPosition = RMI.moveRobot(movement);
-				return verifyMovement(resultPosition, movement);
+				path.updatePath(position, RobotPosition.pathCount);
+				return true;
 			}
 			break;
 		case "-x": //WEST(-x) 방향으로 움직여야 했던 경우
@@ -120,8 +122,8 @@ public class RobotMovement implements Finals {
 				return verifyMovement(resultPosition, movement);
 			}
 			else if(position.getX() - this.nextPosition.getX() == -1) { //2칸 움직인 경우
-				resultPosition = RMI.moveRobot(movement);
-				return verifyMovement(resultPosition, movement);
+				path.updatePath(position, RobotPosition.pathCount);
+				return true;
 			}
 			break;
 		case "+y": //NORTH(+y) 방향으로 움직여야 했던 경우
@@ -130,8 +132,8 @@ public class RobotMovement implements Finals {
 				return verifyMovement(resultPosition, movement);
 			}
 			else if(position.getY() - this.nextPosition.getY() == 1) { //2칸 움직인 경우
-				resultPosition = RMI.moveRobot(movement);
-				return verifyMovement(resultPosition, movement);
+				path.updatePath(position, RobotPosition.pathCount);
+				return true;
 			}
 			break;
 		}
