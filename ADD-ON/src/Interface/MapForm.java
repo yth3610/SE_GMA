@@ -46,6 +46,7 @@ class MyFrame extends JFrame{
    private ArrayList<Position> findpositionList = new ArrayList<>();   // 탐색지점 좌료를 저장하는 리스트
    private Position startposition, mapposition, robotposition;
 
+
    public MyFrame(){
       setSize(800,500);
       setTitle("ADD-ON");
@@ -126,8 +127,9 @@ class MyFrame extends JFrame{
    
    public Position getMapPosition() {
       return this.mapposition;
-   }
 
+   }
+   
    class MapComponent extends JComponent implements Finals{
       int mapx = 1, mapy = 1;
 
@@ -137,6 +139,7 @@ class MyFrame extends JFrame{
       }   
 
       public void paint(Graphics g){
+
          g.drawRect(x,y,width,height);  
 
          int widthmap=width/mapx;   // 격자의 너비
@@ -173,7 +176,7 @@ class MyFrame extends JFrame{
                   g.fillRect(15+widthmap*i,365-heightmap*j,30,30);            
                }
             }
-         }           
+         }
       }
    }
    
@@ -262,7 +265,6 @@ class MyFrame extends JFrame{
                 int starty = Integer.valueOf(txstart.getText().substring(txstart.getText().indexOf(",")+1,txstart.getText().length()));
                 startposition = new Position(startx,starty);
                 robot = new SimSensor(startx, starty);
-
                 StringTokenizer stfind = new StringTokenizer(txfind.getText());               
 
                 while(stfind.hasMoreTokens()) {
@@ -279,20 +281,18 @@ class MyFrame extends JFrame{
                     int hazardy = Integer.valueOf(tmp.substring(2, tmp.length()));
                     hazardpositionList.add(new Position(hazardx, hazardy));
                }
-                     
                MapManager map = new MapManager();
                PathManager path = new PathManager();
                map.createMap(mapx,mapy,hazardpositionList);
                path.createPath(startx, starty, findpositionList);
                Map mapmap = new Map();      
                mapdata= mapmap.getMap(0);                 
-              
+
                MapComponent mapcomponent = new MapComponent(mapposition.getX(), mapposition.getY());
                MapForm.f.setComponent(mapcomponent);
           
                txlog.append("지도 크기"+mapposition+"\n위험 지점"+hazardpositionList+
                   "\n시작 지점"+startposition+"\n탐색 지점"+findpositionList+"\n");
-               
 
                // system log에 입력받은 값들을 출력            
             	}
@@ -318,15 +318,10 @@ class MyFrame extends JFrame{
 			   /*while(){*/
 			   MovementComponent movecomponent = new MovementComponent(mapposition.getX(), mapposition.getY());
 			   MapForm.f.setComponent(movecomponent);
-			   }
-			   moveLog();
 		   }
 	   }
-	   // 로봇의 움직임을 출력해주는 시스템 로그
-	   public void moveLog(){
-		   txlog.append(""+"\n");
-	   }
    }
+}
 
 
 public class MapForm extends JFrame  {
@@ -349,11 +344,7 @@ public class MapForm extends JFrame  {
          return f.getMapPosition();
       }
       
-      public void update(){
-         
-      }
-      
-      public void setMapcomponent() {
-           // f.setMap
-      }
+      public void moveLog(){
+		   MyFrame.txlog.append(""+"\n");
+	   }
 }
