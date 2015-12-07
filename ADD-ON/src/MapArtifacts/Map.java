@@ -72,6 +72,9 @@ public class Map implements Finals {
 				break;
 		}
 		
+		// 지도 출력
+		MapForm.updatePaint(map);
+		
 		// 둘러싸인 경우 system log에 뜨도록 알리기
 		if(confirm()==ERROR)
 			MapForm.errorMessage("No Path(위험지역으로 둘러싸임)"+"\n3초뒤 프로그램이 종료됩니다.");
