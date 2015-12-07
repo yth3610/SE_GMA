@@ -30,7 +30,7 @@ class MyFrame extends JFrame{
    private JTextField txmap,txhazard,txstart,txfind;
    private JButton btnset,btnstart;
    private JSplitPane sp1, sp2, sp3;
-   private TextArea txlog;
+   public static TextArea txlog;
    private JPanel panelInput, panelMap, panelLog, panelDev;
    private JScrollPane scrollPane;
    private static SimSensor robot; 
@@ -293,12 +293,17 @@ class MyFrame extends JFrame{
                txlog.append("지도 크기"+mapposition+"\n위험 지점"+hazardpositionList+
                   "\n시작 지점"+startposition+"\n탐색 지점"+findpositionList+"\n");
                
+               if(mapmap.confirm()==ERROR)
+            	   txlog.append("경로를 생성할 수 없습니다");
+               
                // system log에 입력받은 값들을 출력            
             	}
             
             	catch(ArrayIndexOutOfBoundsException e1){
             		txlog.append("지도의 범위를 벗어납니다"+"\n");
             	}
+            
+            	
             /*
             catch(){
                txlog.append("경로를 생성할 수 없습니다"+"\n");
@@ -313,7 +318,7 @@ class MyFrame extends JFrame{
 			
 			   RobotPosition rp = new RobotPosition();
 			   
-			   while(){
+			   /*while(){*/
 			   MovementComponent movecomponent = new MovementComponent(mapposition.getX(), mapposition.getY());
 			   MapForm.f.setComponent(movecomponent);
 			   }
@@ -325,7 +330,7 @@ class MyFrame extends JFrame{
 		   txlog.append(""+"\n");
 	   }
    }
-}
+
 
 public class MapForm extends JFrame  {
 
