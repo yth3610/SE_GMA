@@ -42,10 +42,10 @@ class MyFrame extends JFrame{
    private static int robotSsa=40,robotSaa=100;   // 로봇이 남쪽을 향하고 있는 경우
    private static int robotEsa=130,robotEaa=100;   // 로봇이 동쪽을 향하고 있는 경우
    private static int robotNsa=-40,robotNaa=-100;   // 로봇이 북쪽을 향하고 있는 경우
-   private int[][] mapdata = new int[5][5];
+   private int[][] mapdata = new int[5][5];	// 재난지역모델 정보를 저장할 리스트
    private ArrayList<Position> hazardpositionList = new ArrayList<>();   // 위험지역 좌표를 저장하는 리스트
    private ArrayList<Position> findpositionList = new ArrayList<>();   // 탐색지점 좌료를 저장하는 리스트
-   private Position startposition, mapposition, robotposition;
+   private Position startposition, mapposition, robotposition;	// 입력값들을 저장할 리스트
 
 
    public MyFrame(){
@@ -87,9 +87,9 @@ class MyFrame extends JFrame{
       txfind.addActionListener(setlistener);
       panelInput.add(txfind);
       btnset = new JButton("set");
-      btnset.addActionListener(setlistener);   // set 버튼에 listener 달아줌
+      btnset.addActionListener(setlistener);   // set 버튼에 setlistener 달아줌
       panelInput.add(btnset);
-      btnstart = new JButton("start");
+      btnstart = new JButton("start");	// start 버튼에 startlisener 달아줌
       btnstart.addActionListener(startlistener);
       panelInput.add(btnstart);
             
@@ -101,7 +101,7 @@ class MyFrame extends JFrame{
       panelLog.add(txlog,BorderLayout.CENTER);
       
       panelDev = new JPanel(); // 개발자 정보를 배치할 판넬      
-      panelMap = new JPanel();
+      panelMap = new JPanel(); // 초창기 재난지역 모델
             
       sp1.setTopComponent(panelInput);   // sp1에 panelInput 배치
       sp2.setRightComponent(panelMap);   // sp2에 panelMap 배치
@@ -114,10 +114,12 @@ class MyFrame extends JFrame{
       setVisible(true);
    }
    
+   // MapComponent를 불러오는 생성자
    public void setComponent(MapComponent mapcomponent) {
        sp2.setRightComponent(mapcomponent);
    }
    
+   // MovementComponent를 불러오는 생성자
    public void setComponent(MovementComponent movecomponent){
 	   sp2.setRightComponent(movecomponent);
    }
@@ -130,10 +132,12 @@ class MyFrame extends JFrame{
       return this.mapposition;
 
    }
-
+   
+   // 지도크기, 위험지역, 탐색지점, 시작지점을 입력받은 뒤 재난지역모델을 그리는 컴포넌트
    class MapComponent extends JComponent implements Finals{
       int mapx = 1, mapy = 1;
-
+      
+      // 생성자
       public MapComponent(int x, int y) {
          this.mapx = x;
          this.mapy = y;
@@ -168,7 +172,7 @@ class MyFrame extends JFrame{
                   g.setColor(Color.RED);
                   g.fillOval(15+widthmap*i,365-heightmap*j,30,30);   // 빨간원을 그린다
                }
-               if(mapdata[i][j]==START){   // 탐색 지점에 로봇을 위치시킨다
+               if(mapdata[i][j]==START){   // 시작 지점에 로봇을 그린다
                   g.setColor(Color.MAGENTA);
                   g.fillArc(20+widthmap*i,355-heightmap*j,50,50,robotEsa,robotEaa);
                }
@@ -181,6 +185,7 @@ class MyFrame extends JFrame{
       }
    }
    
+   // 지도크기, 위험지역, 탐색지점, 시작지점을 입력받은 뒤 재난지역모델을 그리는 컴포넌트
    class MovementComponent extends JComponent implements Finals{
 	   	  int mapx=1, mapy=1;
 	   	  
@@ -217,28 +222,28 @@ class MyFrame extends JFrame{
 	                   g.setColor(Color.RED);
 	                   g.fillOval(15+widthmap*i,365-heightmap*j,30,30);   // 빨간원을 그린다
 	                }
-	                if(mapdata[i][j]==FIND){
-	                   g.setColor(Color.ORANGE);
-	                   g.fillRect(15+widthmap*i,365-heightmap*j,30,30);            
+	                if(mapdata[i][j]==FIND){	// 좌표값이 find인 경우
+	                   g.setColor(Color.ORANGE);	
+	                   g.fillRect(15+widthmap*i,365-heightmap*j,30,30);	// 주황색 네모를 그린다            
 	                }
 	             }
 	          }
 	    	  
 	          g.setColor(Color.MAGENTA);
 	    	  switch(robot.positionSensor().getDirection()) {
-	    	  case EAST :
+	    	  case EAST :	// 로봇이 동쪽을 바라보고 있는 경우
 	              g.fillArc(20+widthmap*robot.positionSensor().getX(),
 	            		  355-heightmap*robot.positionSensor().getY(),50,50,robotEsa,robotEaa);
 	              break;
-	    	  case SOUTH:
+	    	  case SOUTH:	// 로봇이 남쪽을 바라보고 있는 경우
 	              g.fillArc(20+widthmap*robot.positionSensor().getX(),
 	            		  355-heightmap*robot.positionSensor().getY(),50,50,robotSsa,robotSaa);
 	              break;
-	    	  case WEST:
+	    	  case WEST:	// 로봇이 서쪽을 바라보고 있는 경우
 	              g.fillArc(20+widthmap*robot.positionSensor().getX(),
 	            		  355-heightmap*robot.positionSensor().getY(),50,50,robotWsa,robotWaa);
 	              break;
-	    	  case NORTH:
+	    	  case NORTH:	// 로봇이 북쪽을 바라보고 있는 경우
 	              g.fillArc(20+widthmap*robot.positionSensor().getX(),
 	            		  355-heightmap*robot.positionSensor().getY(),50,50,robotNsa,robotNaa);
 	              break;
@@ -260,20 +265,21 @@ class MyFrame extends JFrame{
             try{
             	int mapx = Integer.valueOf(txmap.getText().substring(0,txmap.getText().indexOf(",")));
                 int mapy = Integer.valueOf(txmap.getText().substring(txmap.getText().indexOf(",")+1,txmap.getText().length()));
-                mapposition = new Position(mapx,mapy); 
+                mapposition = new Position(mapx,mapy); // 입력받은 지도크기를 mapposition 리스트에 저장
 
                 int startx = Integer.valueOf(txstart.getText().substring(0,txstart.getText().indexOf(",")));
                 int starty = Integer.valueOf(txstart.getText().substring(txstart.getText().indexOf(",")+1,txstart.getText().length()));
-                startposition = new Position(startx,starty);
+                startposition = new Position(startx,starty);	// 입력받은 시작지점을 startposition 리스트에 저장
+                
                 robot = new SimSensor(startx, starty);
-                StringTokenizer stfind = new StringTokenizer(txfind.getText());               
-
+                
+                StringTokenizer stfind = new StringTokenizer(txfind.getText()); 
                 while(stfind.hasMoreTokens()) {
                    String tmp = stfind.nextToken();
                    int findx = Integer.valueOf(tmp.substring(0,1));
                    int findy = Integer.valueOf(tmp.substring(2,tmp.length()));
                    findpositionList.add(new Position(findx,findy));                
-               }
+               }	// 입력받은 탐색지점을 findpositionList에 저장
                 
                StringTokenizer sthazard = new StringTokenizer(txhazard.getText());
                while(sthazard.hasMoreTokens()) {
@@ -281,42 +287,43 @@ class MyFrame extends JFrame{
                     int hazardx = Integer.valueOf(tmp.substring(0, 1));
                     int hazardy = Integer.valueOf(tmp.substring(2, tmp.length()));
                     hazardpositionList.add(new Position(hazardx, hazardy));
-               }
+               }	// 입력받은 위험지점을 hazardpositionList에 저장
                
                txlog.append("지도 크기"+mapposition+"\n위험 지점"+hazardpositionList+
                        "\n시작 지점"+startposition+"\n탐색 지점"+findpositionList+"\n");
+               // system log에 입력받은 값들을 출력     
                
                MapManager map = new MapManager();
                PathManager path = new PathManager();
-               map.createMap(mapx,mapy,hazardpositionList);
-               path.createPath(startx, starty, findpositionList);
+               map.createMap(mapx,mapy,hazardpositionList);	// MapManager클래스로 입력값을 전달하고 맵생성
+               path.createPath(startx, starty, findpositionList);	// pathManager클래스로 입력값을 전달하고 경로생성
                Map mapmap = new Map();      
-               mapdata= mapmap.getMap(0);                 
+               mapdata= mapmap.getMap(0);    // 생성된 재난지역모델 정보를 받아온다             
 
                MapComponent mapcomponent = new MapComponent(mapposition.getX(), mapposition.getY());
+               // 입력받은 지도크기를 바탕으로 재난지역모델을 그린다.
                MapForm.f.setComponent(mapcomponent);
-
-               // system log에 입력받은 값들을 출력            
-            	}            
-            	catch(ArrayIndexOutOfBoundsException e1){
+                                
+               }	// 위험지역, 시작지점, 탐색지점의 입력값이 지도크기에서 벗어난 경우           
+               catch(ArrayIndexOutOfBoundsException e1){
             		txlog.append("지도의 범위를 벗어납니다"+"\n");
-            	} 
+               } 
          	}
       	}
-   	} 
+   	}    
+   // start 버튼을 누른 경우 이벤트
    private class startListener implements ActionListener{
 	   public void actionPerformed(ActionEvent e){
 		   if(e.getSource()==btnstart){
-
-			   RobotPosition rp = new RobotPosition();
+			   RobotPosition rp = new RobotPosition();	// 로봇이 이동을 시작한다.
 		   }
 	   }
    }
-	   // 로봇의 움직임을 출력해주는 시스템 로그
+	// 로봇의 움직임을 시스템 로그에 출력하는 메소드
 	public void moveLog(String message){
 		txlog.append(message+"\n");
 	}
-	
+	// 에러 메세지를 시스템 로그에 출력하는 메소드
 	public void errorMessage(String message){
 		txlog.append(message+"\n");
 		try {
@@ -327,11 +334,11 @@ class MyFrame extends JFrame{
 		}
   	  System.exit(0);
 	}
-	
+	// 로봇이 이동하는 것을 출력해주는 메소드
 	public MovementComponent movePaint(){
 		return new MovementComponent(mapposition.getX(), mapposition.getY());
 	}
-	
+	// 재난지역모델이 업데이트된 것을 출력해주는 메소드
 	public MovementComponent updatePaint(int[][] update_map){
 		mapdata = update_map;
 		return new MovementComponent(mapposition.getX(), mapposition.getY());
@@ -350,20 +357,24 @@ public class MapForm extends JFrame  {
       public static SimSensor getRobot() {
          return f.getRobot();
       }
-      
-      public static void open(){   // 사용자가 MapForm에 접근하는 함수
+   // 사용자가 MapForm에 접근하는 함수
+      public static void open(){   
          f = new MyFrame();
       }
       
       public static Position getMapPosition() {
          return f.getMapPosition();
       }
-
+      // 에러메세지를 시스템 로그에 출력하는 메소드
       public static void errorMessage(String message){
     	  f.errorMessage(message);
-      }    	  
-      
-      public void movepaint(){
+      }
+      // 이동상황을 시스템 로그에 출력하는 메소드
+      public static void moveLog(String message){
+    	  f.moveLog(message);
+      }
+      // 로봇의 움직임을 출력하는 메소드
+      public static void movepaint(){
     	  f.setComponent(f.movePaint());
     	  try{
 			   Thread.sleep(1000);
@@ -373,7 +384,7 @@ public class MapForm extends JFrame  {
 			e1.printStackTrace();
 			}		
       }
-      
+      // 재난지역모델이 업데이트된 것을 출력해주는 메소드
       public static void updatePaint(int[][] update_map){
     	  f.setComponent(f.updatePaint(update_map));
       }
