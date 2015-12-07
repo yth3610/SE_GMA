@@ -34,7 +34,8 @@ public class RobotPosition implements Finals{
 			ssm.colorBlobSensor(); //color blob 유무 판단
 			pathList = path.getPath();
 			ssm.setMap(map.getMap(1));
-			MapForm.movepaint();
+			//MapForm.movepaint();
+			MapForm.robotPaint(MapForm.getRobot().positionSensor());
 		}
 		MapForm.moveLog("탐색종료");
 		System.out.println("탐색종료");

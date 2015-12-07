@@ -141,12 +141,18 @@ class MyFrame extends JFrame{
    // 지도크기, 위험지역, 탐색지점, 시작지점을 입력받은 뒤 재난지역모델을 그리는 컴포넌트
    class MapComponent extends JComponent implements Finals{
       int mapx = 1, mapy = 1;
+      Position robotPosition;
       
       // 생성자
       public MapComponent(int x, int y) {
          this.mapx = x;
          this.mapy = y;
       }   
+      public MapComponent(int x, int y, Position robotPosition) {
+    	  this.mapx = x;
+    	  this.mapy = y;
+    	  this.robotPosition = robotPosition;
+      }
 
       public void paint(Graphics g){
 
@@ -177,14 +183,30 @@ class MyFrame extends JFrame{
                   g.setColor(Color.RED);
                   g.fillOval(15+widthmap*i,365-heightmap*j,30,30);   // 빨간원을 그린다
                }
-               if(mapdata[i][j]==START){   // 시작 지점에 로봇을 그린다
-                  g.setColor(Color.MAGENTA);
-                  g.fillArc(20+widthmap*i,355-heightmap*j,50,50,robotEsa,robotEaa);
-               }
                if(mapdata[i][j]==FIND){		// 탐색 지점을 표시
                   g.setColor(Color.ORANGE);
                   g.fillRect(15+widthmap*i,365-heightmap*j,30,30);            
                }
+               
+ 	          g.setColor(Color.MAGENTA);
+ 	    	  switch(robot.positionSensor().getDirection()) {
+ 	    	  case EAST :	// 로봇이 동쪽을 바라보고 있는 경우
+ 	              g.fillArc(20+widthmap*robot.positionSensor().getX(),
+ 	            		  355-heightmap*robot.positionSensor().getY(),50,50,robotEsa,robotEaa);
+ 	              break;
+ 	    	  case SOUTH:	// 로봇이 남쪽을 바라보고 있는 경우
+ 	              g.fillArc(20+widthmap*robot.positionSensor().getX(),
+ 	            		  355-heightmap*robot.positionSensor().getY(),50,50,robotSsa,robotSaa);
+ 	              break;
+ 	    	  case WEST:	// 로봇이 서쪽을 바라보고 있는 경우
+ 	              g.fillArc(20+widthmap*robot.positionSensor().getX(),
+ 	            		  355-heightmap*robot.positionSensor().getY(),50,50,robotWsa,robotWaa);
+ 	              break;
+ 	    	  case NORTH:	// 로봇이 북쪽을 바라보고 있는 경우
+ 	              g.fillArc(20+widthmap*robot.positionSensor().getX(),
+ 	            		  355-heightmap*robot.positionSensor().getY(),50,50,robotNsa,robotNaa);
+ 	              break;
+ 	    	  }
             }
          }
       }
@@ -197,7 +219,7 @@ class MyFrame extends JFrame{
 	   	 public MovementComponent(int x, int y) {
 	         this.mapx = x;
 	         this.mapy = y;
-	      }   
+	      }
 	   	
 	      public void paint(Graphics g) {	          
 	          g.drawRect(x,y,width,height);
@@ -306,6 +328,7 @@ class MyFrame extends JFrame{
                mapdata= mapmap.getMap(0);    // 생성된 재난지역모델 정보를 받아온다             
 
                MapComponent mapcomponent = new MapComponent(mapposition.getX(), mapposition.getY());
+               //MapComponent mapcomponent = new MapComponent(mapposition.getX(), mapposition.getY(), startposition);
                // 입력받은 지도크기를 바탕으로 재난지역모델을 그린다.
                MapForm.f.setComponent(mapcomponent);
                                 
@@ -387,6 +410,16 @@ public class MapForm extends JFrame  {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			}		
+      }
+      
+      public static void robotPaint(Position robotPosition) {
+    	  try{
+   		   f.repaint();
+			   Thread.sleep(1000);
+			
+			} catch (InterruptedException e1) {
+			e1.printStackTrace();
+			}	
       }
       // 재난지역모델이 업데이트된 것을 출력해주는 메소드
       public static void updatePaint(int[][] update_map){
