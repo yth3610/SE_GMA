@@ -24,6 +24,7 @@ import MapArtifacts.Position;
 import RobotMovement.RobotPosition;
 import RobotMovement.RobotPositionManager;
 import Interface.Finals;
+import Interface.MyFrame.MovementComponent;
 
 class MyFrame extends JFrame{
 
@@ -129,6 +130,7 @@ class MyFrame extends JFrame{
       return this.mapposition;
 
    }
+
    class MapComponent extends JComponent implements Finals{
       int mapx = 1, mapy = 1;
 
@@ -294,20 +296,15 @@ class MyFrame extends JFrame{
                MapComponent mapcomponent = new MapComponent(mapposition.getX(), mapposition.getY());
                MapForm.f.setComponent(mapcomponent);
           
-              
+               txlog.append("지도 크기"+mapposition+"\n위험 지점"+hazardpositionList+
+                  "\n시작 지점"+startposition+"\n탐색 지점"+findpositionList+"\n");
 
                // system log에 입력받은 값들을 출력            
             	}
             
             	catch(ArrayIndexOutOfBoundsException e1){
             		txlog.append("지도의 범위를 벗어납니다"+"\n");
-            	}
-                        	
-            /*
-            catch(){
-               txlog.append("경로를 생성할 수 없습니다"+"\n");
-            }
-            */
+            	} 
          	}
       	}
    	} 
@@ -316,14 +313,19 @@ class MyFrame extends JFrame{
 		   if(e.getSource()==btnstart){
 			
 			   RobotPosition rp = new RobotPosition();
-			   
-			   /*while(){*/
+			  
 			   MovementComponent movecomponent = new MovementComponent(mapposition.getX(), mapposition.getY());
 			   MapForm.f.setComponent(movecomponent);
-			   }
-			   moveLog();
+			   try{
+				   Thread.sleep(1000);
+				
+				} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				}			   
 		   }
-	}
+	   }
+   }
 	   // 로봇의 움직임을 출력해주는 시스템 로그
 	public void moveLog(){
 		txlog.append(""+"\n");
@@ -345,6 +347,7 @@ class MyFrame extends JFrame{
 public class MapForm extends JFrame  {
 
       static MyFrame f;
+      static MyFrame.MovementComponent move;
       
       public static void main(String[] args) {
          open();
@@ -361,16 +364,20 @@ public class MapForm extends JFrame  {
       public static Position getMapPosition() {
          return f.getMapPosition();
       }
+
+      public static void errorMessage(String message){
+    	  f.errorMessage(message);
+      }    	  
       
-      public void update(){
-         
-      }
-      
-      public void setMapcomponent() {
-           // f.setMap
-      }
-      
-      public static void surroundedError(){
-    	  f.errorMessage("No Path(위험지역으로 둘러싸임)"+"\n3초뒤 프로그램이 종료됩니다.");
+      public void movepaint(int mapx, int mapy){
+    	  move = new MyFrame.MovementComponent(mapx,mapy);
+    	  f.setComponent(move);
+    	  try{
+			   Thread.sleep(1000);
+			
+			} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			}		
       }
 }
