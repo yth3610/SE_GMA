@@ -234,7 +234,7 @@ public class Path implements Finals{
 			
 			move = true; // 초기화
 			
-			System.out.println(" (( "+(x-1)+","+(y-1)+"))");
+			System.out.println(" (( "+(x-1)+","+(y-1)+" )) ");
 			
 			// 빙 돌아온 경우 중복 제거하고 아닌 경우 경로저장
 			if(overlapPath(x-1, y-1)>0)
@@ -275,7 +275,7 @@ public class Path implements Finals{
 	private int visitedFinds(int fx, int fy){
 		for(int i=0; i<path.size(); i++)
 		{
-			if(fx==path.get(i).getX() && fy==path.get(i).getY())
+			if((fx-1)==path.get(i).getX() && (fy-1)==path.get(i).getY())
 				return 0;
 		}
 		return 1;

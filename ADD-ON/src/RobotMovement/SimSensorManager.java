@@ -4,14 +4,12 @@ import Interface.MapForm;
 import MapArtifacts.Position;
 
 public class SimSensorManager {
-	public static boolean hazardSensor() { //hazard의 유무를 받아오는 method
-		boolean hazard = MapForm.getRobot().hazardSensor();
-		return hazard;
+	public static void hazardSensor() { //hazard의 유무를 받아오는 method
+		MapForm.getRobot().hazardSensor();
 	}
 	
-	public static boolean[] colorBlobSensor() { //colorblob 배열을 받아오는 method
-		boolean[] colorblob = MapForm.getRobot().colorBlobSensor(); //default = false;
-		return colorblob;
+	public static void colorBlobSensor() { //colorblob 배열을 받아오는 method
+		MapForm.getRobot().colorBlobSensor(); //default = false;
 	}
 	
 	public static Position positionSensor() { //robot의 position을 받아오는 method
