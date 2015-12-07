@@ -300,8 +300,7 @@ class MyFrame extends JFrame{
                   "\n시작 지점"+startposition+"\n탐색 지점"+findpositionList+"\n");
 
                // system log에 입력받은 값들을 출력            
-            	}
-            
+            	}            
             	catch(ArrayIndexOutOfBoundsException e1){
             		txlog.append("지도의 범위를 벗어납니다"+"\n");
             	} 
@@ -327,12 +326,12 @@ class MyFrame extends JFrame{
 	   }
    }
 	   // 로봇의 움직임을 출력해주는 시스템 로그
-	public void moveLog(){
-		txlog.append(""+"\n");
+	public void moveLog(String message){
+		txlog.append(message+"\n");
 	}
 	
 	public void errorMessage(String message){
-		txlog.append(message);
+		txlog.append(message+"\n");
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
@@ -372,6 +371,10 @@ public class MapForm extends JFrame  {
       public static void errorMessage(String message){
     	  f.errorMessage(message);
       }    	  
+      
+      public static void logMessage(String message){
+    	  f.moveLog(message);    	  
+      }
       
       public void movepaint(int mapx, int mapy){
     	  f.setComponent(f.movePaint(mapx,mapy));
