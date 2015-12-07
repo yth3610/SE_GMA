@@ -65,10 +65,14 @@ public class Map implements Finals {
 				map[xy.getX()][xy.getY()]=COLORBLOB;
 				break;
 			case "Start" :
+				if(map[xy.getX()][xy.getY()]==HAZARD)
+					MapForm.errorMessage("로봇이 위험지역에 들어갔습니다."+"\n3초뒤 프로그램이 종료됩니다.");
 				path_map[xy.getX()+1][xy.getY()+1]=START;
 				map[xy.getX()][xy.getY()]=START;
 				break;
 			case "Find" :
+				if(map[xy.getX()][xy.getY()]==HAZARD)
+					MapForm.errorMessage("위험지역을 탐색할 수 없습니다."+"\n3초뒤 프로그램이 종료됩니다.");
 				path_map[xy.getX()+1][xy.getY()+1]=FIND;
 				map[xy.getX()][xy.getY()]=FIND;
 				break;

@@ -336,7 +336,7 @@ class MyFrame extends JFrame{
 	public void errorMessage(String message){
 		txlog.append(message+"\n");
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
