@@ -1,7 +1,7 @@
 package RobotMovement;
 
+import Foundation.Position;
 import Interface.MapForm;
-import MapArtifacts.Position;
 
 public class SimSensorManager {
 	public void hazardSensor(){ //hazard의 유무를 받아오는 method
@@ -12,7 +12,7 @@ public class SimSensorManager {
 		MapForm.getRobot().colorBlobSensor(); //default = false;
 	}
 	
-	public Position positionSensor() { //robot의 position을 받아오는 method
+	public static Position positionSensor() { //robot의 position을 받아오는 method
 		Position position = MapForm.getRobot().positionSensor();
 		return position;
 	}

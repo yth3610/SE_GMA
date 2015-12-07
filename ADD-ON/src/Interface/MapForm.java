@@ -7,6 +7,7 @@ import java.awt.image.*;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Label;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,13 +17,15 @@ import java.util.StringTokenizer;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.BoxLayout;
 
+import Foundation.Finals;
+import Foundation.Position;
 import MapArtifacts.Map;
 import MapArtifacts.MapManager;
 import MapArtifacts.PathManager;
-import MapArtifacts.Position;
 import RobotMovement.RobotPosition;
-import Interface.Finals;
+import RobotMovement.RobotPositionManager;
 import Interface.MyFrame.MovementComponent;
 
 class MyFrame extends JFrame{
@@ -62,7 +65,7 @@ class MyFrame extends JFrame{
       sp2.setDividerLocation(250); // 자르는 위치 너비 250에서 시작      
       
       sp3 = new JSplitPane(JSplitPane.VERTICAL_SPLIT); // 상하 분할
-      sp3.setDividerLocation(300); // 자르는 위치 높이 300에서 시작
+      sp3.setDividerLocation(350); // 자르는 위치 높이 300에서 시작
       
       panelInput = new JPanel(); // 입력 값들을 배치하는 판넬
       panelInput.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -99,7 +102,11 @@ class MyFrame extends JFrame{
       scrollPane = new JScrollPane(txlog);
       panelLog.add(txlog,BorderLayout.CENTER);
       
-      panelDev = new JPanel(); // 개발자 정보를 배치할 판넬      
+      panelDev = new JPanel(); // 개발자 정보를 배치할 판넬
+      panelDev.setLayout(new BoxLayout(panelDev, BoxLayout.Y_AXIS));      
+      panelDev.add(new JLabel("2015 SE - Team GMA"));
+      panelDev.add(new JLabel("Kim YeoJung, Seo Jung, Cheon SangJin"));
+      
       panelMap = new JPanel(); // 초창기 재난지역 모델
             
       sp1.setTopComponent(panelInput);   // sp1에 panelInput 배치
@@ -195,7 +202,7 @@ class MyFrame extends JFrame{
 	   	
 	      public void paint(Graphics g) {	          
 	          g.drawRect(x,y,width,height);
-	          repaint();
+	          
 	          int widthmap=width/mapx;   // 격자의 너비
 	          int heightmap=height/mapy;   // 격자의 높이
 	          int tempx=widthmap;
@@ -314,7 +321,6 @@ class MyFrame extends JFrame{
    private class startListener implements ActionListener{
 	   public void actionPerformed(ActionEvent e){
 		   if(e.getSource()==btnstart){
-
 			   RobotPosition rp = new RobotPosition();	// 로봇이 이동을 시작한다.
 		   }
 	   }
@@ -348,7 +354,6 @@ class MyFrame extends JFrame{
 public class MapForm extends JFrame  {
 
       static MyFrame f;
-      static MyFrame.MovementComponent move;
       
       public static void main(String[] args) {
          open();
@@ -374,9 +379,9 @@ public class MapForm extends JFrame  {
     	  f.moveLog(message);
       }
       // 로봇의 움직임을 출력하는 메소드
-      public static void movepaint(){
-    	  f.setComponent(f.movePaint());
+      public static void movepaint(){    	  
     	  try{
+    		   f.setComponent(f.movePaint());
 			   Thread.sleep(1000);
 			
 			} catch (InterruptedException e1) {

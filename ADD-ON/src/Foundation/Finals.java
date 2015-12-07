@@ -1,4 +1,4 @@
-package Interface;
+package Foundation;
 
 //전체적으로 사용될 상수 선언
 

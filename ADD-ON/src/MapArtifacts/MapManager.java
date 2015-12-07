@@ -2,6 +2,8 @@ package MapArtifacts;
 
 import java.util.ArrayList;
 
+import Foundation.Position;
+
 public class MapManager {
 
 	private static Map map;
