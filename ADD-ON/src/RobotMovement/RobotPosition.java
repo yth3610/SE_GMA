@@ -28,19 +28,21 @@ public class RobotPosition implements Finals{
 		pathList = path.getPath();
 		movedList.add(currentPosition);
 
-		while(pathCount < pathList.size()) { //pathList.size()
+		if(pathCount < pathList.size()) { //pathList.size()
 			this.createNextPosition(pathList.get(pathCount));
 			ssm.hazardSensor();
 			ssm.colorBlobSensor();
 			pathList = path.getPath();
 			ssm.setMap(map.getMap(1));
-			MapForm.movepaint();
 		}
-		MapForm.moveLog("탐색종료");
-		System.out.println("탐색종료");
-		
-		for(int i=0; i<pathList.size(); i++)
-			System.out.print(pathList.get(i).toString()+" ");
+		else
+		{
+			MapForm.moveLog("탐색종료");
+			System.out.println("탐색종료");
+			
+			for(int i=0; i<pathList.size(); i++)
+				System.out.print(pathList.get(i).toString()+" ");
+		}
 	}
 	
 	//path와 currentPositin을 비교하여 다음 위치를 만드는 method

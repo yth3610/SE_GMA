@@ -48,7 +48,6 @@ class MyFrame extends JFrame{
    private ArrayList<Position> findpositionList = new ArrayList<>();   // 탐색지점 좌료를 저장하는 리스트
    private Position startposition, mapposition, robotposition;	// 입력값들을 저장할 리스트
 
-
    public MyFrame(){
       setSize(800,500);
       setTitle("ADD-ON");
@@ -197,9 +196,9 @@ class MyFrame extends JFrame{
 	   	 public MovementComponent(int x, int y) {
 	         this.mapx = x;
 	         this.mapy = y;
-	      }   
+	      } 
 	   	
-	      public void paint(Graphics g) {	          
+	      public void paint(Graphics g) {
 	          g.drawRect(x,y,width,height);
 	          
 	          int widthmap=width/mapx;   // 격자의 너비
@@ -308,6 +307,8 @@ class MyFrame extends JFrame{
                MapComponent mapcomponent = new MapComponent(mapposition.getX(), mapposition.getY());
                // 입력받은 지도크기를 바탕으로 재난지역모델을 그린다.
                MapForm.f.setComponent(mapcomponent);
+               
+               RobotPosition.pathCount=1;
                                 
                }	// 위험지역, 시작지점, 탐색지점의 입력값이 지도크기에서 벗어난 경우           
                catch(ArrayIndexOutOfBoundsException e1){
@@ -320,7 +321,10 @@ class MyFrame extends JFrame{
    private class startListener implements ActionListener{
 	   public void actionPerformed(ActionEvent e){
 		   if(e.getSource()==btnstart){
-			   RobotPosition rp = new RobotPosition();	// 로봇이 이동을 시작한다.
+			   MovementComponent mc = new MovementComponent(mapposition.getX(), mapposition.getY());
+               // 입력받은 지도크기를 바탕으로 재난지역모델을 그린다.
+               MapForm.f.setComponent(mc);
+			   RobotPosition rp = new RobotPosition();	// 로봇이 이동을 시작한다.   
 		   }
 	   }
    }
@@ -339,14 +343,9 @@ class MyFrame extends JFrame{
 		}
   	  System.exit(0);
 	}
-	// 로봇이 이동하는 것을 출력해주는 메소드
-	public MovementComponent movePaint(){
-		return new MovementComponent(mapposition.getX(), mapposition.getY());
-	}
 	// 재난지역모델이 업데이트된 것을 출력해주는 메소드
-	public MovementComponent updatePaint(int[][] update_map){
+	public void updatePaint(int[][] update_map){
 		mapdata = update_map;
-		return new MovementComponent(mapposition.getX(), mapposition.getY());
 	}
 }
 
@@ -377,19 +376,9 @@ public class MapForm extends JFrame  {
       public static void moveLog(String message){
     	  f.moveLog(message);
       }
-      // 로봇의 움직임을 출력하는 메소드
-      public static void movepaint(){    	  
-    	  try{
-    		   f.setComponent(f.movePaint());
-			   Thread.sleep(1000);
-			
-			} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			}		
-      }
+
       // 재난지역모델이 업데이트된 것을 출력해주는 메소드
       public static void updatePaint(int[][] update_map){
-    	  f.setComponent(f.updatePaint(update_map));
+    	  f.updatePaint(update_map);
       }
 }

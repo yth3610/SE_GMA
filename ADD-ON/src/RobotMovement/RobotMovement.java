@@ -98,12 +98,12 @@ public class RobotMovement implements Finals {
 		}
 	}
 	
+	// 로봇이 잘못움직여 위험지역에 들어간 경우
 	public void robotDie(Position resultPosition){
 		Map m = new Map();
 		int[][] map = m.getMap(0);
 		
 		if(map[resultPosition.getX()][resultPosition.getY()]==HAZARD)
-			MapForm.errorMessage("로봇이 위험지역에 들어갔습니다."+"\n3초뒤 프로그램이 종료됩니다.");;
-			
+			MapForm.errorMessage("로봇이 위험지역에 들어갔습니다."+"\n3초뒤 프로그램이 종료됩니다.");;	
 	}
 }
