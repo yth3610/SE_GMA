@@ -76,9 +76,12 @@ public class Map implements Finals {
 		if(confirm()==ERROR)
 			MapForm.surroundedError();
 		
-		// Hazard 추가한 경우 경로 update
+		// Hazard 추가한 경우 경로
 		if(type.equalsIgnoreCase("Hazard"))
-			m_path.updatePath(xy);
+		{
+			MapForm mf = new MapForm();
+			m_path.updatePath(mf.getRobot().positionSensor(), 0);
+		}
 	}
 	
 	// 지도 반환 하는 함수 (0 : 일반지도 1 : 경로용)
