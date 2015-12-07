@@ -341,6 +341,10 @@ class MyFrame extends JFrame{
 		}
   	  System.exit(0);
 	}
+	
+	public MovementComponent movePaint(int x, int y){
+		return new MovementComponent(x, y);
+	}
 }
 
 
@@ -370,8 +374,7 @@ public class MapForm extends JFrame  {
       }    	  
       
       public void movepaint(int mapx, int mapy){
-    	  move = new MyFrame.MovementComponent(mapx,mapy);
-    	  f.setComponent(move);
+    	  f.setComponent(f.movePaint(mapx,mapy));
     	  try{
 			   Thread.sleep(1000);
 			
