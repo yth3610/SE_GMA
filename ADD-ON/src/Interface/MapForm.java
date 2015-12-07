@@ -25,7 +25,6 @@ import MapArtifacts.Map;
 import MapArtifacts.MapManager;
 import MapArtifacts.PathManager;
 import RobotMovement.RobotPosition;
-import RobotMovement.RobotPositionManager;
 import Interface.MyFrame.MovementComponent;
 
 class MyFrame extends JFrame{
