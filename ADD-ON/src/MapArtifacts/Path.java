@@ -106,7 +106,6 @@ public class Path implements Finals{
 		else
 		{
 			now_xy=index;
-			path.remove(now_xy);
 			path.add(now_xy, xy);
 		}
 		
@@ -122,6 +121,8 @@ public class Path implements Finals{
 			}
 			path.remove(now_xy);
 		}
+		
+		x++; y++;
 		
 		// 현재 위치부터 경로 생성
 		for(int i=0;i<un_finds.size();i++)
