@@ -234,7 +234,7 @@ public class Path implements Finals{
 			
 			move = true; // 초기화
 			
-			System.out.println(" (( "+(x-1)+","+(y-1)+"))");
+			System.out.println(" (( "+(x-1)+","+(y-1)+" )) ");
 			
 			// 빙 돌아온 경우 중복 제거하고 아닌 경우 경로저장
 			if(overlapPath(x-1, y-1)>0)
