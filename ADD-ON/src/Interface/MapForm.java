@@ -46,6 +46,7 @@ class MyFrame extends JFrame{
    private ArrayList<Position> findpositionList = new ArrayList<>();   // 탐색지점 좌료를 저장하는 리스트
    private Position startposition, mapposition, robotposition;
 
+
    public MyFrame(){
       setSize(800,500);
       setTitle("ADD-ON");
@@ -113,25 +114,21 @@ class MyFrame extends JFrame{
    }
    
    public void setComponent(MapComponent mapcomponent) {
-      sp2.setRightComponent(mapcomponent);
+       sp2.setRightComponent(mapcomponent);
    }
    
    public void setComponent(MovementComponent movecomponent){
 	   sp2.setRightComponent(movecomponent);
    }
-   
+
    public SimSensor getRobot() {
          return this.robot;
    }
    
    public Position getMapPosition() {
       return this.mapposition;
+
    }
-   
-   public void setRobotPosition(Position p){
-   
-   }
-   
    class MapComponent extends JComponent implements Finals{
       int mapx = 1, mapy = 1;
 
@@ -139,12 +136,9 @@ class MyFrame extends JFrame{
          this.mapx = x;
          this.mapy = y;
       }   
-      
-      public void robotRepaint(){
-    	  repaint();
-      }
-      
+
       public void paint(Graphics g){
+
          g.drawRect(x,y,width,height);  
 
          int widthmap=width/mapx;   // 격자의 너비
@@ -176,12 +170,12 @@ class MyFrame extends JFrame{
                   g.setColor(Color.MAGENTA);
                   g.fillArc(20+widthmap*i,355-heightmap*j,50,50,robotEsa,robotEaa);
                }
-               if(mapdata[i][j]==FIND){
+               if(mapdata[i][j]==FIND){		// 탐색 지점을 표시
                   g.setColor(Color.ORANGE);
                   g.fillRect(15+widthmap*i,365-heightmap*j,30,30);            
                }
             }
-         }           
+         }
       }
    }
    
@@ -270,7 +264,6 @@ class MyFrame extends JFrame{
                 int starty = Integer.valueOf(txstart.getText().substring(txstart.getText().indexOf(",")+1,txstart.getText().length()));
                 startposition = new Position(startx,starty);
                 robot = new SimSensor(startx, starty);
-
                 StringTokenizer stfind = new StringTokenizer(txfind.getText());               
 
                 while(stfind.hasMoreTokens()) {
@@ -287,26 +280,29 @@ class MyFrame extends JFrame{
                     int hazardy = Integer.valueOf(tmp.substring(2, tmp.length()));
                     hazardpositionList.add(new Position(hazardx, hazardy));
                }
-                     
+               
+               txlog.append("지도 크기"+mapposition+"\n위험 지점"+hazardpositionList+
+                       "\n시작 지점"+startposition+"\n탐색 지점"+findpositionList+"\n");
+               
                MapManager map = new MapManager();
                PathManager path = new PathManager();
                map.createMap(mapx,mapy,hazardpositionList);
                path.createPath(startx, starty, findpositionList);
                Map mapmap = new Map();      
                mapdata= mapmap.getMap(0);                 
-              
+
                MapComponent mapcomponent = new MapComponent(mapposition.getX(), mapposition.getY());
                MapForm.f.setComponent(mapcomponent);
           
-               txlog.append("지도 크기"+mapposition+"\n위험 지점"+hazardpositionList+
-                  "\n시작 지점"+startposition+"\n탐색 지점"+findpositionList+"\n");
-               
+              
+
                // system log에 입력받은 값들을 출력            
             	}
             
             	catch(ArrayIndexOutOfBoundsException e1){
             		txlog.append("지도의 범위를 벗어납니다"+"\n");
             	}
+                        	
             /*
             catch(){
                txlog.append("경로를 생성할 수 없습니다"+"\n");
@@ -321,13 +317,30 @@ class MyFrame extends JFrame{
 			
 			   RobotPosition rp = new RobotPosition();
 			   
+			   /*while(){*/
 			   MovementComponent movecomponent = new MovementComponent(mapposition.getX(), mapposition.getY());
 			   MapForm.f.setComponent(movecomponent);
-			   txlog.append(""+"\n");
+			   }
+			   moveLog();
 		   }
-	   }
-   }
+	}
+	   // 로봇의 움직임을 출력해주는 시스템 로그
+	public void moveLog(){
+		txlog.append(""+"\n");
+	}
+	
+	public void errorMessage(String message){
+		txlog.append(message);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+  	  System.exit(0);
+	}
 }
+
 
 public class MapForm extends JFrame  {
 
@@ -355,5 +368,9 @@ public class MapForm extends JFrame  {
       
       public void setMapcomponent() {
            // f.setMap
+      }
+      
+      public static void surroundedError(){
+    	  f.errorMessage("No Path(위험지역으로 둘러싸임)"+"\n3초뒤 프로그램이 종료됩니다.");
       }
 }
