@@ -30,7 +30,7 @@ class MyFrame extends JFrame{
    private JTextField txmap,txhazard,txstart,txfind;
    private JButton btnset,btnstart;
    private JSplitPane sp1, sp2, sp3;
-   private TextArea txlog;
+   public static TextArea txlog;
    private JPanel panelInput, panelMap, panelLog, panelDev;
    private JScrollPane scrollPane;
    private static SimSensor robot; 
@@ -114,13 +114,13 @@ class MyFrame extends JFrame{
    }
    
    public void setComponent(MapComponent mapcomponent) {
-      sp2.setRightComponent(mapcomponent);
+       sp2.setRightComponent(mapcomponent);
    }
    
    public void setComponent(MovementComponent movecomponent){
 	   sp2.setRightComponent(movecomponent);
    }
-   
+
    public SimSensor getRobot() {
          return this.robot;
    }
@@ -129,12 +129,6 @@ class MyFrame extends JFrame{
       return this.mapposition;
 
    }
-   
-   public void setRobotPosition(Position p){
-   
-
-   }
-   
    class MapComponent extends JComponent implements Finals{
       int mapx = 1, mapy = 1;
 
@@ -142,11 +136,7 @@ class MyFrame extends JFrame{
          this.mapx = x;
          this.mapy = y;
       }   
-      
-      public void robotRepaint(){
-    	  repaint();
-      }
-      
+
       public void paint(Graphics g){
 
          g.drawRect(x,y,width,height);  
@@ -180,7 +170,7 @@ class MyFrame extends JFrame{
                   g.setColor(Color.MAGENTA);
                   g.fillArc(20+widthmap*i,355-heightmap*j,50,50,robotEsa,robotEaa);
                }
-               if(mapdata[i][j]==FIND){
+               if(mapdata[i][j]==FIND){		// 탐색 지점을 표시
                   g.setColor(Color.ORANGE);
                   g.fillRect(15+widthmap*i,365-heightmap*j,30,30);            
                }
@@ -290,6 +280,10 @@ class MyFrame extends JFrame{
                     int hazardy = Integer.valueOf(tmp.substring(2, tmp.length()));
                     hazardpositionList.add(new Position(hazardx, hazardy));
                }
+               
+               txlog.append("지도 크기"+mapposition+"\n위험 지점"+hazardpositionList+
+                       "\n시작 지점"+startposition+"\n탐색 지점"+findpositionList+"\n");
+               
                MapManager map = new MapManager();
                PathManager path = new PathManager();
                map.createMap(mapx,mapy,hazardpositionList);
@@ -300,8 +294,7 @@ class MyFrame extends JFrame{
                MapComponent mapcomponent = new MapComponent(mapposition.getX(), mapposition.getY());
                MapForm.f.setComponent(mapcomponent);
           
-               txlog.append("지도 크기"+mapposition+"\n위험 지점"+hazardpositionList+
-                  "\n시작 지점"+startposition+"\n탐색 지점"+findpositionList+"\n");
+              
 
                // system log에 입력받은 값들을 출력            
             	}
@@ -309,6 +302,7 @@ class MyFrame extends JFrame{
             	catch(ArrayIndexOutOfBoundsException e1){
             		txlog.append("지도의 범위를 벗어납니다"+"\n");
             	}
+                        	
             /*
             catch(){
                txlog.append("경로를 생성할 수 없습니다"+"\n");
@@ -323,13 +317,19 @@ class MyFrame extends JFrame{
 			
 			   RobotPosition rp = new RobotPosition();
 			   
+			   /*while(){*/
 			   MovementComponent movecomponent = new MovementComponent(mapposition.getX(), mapposition.getY());
 			   MapForm.f.setComponent(movecomponent);
-			   txlog.append(""+"\n");
+			   }
+			   moveLog();
 		   }
 	   }
+	   // 로봇의 움직임을 출력해주는 시스템 로그
+	   public void moveLog(){
+		   txlog.append(""+"\n");
+	   }
    }
-}
+
 
 public class MapForm extends JFrame  {
 
@@ -357,5 +357,9 @@ public class MapForm extends JFrame  {
       
       public void setMapcomponent() {
            // f.setMap
+      }
+      
+      public static void surroundedError(){
+    	  MyFrame.txlog.append("no Path(위험지역으로 둘러싸임)"+"\n");
       }
 }

@@ -3,13 +3,14 @@ package MapArtifacts;
 import java.util.ArrayList;
 import java.util.Random;
 import Interface.Finals;
+import Interface.MapForm;
 
 public class Map implements Finals {
 
 	private static int[][] path_map; // 지도저장
 	private static int[][] map; // 지도저장
 	private static int x, y;
-
+	
 	public static final int OK = 9;
 	public static final int ERROR = 999;
 
@@ -74,7 +75,7 @@ public class Map implements Finals {
 		
 		// 둘러싸인 경우 system log에 뜨도록 알리기
 		if(confirm()==ERROR)
-			System.out.println("no path(surrounded hazard)");
+			MapForm.surroundedError();
 	}
 	
 	// 지도 반환 하는 함수 (0 : 일반지도 1 : 경로용)
@@ -86,7 +87,7 @@ public class Map implements Finals {
 	}
 	
 	// 시작지점, 탐색지점이 위험지점으로 둘러싸인 경우
-	private int confirm(){
+	public int confirm(){
 		for(int i=1; i<x+2; i++) 
 		{
 			for(int j=1; j<y+2; j++)

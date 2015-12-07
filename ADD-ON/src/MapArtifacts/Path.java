@@ -2,6 +2,7 @@ package MapArtifacts;
 
 import java.util.*;
 import Interface.Finals;
+import Interface.MapForm;
 
 public class Path implements Finals{
 	
@@ -227,10 +228,8 @@ public class Path implements Finals{
 			}
 			
 			if(end==99) // 경로이동 횟수가 99이상이 되면 위험지역으로 둘러싸였다고 판단하여 종료한다.
-			{
-				System.out.println("BLOCKED ERROR");
-				return ERROR;
-			}
+				MapForm.surroundedError();
+			
 			
 			move = true; // 초기화
 			
