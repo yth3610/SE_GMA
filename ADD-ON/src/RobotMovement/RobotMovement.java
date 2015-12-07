@@ -4,6 +4,7 @@ import Foundation.Finals;
 import Foundation.Position;
 import Interface.MapForm;
 import MapArtifacts.Path;
+import MapArtifacts.Map;
 
 public class RobotMovement implements Finals {
 	private Position currentPosition, nextPosition;
@@ -67,8 +68,8 @@ public class RobotMovement implements Finals {
 				break;
 			}
 			resultPosition = RMI.moveRobot(movement); //Robot이 움직이게 한다
+			robotDie(resultPosition); // 로봇이 잘못움직여 위험지역에 들어간 경우
 			boolean checkMovement = verifyMovement(resultPosition, movement);
-
 			//System.out.println("first check");
 
 			if(checkMovement == false) { //움직임을 확인한다
@@ -84,9 +85,8 @@ public class RobotMovement implements Finals {
 	}
 	
 	public boolean verifyMovement(Position position, String movement) { //Robot의 움직임 확인
-		if(position.getX() == this.nextPosition.getX() && position.getY() == this.nextPosition.getY()
-				&& position.getDirection() == this.nextPosition.getDirection()) {
-			//robot의 현재 위치(X, Y)와 방향이 모두 같은 경우
+		if(position.getX() == this.nextPosition.getX() && position.getY() == this.nextPosition.getY()) {
+			//robot의 현재 위치(X, Y)가 모두 같은 경우
 			MapForm.moveLog("Correct Movement.");
 			System.out.println("Correct Movement.");
 			//System.out.println("=====================");
@@ -97,5 +97,14 @@ public class RobotMovement implements Finals {
 			System.out.println("Wrong Movement.");
 			return false;
 		}
+	}
+	
+	public void robotDie(Position resultPosition){
+		Map m = new Map();
+		int[][] map = m.getMap(0);
+		
+		if(map[resultPosition.getX()][resultPosition.getY()]==HAZARD)
+			MapForm.errorMessage("로봇이 위험지역에 들어갔습니다."+"\n3초뒤 프로그램이 종료됩니다.");;
+			
 	}
 }

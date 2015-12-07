@@ -202,7 +202,7 @@ class MyFrame extends JFrame{
 	   	
 	      public void paint(Graphics g) {	          
 	          g.drawRect(x,y,width,height);
-	          repaint();
+	          
 	          int widthmap=width/mapx;   // 격자의 너비
 	          int heightmap=height/mapy;   // 격자의 높이
 	          int tempx=widthmap;
@@ -379,9 +379,9 @@ public class MapForm extends JFrame  {
     	  f.moveLog(message);
       }
       // 로봇의 움직임을 출력하는 메소드
-      public static void movepaint(){
-    	  f.setComponent(f.movePaint());
+      public static void movepaint(){    	  
     	  try{
+    		   f.setComponent(f.movePaint());
 			   Thread.sleep(1000);
 			
 			} catch (InterruptedException e1) {
