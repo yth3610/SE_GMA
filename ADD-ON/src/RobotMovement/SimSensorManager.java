@@ -12,7 +12,7 @@ public class SimSensorManager {
 		MapForm.getRobot().colorBlobSensor(); //default = false;
 	}
 	
-	public static Position positionSensor() { //robot의 position을 받아오는 method
+	public Position positionSensor() { //robot의 position을 받아오는 method
 		Position position = MapForm.getRobot().positionSensor();
 		return position;
 	}

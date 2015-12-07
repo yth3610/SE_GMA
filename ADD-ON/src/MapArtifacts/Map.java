@@ -81,7 +81,7 @@ public class Map implements Finals {
 		if(confirm()==ERROR)
 			MapForm.errorMessage("No Path(위험지역으로 둘러싸임)"+"\n3초뒤 프로그램이 종료됩니다.");
 		
-		// Hazard 추가한 경우 경로
+		// Hazard 추가한 경우 경로 재설정
 		if(type.equalsIgnoreCase("Hazard"))
 		{
 			MapForm mf = new MapForm();
