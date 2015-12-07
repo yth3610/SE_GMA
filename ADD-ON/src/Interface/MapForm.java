@@ -24,13 +24,14 @@ import MapArtifacts.Position;
 import RobotMovement.RobotPosition;
 import RobotMovement.RobotPositionManager;
 import Interface.Finals;
+import Interface.MyFrame.MovementComponent;
 
 class MyFrame extends JFrame{
 
    private JTextField txmap,txhazard,txstart,txfind;
    private JButton btnset,btnstart;
    private JSplitPane sp1, sp2, sp3;
-   public static TextArea txlog;
+   private TextArea txlog;
    private JPanel panelInput, panelMap, panelLog, panelDev;
    private JScrollPane scrollPane;
    private static SimSensor robot; 
@@ -312,8 +313,7 @@ class MyFrame extends JFrame{
 		   if(e.getSource()==btnstart){
 			
 			   RobotPosition rp = new RobotPosition();
-			   
-			   /*while(){
+			  
 			   MovementComponent movecomponent = new MovementComponent(mapposition.getX(), mapposition.getY());
 			   MapForm.f.setComponent(movecomponent);
 			   try{
@@ -322,17 +322,32 @@ class MyFrame extends JFrame{
 				} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-				}
-			   }*/
+				}			   
 		   }
 	   }
    }
+	   // 로봇의 움직임을 출력해주는 시스템 로그
+	public void moveLog(){
+		txlog.append(""+"\n");
+	}
+	
+	public void errorMessage(String message){
+		txlog.append(message);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+  	  System.exit(0);
+	}
 }
 
 
 public class MapForm extends JFrame  {
 
       static MyFrame f;
+      static MyFrame.MovementComponent move;
       
       public static void main(String[] args) {
          open();
@@ -350,18 +365,19 @@ public class MapForm extends JFrame  {
          return f.getMapPosition();
       }
 
-      public void moveLog(){
-		   MyFrame.txlog.append(""+"\n");
-	   }
-
-      public static void surroundedError(){
-    	  MyFrame.txlog.append("no Path(위험지역으로 둘러싸임)"+"\n 3초뒤 프로그램이 종료됩니다.");
-    	  try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
+      public static void errorMessage(String message){
+    	  f.errorMessage(message);
+      }    	  
+      
+      public void movepaint(int mapx, int mapy){
+    	  move = new MyFrame.MovementComponent(mapx,mapy);
+    	  f.setComponent(move);
+    	  try{
+			   Thread.sleep(1000);
+			
+			} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	  System.exit(0);
-     }
+			e1.printStackTrace();
+			}		
+      }
 }
