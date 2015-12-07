@@ -1,4 +1,4 @@
-package MapArtifacts;
+package Foundation;
 
 public class Position {
 	private int x;
@@ -45,6 +45,6 @@ public class Position {
 	}
 	
 	public String toString() {
-		return "(" + this.x + ", " + this.y + ")";
+		return "(" + this.x + ", " + this.y + ") D : " + this.direction;
 	}
 }

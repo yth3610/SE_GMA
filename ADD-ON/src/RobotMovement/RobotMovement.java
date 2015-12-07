@@ -1,9 +1,9 @@
 package RobotMovement;
 
-import Interface.Finals;
+import Foundation.Finals;
+import Foundation.Position;
 import Interface.MapForm;
 import MapArtifacts.Path;
-import MapArtifacts.Position;
 import MapArtifacts.Map;
 
 public class RobotMovement implements Finals {

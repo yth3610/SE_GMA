@@ -2,11 +2,12 @@ package RobotMovement;
 
 import MapArtifacts.Map;
 import MapArtifacts.Path;
-import MapArtifacts.Position;
-import Interface.Finals;
 import Interface.MapForm;
 
 import java.util.ArrayList;
+
+import Foundation.Finals;
+import Foundation.Position;
 
 public class RobotPosition implements Finals{
 	private Position currentPosition, nextPosition;

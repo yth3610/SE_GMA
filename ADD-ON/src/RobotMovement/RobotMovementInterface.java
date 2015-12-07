@@ -1,7 +1,7 @@
 package RobotMovement;
 
+import Foundation.Position;
 import Interface.MapForm;
-import MapArtifacts.Position;
 
 public class RobotMovementInterface {
 	
