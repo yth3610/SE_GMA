@@ -38,6 +38,9 @@ public class RobotPosition implements Finals{
 		}
 		MapForm.moveLog("탐색종료");
 		System.out.println("탐색종료");
+		
+		for(int i=0; i<pathList.size(); i++)
+			System.out.print(pathList.get(i).toString()+" ");
 	}
 	
 	//path와 currentPositin을 비교하여 다음 위치를 만드는 method
