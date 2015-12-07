@@ -30,7 +30,7 @@ class MyFrame extends JFrame{
    private JTextField txmap,txhazard,txstart,txfind;
    private JButton btnset,btnstart;
    private JSplitPane sp1, sp2, sp3;
-   private TextArea txlog;
+   public static TextArea txlog;
    private JPanel panelInput, panelMap, panelLog, panelDev;
    private JScrollPane scrollPane;
    private static SimSensor robot; 
@@ -129,6 +129,7 @@ class MyFrame extends JFrame{
       return this.mapposition;
 
    }
+
    class MapComponent extends JComponent implements Finals{
       int mapx = 1, mapy = 1;
 
@@ -294,20 +295,15 @@ class MyFrame extends JFrame{
                MapComponent mapcomponent = new MapComponent(mapposition.getX(), mapposition.getY());
                MapForm.f.setComponent(mapcomponent);
           
-              
+               txlog.append("지도 크기"+mapposition+"\n위험 지점"+hazardpositionList+
+                  "\n시작 지점"+startposition+"\n탐색 지점"+findpositionList+"\n");
 
                // system log에 입력받은 값들을 출력            
             	}
             
             	catch(ArrayIndexOutOfBoundsException e1){
             		txlog.append("지도의 범위를 벗어납니다"+"\n");
-            	}
-                        	
-            /*
-            catch(){
-               txlog.append("경로를 생성할 수 없습니다"+"\n");
-            }
-            */
+            	} 
          	}
       	}
    	} 
@@ -317,28 +313,20 @@ class MyFrame extends JFrame{
 			
 			   RobotPosition rp = new RobotPosition();
 			   
-			   /*while(){*/
+			   /*while(){
 			   MovementComponent movecomponent = new MovementComponent(mapposition.getX(), mapposition.getY());
 			   MapForm.f.setComponent(movecomponent);
-			   }
-			   moveLog();
+			   try{
+				   Thread.sleep(1000);
+				
+				} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				}
+			   }*/
 		   }
-	}
-	   // 로봇의 움직임을 출력해주는 시스템 로그
-	public void moveLog(){
-		txlog.append(""+"\n");
-	}
-	
-	public void errorMessage(String message){
-		txlog.append(message);
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-  	  System.exit(0);
-	}
+	   }
+   }
 }
 
 
@@ -361,16 +349,19 @@ public class MapForm extends JFrame  {
       public static Position getMapPosition() {
          return f.getMapPosition();
       }
-      
-      public void update(){
-         
-      }
-      
-      public void setMapcomponent() {
-           // f.setMap
-      }
-      
+
+      public void moveLog(){
+		   MyFrame.txlog.append(""+"\n");
+	   }
+
       public static void surroundedError(){
-    	  f.errorMessage("No Path(위험지역으로 둘러싸임)"+"\n3초뒤 프로그램이 종료됩니다.");
-      }
+    	  MyFrame.txlog.append("no Path(위험지역으로 둘러싸임)"+"\n 3초뒤 프로그램이 종료됩니다.");
+    	  try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	  System.exit(0);
+     }
 }

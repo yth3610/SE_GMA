@@ -16,7 +16,7 @@ public class SimSensor implements Finals {
 		
 	}
 	
-	public void hazardSensor() {
+	public void hazardSensor(){
 	      MapManager mm = new MapManager(); // mm 생성
 	      
 	      switch(this.position.getDirection()) {
@@ -43,7 +43,7 @@ public class SimSensor implements Finals {
 	      }
 	   }
 	   
-	   public void colorBlobSensor() {
+	   public void colorBlobSensor(){
 	      MapManager mm = new MapManager(); // mm 생성
 	      //숨겨진 colorblob을 발견한 경우
 	      //4방향 모두 찾아야 하기 때문에 4개의 if문 사용
