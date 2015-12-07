@@ -302,8 +302,7 @@ class MyFrame extends JFrame{
             	catch(ArrayIndexOutOfBoundsException e1){
             		txlog.append("지도의 범위를 벗어납니다"+"\n");
             	}
-            
-            	
+                        	
             /*
             catch(){
                txlog.append("경로를 생성할 수 없습니다"+"\n");
