@@ -9,7 +9,6 @@ import MapArtifacts.Map;
 public class RobotMovement implements Finals {
 	private Position currentPosition, nextPosition;
 	private RobotMovementInterface RMI;
-	private boolean updatePath = false;
 	Position resultPosition;
 	Path path = new Path();
 	
